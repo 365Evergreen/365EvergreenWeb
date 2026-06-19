@@ -1,0 +1,15 @@
+{
+  "name": "core/embed",
+  "title": "Embed",
+  "category": "embed",
+  "description": "Trusted embed HTML or source URL.",
+  "attributes": {
+    "url": { "type": "string", "default": "" },
+    "html": { "type": "string", "default": "" },
+    "provider": { "type": "string", "default": "" },
+    "caption": { "type": "string", "default": "" },
+    "aspectRatio": { "type": "string", "default": "16x9" },
+    "className": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "wide" }
+  }
+}

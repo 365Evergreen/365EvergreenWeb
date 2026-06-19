@@ -1,0 +1,16 @@
+{
+  "name": "core/card",
+  "title": "Card",
+  "category": "design",
+  "description": "Highlighted container shell with surface styling.",
+  "attributes": {
+    "title": { "type": "string", "default": "Card title" },
+    "text": { "type": "string", "default": "Card body copy" },
+    "backgroundColor": { "type": "string", "default": "#ffffff" },
+    "borderRadius": { "type": "string", "default": "24px" },
+    "shadow": { "type": "string", "default": "medium" },
+    "padding": { "type": "string", "default": "1.5rem" },
+    "className": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "wide" }
+  }
+}

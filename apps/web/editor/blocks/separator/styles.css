@@ -1,0 +1,13 @@
+.pe-block[data-block-type="separator"] .pe-block-separator {
+  border: 0;
+  border-top: 1px solid #d1d5db;
+  margin: 0;
+}
+
+.pe-block[data-block-type="separator"] .pe-block-separator.is-style-dots {
+  border-top-style: dotted;
+}
+
+.pe-block[data-block-type="separator"] .pe-block-separator.is-style-short {
+  max-width: 8rem;
+}

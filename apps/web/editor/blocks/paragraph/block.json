@@ -1,0 +1,12 @@
+{
+  "name": "core/paragraph",
+  "title": "Paragraph",
+  "category": "text",
+  "description": "Body copy with inline formatting.",
+  "attributes": {
+    "text": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "left" },
+    "className": { "type": "string", "default": "" },
+    "style": { "type": "object", "default": {} }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "core/grid",
+  "title": "Grid",
+  "category": "layout",
+  "description": "Uniform grid shell with configurable columns and minimum width.",
+  "attributes": {
+    "columns": { "type": "number", "default": 3 },
+    "minWidth": { "type": "string", "default": "180px" },
+    "gap": { "type": "string", "default": "20px" },
+    "text": { "type": "string", "default": "Add grid content summary" },
+    "items": { "type": "array", "default": [[], [], []] },
+    "className": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "wide" }
+  }
+}

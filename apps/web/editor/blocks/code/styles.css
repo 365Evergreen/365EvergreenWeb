@@ -1,0 +1,3 @@
+.pe-block[data-block-type="code"] pre {
+  overflow-x: auto;
+}

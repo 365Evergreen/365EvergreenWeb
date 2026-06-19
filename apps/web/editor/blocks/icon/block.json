@@ -1,0 +1,14 @@
+{
+  "name": "core/icon",
+  "title": "Icon",
+  "category": "design",
+  "description": "Standalone icon or symbol with size and color settings.",
+  "attributes": {
+    "icon": { "type": "string", "default": "star" },
+    "size": { "type": "string", "default": "48px" },
+    "color": { "type": "string", "default": "#02760c" },
+    "label": { "type": "string", "default": "" },
+    "className": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "left" }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "core/columns",
+  "title": "Columns",
+  "category": "layout",
+  "description": "Multi-column layout shell with adjustable gaps.",
+  "attributes": {
+    "columns": { "type": "number", "default": 2 },
+    "gap": { "type": "string", "default": "24px" },
+    "text": { "type": "string", "default": "Add column content summary" },
+    "className": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "wide" },
+    "children": { "type": "array", "default": [] }
+  }
+}

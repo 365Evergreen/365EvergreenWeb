@@ -1,0 +1,2 @@
+/* Dev harness proxy: import shared root stylesheet for app-private direct preview */
+@import url('../src/index.css');

@@ -1,0 +1,13 @@
+.pe-block[data-block-type="stack"] .pe-block-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pe-block[data-block-type="stack"] .pe-block-stack__empty {
+  border: 1px dashed #cbd5e1;
+  border-radius: 0.75rem;
+  color: #64748b;
+  padding: 1rem;
+  text-align: center;
+}

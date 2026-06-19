@@ -1,0 +1,19 @@
+{
+  "name": "core/hero",
+  "title": "Hero",
+  "category": "design",
+  "description": "Banner shell with background treatment, overlay, and optional CTA.",
+  "attributes": {
+    "eyebrow": { "type": "string", "default": "" },
+    "title": { "type": "string", "default": "Hero title" },
+    "text": { "type": "string", "default": "Supporting hero copy" },
+    "backgroundImage": { "type": "string", "default": "" },
+    "backgroundColor": { "type": "string", "default": "#0f172a" },
+    "overlayColor": { "type": "string", "default": "rgba(15,23,42,0.45)" },
+    "minHeight": { "type": "string", "default": "320px" },
+    "ctaText": { "type": "string", "default": "" },
+    "ctaHref": { "type": "string", "default": "" },
+    "className": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "full" }
+  }
+}

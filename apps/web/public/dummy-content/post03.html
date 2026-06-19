@@ -1,0 +1,86 @@
+<title>Power Automate and SharePoint: Modern Workflows Done Right</title>
+<article>
+  <header>
+    <h1>Power Automate and SharePoint: Modern Workflows Done Right</h1>
+    <p><time datetime="2026-06-20">June 20, 2026</time> · 8 min read</p>
+  </header>
+
+  <section>
+    <h2>From classic workflows to Power Automate</h2>
+    <p>
+      Classic SharePoint Designer workflows are deprecated, and Power Automate is the modern
+      replacement. Instead of being tied to a single SharePoint site, flows can span multiple
+      sites, tenants, and external systems, while still reacting to SharePoint events.
+    </p>
+  </section>
+
+  <section>
+    <h2>Key SharePoint triggers</h2>
+    <ul>
+      <li><strong>When an item is created</strong> – ideal for request intake scenarios.</li>
+      <li><strong>When an item is created or modified</strong> – useful for reacting to status changes.</li>
+      <li><strong>When a file is created (properties only)</strong> – for document libraries.</li>
+      <li><strong>When a file is created or modified (properties only)</strong> – for document lifecycle flows.</li>
+    </ul>
+    <p>
+      These triggers give you access to list or library metadata, which you can use to drive
+      conditions, approvals, and routing logic.
+    </p>
+  </section>
+
+  <section>
+    <h2>Common SharePoint + Power Automate patterns</h2>
+    <ul>
+      <li>
+        <strong>Document approval:</strong>
+        When a file is uploaded to a library, start an approval, then move the file to an
+        “Approved” folder and update metadata.
+      </li>
+      <li>
+        <strong>Reminder flows:</strong>
+        On item creation, calculate a due date and schedule reminder emails using delay actions
+        or scheduled flows.
+      </li>
+      <li>
+        <strong>Permission management:</strong>
+        Break inheritance and assign unique permissions when items reach a certain status.
+      </li>
+      <li>
+        <strong>Cross-system sync:</strong>
+        Create or update items in other lists or Dataverse tables when SharePoint data changes.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Design considerations for SharePoint-centric flows</h2>
+    <p>
+      SharePoint is great for content and collaboration, but it’s not a relational database.
+      When designing flows, keep list thresholds, lookup limits, and performance in mind.
+    </p>
+    <ul>
+      <li>
+        <strong>Filter at the source:</strong>
+        Use OData filters in “Get items” actions instead of filtering in memory.
+      </li>
+      <li>
+        <strong>Avoid unnecessary loops:</strong>
+        Batch operations where possible and minimize per-item calls.
+      </li>
+      <li>
+        <strong>Use columns intentionally:</strong>
+        Create dedicated columns for status, approver, and audit data to avoid overloading
+        the Title field.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Governance and lifecycle</h2>
+    <p>
+      As you replace classic workflows, treat flows as first-class assets. Store them in
+      solutions, use source control where possible, and document which lists and libraries
+      they apply to. This makes future migrations and troubleshooting far less painful.
+    </p>
+  </section>
+</article>

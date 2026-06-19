@@ -1,0 +1,15 @@
+{
+  "name": "core/audio",
+  "title": "Audio",
+  "category": "media",
+  "description": "Audio player for uploaded or linked audio files.",
+  "attributes": {
+    "src": { "type": "string", "default": "" },
+    "title": { "type": "string", "default": "" },
+    "artist": { "type": "string", "default": "" },
+    "autoplay": { "type": "boolean", "default": false },
+    "loop": { "type": "boolean", "default": false },
+    "preload": { "type": "string", "default": "metadata" },
+    "className": { "type": "string", "default": "" }
+  }
+}

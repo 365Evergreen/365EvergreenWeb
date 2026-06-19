@@ -1,0 +1,13 @@
+.pe-block-divider {
+  border: 0;
+  border-top-color: #94a3b8;
+  margin: 1.5rem auto;
+}
+
+.pe-block-divider.is-style-dashed {
+  border-top-style: dashed;
+}
+
+.pe-block-divider.is-style-dotted {
+  border-top-style: dotted;
+}

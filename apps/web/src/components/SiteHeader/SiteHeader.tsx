@@ -45,7 +45,11 @@ export default function SiteHeader({
           aria-label="365 Evergreen Home"
           onClick={onCloseMenu}
         >
-          365 Evergreen
+          <img
+            className={styles.brandLogo}
+            src="https://sa365evergreenwebsite.blob.core.windows.net/$web/assets/Evergreen_Logo__100px.png"
+            alt="365 Evergreen"
+          />
         </Link>
         <button
           type="button"

@@ -1,0 +1,43 @@
+.pe-block-callout {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  border: 1px solid transparent;
+}
+
+.pe-block-callout.is-variant-info {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.pe-block-callout.is-variant-success {
+  background: #ecfdf5;
+  border-color: #86efac;
+}
+
+.pe-block-callout.is-variant-warning {
+  background: #fff7ed;
+  border-color: #fdba74;
+}
+
+.pe-block-callout.is-variant-error {
+  background: #fef2f2;
+  border-color: #fca5a5;
+}
+
+.pe-block-callout__icon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.pe-block-callout__title,
+.pe-block-callout__text {
+  display: block;
+  margin: 0;
+}
+
+.pe-block-callout__text {
+  margin-top: 0.25rem;
+  color: #475569;
+}

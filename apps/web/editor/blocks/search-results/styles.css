@@ -1,0 +1,18 @@
+.pe-block-search-results {
+  display: grid;
+  gap: 1rem;
+}
+
+.pe-block-search-results__card,
+.pe-block-search-results__placeholder {
+  padding: 1rem;
+  border: 1px solid #dbe4f0;
+  border-radius: 1rem;
+  background: #fff;
+}
+
+.pe-block-search-results__meta {
+  margin-top: 0.5rem;
+  color: #64748b;
+  font-size: 0.9rem;
+}

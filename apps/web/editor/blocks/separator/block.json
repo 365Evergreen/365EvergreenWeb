@@ -1,0 +1,11 @@
+{
+  "name": "core/separator",
+  "title": "Separator",
+  "category": "design",
+  "description": "Visual divider between sections.",
+  "attributes": {
+    "style": { "type": "string", "default": "default" },
+    "className": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "full" }
+  }
+}

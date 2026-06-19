@@ -1,0 +1,19 @@
+{
+  "name": "core/group",
+  "title": "Group",
+  "category": "design",
+  "description": "Section wrapper for grouped content.",
+  "attributes": {
+    "title": { "type": "string", "default": "Section heading" },
+    "text": { "type": "string", "default": "" },
+    "tag": { "type": "string", "default": "section" },
+    "layout": { "type": "string", "default": "stack" },
+    "backgroundColor": { "type": "string", "default": "" },
+    "textColor": { "type": "string", "default": "" },
+    "padding": { "type": "string", "default": "2rem 1.5rem" },
+    "margin": { "type": "string", "default": "" },
+    "className": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "wide" },
+    "children": { "type": "array", "default": [] }
+  }
+}

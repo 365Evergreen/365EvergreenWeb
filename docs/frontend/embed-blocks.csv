@@ -1,0 +1,15 @@
+﻿Block,Category,Purpose
+Embed (generic),Embeds,Auto-detects provider via oEmbed.
+YouTube,Embeds,Embed YouTube video.
+Vimeo,Embeds,Embed Vimeo video.
+Twitter/X,Embeds,Embed X posts.
+Instagram,Embeds,Embed Instagram posts.
+Pinterest,Embeds,Embed Pinterest content.
+TikTok,Embeds,Embed TikTok videos.
+Spotify,Embeds,Embed Spotify tracks/playlists.
+SoundCloud,Embeds,Embed SoundCloud audio.
+Flickr,Embeds,Embed Flickr images.
+WordPress,Embeds,Embed WordPress posts.
+Reddit,Embeds,Embed Reddit posts.
+Amazon Kindle,Embeds,Embed Kindle previews.
+Bluesky,Embeds,Embed Bluesky posts.

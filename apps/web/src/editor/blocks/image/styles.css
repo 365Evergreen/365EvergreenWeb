@@ -1,0 +1,4 @@
+.pe-block[data-block-type="image"] .pe-block-image img {
+  display: block;
+  max-width: 100%;
+}

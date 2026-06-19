@@ -1,0 +1,20 @@
+﻿Block,Category,Purpose
+Template Part,Theme,Inserts reusable template sections.
+Header,Theme,Header template area.
+Footer,Theme,Footer template area.
+Post Navigation Link,Theme,Next/previous post links.
+Home Link,Theme,Link to homepage.
+Login/out,Theme,Login/logout link.
+Term Description,Theme,Displays taxonomy description.
+Comments,Theme,Full comments template.
+Comments Form,Theme,Comment submission form.
+Comments Count,Theme,Number of comments.
+Comments Link,Theme,Link to comments section.
+Avatar,Theme,Displays user avatar.
+Author Biography,Theme,Displays author bio.
+Time to Read,Theme,Estimated reading time.
+Word Count,Theme,Displays word count.
+Term Name,Theme,Displays taxonomy term name.
+Term Count,Theme,Displays number of terms.
+Terms List,Theme,Displays list of terms.
+Terms Query,Theme,Query for taxonomy terms.

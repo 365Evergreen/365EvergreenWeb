@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import Contact from '../components/Contact'
+import Drawer from '../components/Drawer'
 import EvergreenMoment from '../components/EvergreenMoment'
 import Hero from '../components/Hero'
 import HomepageCta from '../components/HomepageCta'
@@ -8,6 +10,9 @@ import ProblemGrid from '../components/ProblemGrid'
 import Services from '../components/Services'
 
 export default function HomePage() {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const openDrawer = () => setIsDrawerOpen(true)
+  const closeDrawer = () => setIsDrawerOpen(false)
   const problemCards = [
     {
       title: 'Files everywhere',
@@ -96,7 +101,7 @@ export default function HomePage() {
         title="Stay ahead with 365 Evergreen updates and guidance"
         subtitle="Track change, reduce surprises, and communicate with confidence through a practical, searchable knowledge hub."
         ctaLabel="See how it works"
-        ctaLink="/platform"
+        onCtaClick={openDrawer}
         imageSrc="/plant-cover-1440-900.webp"
         imageAlt="Green plant stems in a glass vase on a white surface"
       />
@@ -140,8 +145,34 @@ export default function HomePage() {
         heading="Ready to bring clarity to your workplace?"
         supportingText="Let's have a conversation about what is getting in the way and what a better setup could look like."
         buttonLabel="Start a conversation"
-        buttonLink="/about"
+        onButtonClick={openDrawer}
       />
+
+      <Drawer
+        isOpen={isDrawerOpen}
+        onClose={closeDrawer}
+        title="Start a conversation"
+        description="Tell us a bit about your organisation so we can suggest the next best step."
+      >
+        <div className="content-block">
+          <p className="lead">
+            We’ll follow up with a short plan that helps your team make Microsoft 365 easier to live with.
+          </p>
+          <div className="content-grid">
+            <div className="card">
+              <h3>1. Your challenge</h3>
+              <p>Share what’s creating friction today and we’ll tailor our response.</p>
+            </div>
+            <div className="card">
+              <h3>2. What you want</h3>
+              <p>Tell us the outcome you care about, not just the tool you want to use.</p>
+            </div>
+          </div>
+          <button type="button" className="button button--primary" onClick={closeDrawer}>
+            Close drawer
+          </button>
+        </div>
+      </Drawer>
     </div>
   )
 }

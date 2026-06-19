@@ -7,6 +7,7 @@ export default function HomepageCta({
   supportingText,
   buttonLabel,
   buttonLink,
+  onButtonClick,
 }: HomepageCtaProps) {
   return (
     <section className={styles.section} aria-labelledby="homepage-cta-heading">
@@ -16,9 +17,15 @@ export default function HomepageCta({
         </h2>
         <p className={styles.supportingText}>{supportingText}</p>
       </div>
-      <Link to={buttonLink} className={styles.button}>
-        {buttonLabel}
-      </Link>
+      {onButtonClick ? (
+        <button type="button" className={styles.button} onClick={onButtonClick}>
+          {buttonLabel}
+        </button>
+      ) : (
+        <Link to={buttonLink ?? '/'} className={styles.button}>
+          {buttonLabel}
+        </Link>
+      )}
     </section>
   )
 }

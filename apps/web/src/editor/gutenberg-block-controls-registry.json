@@ -1,0 +1,2760 @@
+{
+  "meta": {
+    "title": "Gutenberg Block UI Controls Registry (Full)",
+    "scope": "Full set of WordPress core blocks across Text, Media, Design, Widgets, Theme and Embed categories",
+    "wordpress_reference_version": "6.8 / 6.9 (Gutenberg block editor)",
+    "source_of_truth": "WordPress Core Blocks Reference (developer.wordpress.org/block-editor/reference-guides/core-blocks) for slugs, categories, supports and attributes; WordPress.org 'More options' documentation for the ellipsis menu.",
+    "generated": "2026-05-31",
+    "ui_surfaces": {
+      "toolbar_popover": "The floating block toolbar shown above a selected block. 'toolbar_default' lists the block-specific controls there. The universal controls (see universal_toolbar_controls) appear on EVERY block toolbar in addition to these.",
+      "options_menu": "The vertical ellipsis (three-dot) 'Options' menu at the right end of the toolbar. Items are largely identical across blocks (see common_options_menu); per-block differences are noted under each block's 'options_menu'.",
+      "sidebar": "The right-hand Settings panel (gear icon). It has a Settings tab (block-specific controls), a Styles tab (Color / Typography / Dimensions / Border / Background / Shadow panels), and an Advanced section (HTML anchor + Additional CSS class)."
+    },
+    "sidebar_derivation_legend": {
+      "note": "Each block's 'sidebar.styles' panels are derived from the block's documented 'supports' keys. The mapping used:",
+      "map": {
+        "color (background, text, link, gradients, heading, button)": "Color panel",
+        "typography (fontSize, lineHeight, textAlign, fontFamily, appearance, letterSpacing, textDecoration, textTransform)": "Typography panel",
+        "spacing (margin, padding, blockGap)": "Dimensions panel (Margin / Padding / Block spacing)",
+        "dimensions (width, minHeight, aspectRatio)": "Dimensions panel (size controls)",
+        "border / __experimentalBorder": "Border panel (color, width, style, radius)",
+        "shadow": "Shadow panel",
+        "background (backgroundImage, backgroundSize)": "Background panel",
+        "filter (duotone)": "Filter / Duotone control",
+        "anchor": "Advanced -> HTML anchor",
+        "customClassName (on by default)": "Advanced -> Additional CSS class(es)"
+      },
+      "theme_dependency": "Color, Typography, Dimensions, Border and Background panels only render the controls the active theme.json opts into. A block can 'support' a feature yet show no UI if the theme disables it."
+    },
+    "conventions": {
+      "options_menu_value": "'common' = unchanged common_options_menu. An object with 'adds'/'omits' lists per-block differences.",
+      "rich_text_more": "For text blocks Bold / Italic / Link are shown directly; remaining inline formats sit under a 'More' (down-caret) dropdown in the toolbar.",
+      "implied_universal": "Every block also shows the four universal_toolbar_controls; they are not repeated per block."
+    },
+    "caveats": [
+      "Wide/Full alignments require theme support (align-wide).",
+      "'Cut' (~6.8) and 'Hide' (~6.9) are recent ellipsis additions; older installs omit them.",
+      "'Create pattern' was 'Add to Reusable blocks' before 6.3.",
+      "Many Theme-category blocks (post-*, query-*, site-*, navigation-*) only appear in the Site Editor or inside a Query Loop, and several render dynamic placeholder content in the editor.",
+      "Variations (Row / Stack / Grid) are configurations of core/group, not separate blocks; they are listed under Group."
+    ]
+  },
+  "universal_toolbar_controls": [
+    {
+      "control": "Block type / Transform to",
+      "description": "Block icon (far left); transforms the block into a compatible type."
+    },
+    {
+      "control": "Drag",
+      "description": "Six-dot handle to drag-and-drop the block."
+    },
+    {
+      "control": "Move up / Move down",
+      "description": "Arrows to shift the block one position."
+    },
+    {
+      "control": "Options (⋮)",
+      "description": "Three-dot menu (far right) opening the options menu."
+    }
+  ],
+  "common_options_menu": [
+    {
+      "item": "Copy"
+    },
+    {
+      "item": "Cut"
+    },
+    {
+      "item": "Duplicate"
+    },
+    {
+      "item": "Add before"
+    },
+    {
+      "item": "Add after"
+    },
+    {
+      "item": "Edit as HTML"
+    },
+    {
+      "item": "Copy styles"
+    },
+    {
+      "item": "Paste styles"
+    },
+    {
+      "item": "Lock"
+    },
+    {
+      "item": "Hide"
+    },
+    {
+      "item": "Create pattern"
+    },
+    {
+      "item": "Group"
+    },
+    {
+      "item": "Delete"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Paragraph",
+      "slug": "core/paragraph",
+      "category": "text",
+      "toolbar_default": [
+        {
+          "control": "Align text",
+          "options": [
+            "Left",
+            "Center",
+            "Right"
+          ]
+        },
+        {
+          "control": "Bold"
+        },
+        {
+          "control": "Italic"
+        },
+        {
+          "control": "Link"
+        },
+        {
+          "control": "More",
+          "type": "dropdown",
+          "items": [
+            "Inline code",
+            "Inline image",
+            "Keyboard input",
+            "Strikethrough",
+            "Superscript",
+            "Subscript",
+            "Highlight",
+            "Language",
+            "Footnote"
+          ]
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Drop cap"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Heading",
+      "slug": "core/heading",
+      "category": "text",
+      "toolbar_default": [
+        {
+          "control": "Change heading level",
+          "type": "dropdown",
+          "options": [
+            "H1",
+            "H2",
+            "H3",
+            "H4",
+            "H5",
+            "H6"
+          ]
+        },
+        {
+          "control": "Align text",
+          "options": [
+            "Left",
+            "Center",
+            "Right"
+          ]
+        },
+        {
+          "control": "Bold"
+        },
+        {
+          "control": "Italic"
+        },
+        {
+          "control": "Link"
+        },
+        {
+          "control": "More",
+          "type": "dropdown",
+          "items": [
+            "Inline code",
+            "Inline image",
+            "Strikethrough",
+            "Superscript",
+            "Subscript",
+            "Highlight",
+            "Language",
+            "Footnote"
+          ]
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Heading level (H1–H6)"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "List",
+      "slug": "core/list",
+      "category": "text",
+      "toolbar_default": [
+        {
+          "control": "Align text",
+          "options": [
+            "Left",
+            "Center",
+            "Right"
+          ]
+        },
+        {
+          "control": "Convert to ordered / unordered list",
+          "type": "toggle"
+        },
+        {
+          "control": "Indent"
+        },
+        {
+          "control": "Outdent"
+        },
+        {
+          "control": "Bold"
+        },
+        {
+          "control": "Italic"
+        },
+        {
+          "control": "Link"
+        },
+        {
+          "control": "More",
+          "type": "dropdown",
+          "items": [
+            "Inline code",
+            "Strikethrough",
+            "Highlight",
+            "Footnote"
+          ]
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Ordered (numbered) toggle",
+          "Start value",
+          "Reverse order"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      },
+      "notes": "Lines are nested core/list-item blocks."
+    },
+    {
+      "name": "List Item",
+      "slug": "core/list-item",
+      "category": "text",
+      "parent": "core/list",
+      "toolbar_default": [
+        {
+          "control": "Indent"
+        },
+        {
+          "control": "Outdent"
+        },
+        {
+          "control": "Bold"
+        },
+        {
+          "control": "Italic"
+        },
+        {
+          "control": "Link"
+        },
+        {
+          "control": "More",
+          "type": "dropdown"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Quote",
+      "slug": "core/quote",
+      "category": "text",
+      "toolbar_default": [
+        {
+          "control": "Align text",
+          "options": [
+            "Left",
+            "Center",
+            "Right"
+          ]
+        },
+        {
+          "control": "Bold"
+        },
+        {
+          "control": "Italic"
+        },
+        {
+          "control": "Link"
+        },
+        {
+          "control": "More",
+          "type": "dropdown"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ],
+        "block_styles": [
+          "Default",
+          "Plain"
+        ]
+      },
+      "notes": "Container with inner paragraph + citation."
+    },
+    {
+      "name": "Pullquote",
+      "slug": "core/pullquote",
+      "category": "text",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        },
+        {
+          "control": "Align text",
+          "options": [
+            "Left",
+            "Center",
+            "Right"
+          ]
+        },
+        {
+          "control": "Bold"
+        },
+        {
+          "control": "Italic"
+        },
+        {
+          "control": "Link"
+        },
+        {
+          "control": "More",
+          "type": "dropdown"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions",
+          "Border"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Verse",
+      "slug": "core/verse",
+      "category": "text",
+      "toolbar_default": [
+        {
+          "control": "Align text",
+          "options": [
+            "Left",
+            "Center",
+            "Right"
+          ]
+        },
+        {
+          "control": "Bold"
+        },
+        {
+          "control": "Italic"
+        },
+        {
+          "control": "Link"
+        },
+        {
+          "control": "More",
+          "type": "dropdown"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Code",
+      "slug": "core/code",
+      "category": "text",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width"
+          ],
+          "theme_dependent": true
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Preformatted",
+      "slug": "core/preformatted",
+      "category": "text",
+      "toolbar_default": [
+        {
+          "control": "Bold"
+        },
+        {
+          "control": "Italic"
+        },
+        {
+          "control": "Link"
+        },
+        {
+          "control": "More",
+          "type": "dropdown"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Table",
+      "slug": "core/table",
+      "category": "text",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        },
+        {
+          "control": "Edit table",
+          "type": "dropdown",
+          "items": [
+            "Insert row before",
+            "Insert row after",
+            "Delete row",
+            "Insert column before",
+            "Insert column after",
+            "Delete column"
+          ]
+        },
+        {
+          "control": "Change column alignment",
+          "options": [
+            "Left",
+            "Center",
+            "Right"
+          ]
+        },
+        {
+          "control": "Bold"
+        },
+        {
+          "control": "Italic"
+        },
+        {
+          "control": "Link"
+        },
+        {
+          "control": "More",
+          "type": "dropdown"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Header section",
+          "Footer section",
+          "Fixed-width table cells"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions",
+          "Border"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ],
+        "block_styles": [
+          "Default",
+          "Stripes"
+        ]
+      }
+    },
+    {
+      "name": "Details",
+      "slug": "core/details",
+      "category": "text",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Open by default"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Footnotes",
+      "slug": "core/footnotes",
+      "category": "text",
+      "toolbar_default": [],
+      "options_menu": {
+        "omits": [
+          {
+            "item": "Duplicate",
+            "reason": "Only one Footnotes block is allowed per post."
+          }
+        ]
+      },
+      "sidebar": {
+        "settings": [],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      },
+      "notes": "Auto-populated from inline footnotes added via the paragraph 'More' menu."
+    },
+    {
+      "name": "Classic",
+      "slug": "core/freeform",
+      "category": "text",
+      "toolbar_default": [
+        {
+          "control": "Classic TinyMCE toolbar",
+          "description": "Inline classic-editor controls (bold, italic, lists, link, etc.) instead of the standard block toolbar."
+        }
+      ],
+      "options_menu": {
+        "omits": [
+          {
+            "item": "Edit as HTML"
+          },
+          {
+            "item": "Copy styles"
+          },
+          {
+            "item": "Paste styles"
+          }
+        ]
+      },
+      "sidebar": {
+        "settings": [],
+        "styles": [],
+        "advanced": [
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "More",
+      "slug": "core/more",
+      "category": "design",
+      "toolbar_default": [],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Hide the excerpt on the full content page"
+        ],
+        "styles": [],
+        "advanced": []
+      }
+    },
+    {
+      "name": "Page Break",
+      "slug": "core/nextpage",
+      "category": "design",
+      "toolbar_default": [],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [],
+        "styles": [],
+        "advanced": []
+      }
+    },
+    {
+      "name": "Table of Contents",
+      "slug": "core/table-of-contents",
+      "category": "text",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Include only top-level headings"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      },
+      "notes": "May only be available with the Gutenberg plugin active, depending on version."
+    },
+    {
+      "name": "Image",
+      "slug": "core/image",
+      "category": "media",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Left",
+            "Center",
+            "Right",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": "wide/full only"
+        },
+        {
+          "control": "Crop",
+          "type": "dropdown",
+          "items": [
+            "Zoom",
+            "Aspect ratio",
+            "Rotate"
+          ]
+        },
+        {
+          "control": "Add text over image",
+          "description": "Converts to a Cover block with this image as background."
+        },
+        {
+          "control": "Replace"
+        },
+        {
+          "control": "Link"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Alternative text (alt)",
+          "Image size / Resolution",
+          "Width & Height",
+          "Aspect ratio & Scale",
+          "Expand on click (lightbox)",
+          "Link settings (URL, new tab, rel)"
+        ],
+        "styles": [
+          "Color (background/text)",
+          "Border",
+          "Shadow",
+          "Duotone filter",
+          "Dimensions"
+        ],
+        "advanced": [
+          "Title attribute",
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      },
+      "block_styles": [
+        "Default",
+        "Rounded"
+      ]
+    },
+    {
+      "name": "Gallery",
+      "slug": "core/gallery",
+      "category": "media",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        },
+        {
+          "control": "Crop images",
+          "type": "toggle"
+        },
+        {
+          "control": "Add"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Columns",
+          "Crop images",
+          "Randomize order",
+          "Link to (None / Media file / Attachment page)",
+          "Image size / Resolution"
+        ],
+        "styles": [
+          "Color",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      },
+      "notes": "Selecting one image inside the gallery shows that image's own toolbar."
+    },
+    {
+      "name": "Audio",
+      "slug": "core/audio",
+      "category": "media",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        },
+        {
+          "control": "Replace"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Autoplay",
+          "Loop",
+          "Preload (None / Metadata / Auto)"
+        ],
+        "styles": [
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Video",
+      "slug": "core/video",
+      "category": "media",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        },
+        {
+          "control": "Replace"
+        },
+        {
+          "control": "Add text tracks",
+          "description": "Captions / subtitles upload."
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Autoplay",
+          "Loop",
+          "Muted",
+          "Playback controls",
+          "Play inline",
+          "Preload",
+          "Poster image",
+          "Text tracks (subtitles/captions)"
+        ],
+        "styles": [
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "File",
+      "slug": "core/file",
+      "category": "media",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        },
+        {
+          "control": "Replace"
+        },
+        {
+          "control": "Copy URL"
+        },
+        {
+          "control": "Link"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Show inline embed (preview)",
+          "Preview height",
+          "Show download button",
+          "Open in new tab"
+        ],
+        "styles": [
+          "Color",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Cover",
+      "slug": "core/cover",
+      "category": "media",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Left",
+            "Center",
+            "Right",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": "wide/full only"
+        },
+        {
+          "control": "Change content position",
+          "type": "grid",
+          "description": "9-point matrix."
+        },
+        {
+          "control": "Toggle full height",
+          "type": "toggle"
+        },
+        {
+          "control": "Replace"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Fixed background",
+          "Repeated background",
+          "Use featured image",
+          "Focal point picker",
+          "Alternative text",
+          "Overlay color & opacity",
+          "Minimum height of cover"
+        ],
+        "styles": [
+          "Color (overlay/text)",
+          "Typography",
+          "Border",
+          "Shadow",
+          "Dimensions",
+          "Aspect ratio",
+          "Duotone filter"
+        ],
+        "advanced": [
+          "HTML element (tag)",
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Media & Text",
+      "slug": "core/media-text",
+      "category": "media",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        },
+        {
+          "control": "Show media on left / right",
+          "type": "toggle"
+        },
+        {
+          "control": "Vertical align",
+          "options": [
+            "Top",
+            "Middle",
+            "Bottom"
+          ]
+        },
+        {
+          "control": "Crop image to fill",
+          "type": "toggle"
+        },
+        {
+          "control": "Replace"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Stack on mobile",
+          "Crop image to fill column",
+          "Media width %",
+          "Use featured image",
+          "Alternative text",
+          "Link settings"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Icon",
+      "slug": "core/icon",
+      "category": "media",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "Left",
+            "Center",
+            "Right"
+          ]
+        },
+        {
+          "control": "Replace icon"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Icon picker",
+          "Size"
+        ],
+        "styles": [
+          "Color",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      },
+      "notes": "Availability depends on Gutenberg plugin version."
+    },
+    {
+      "name": "Buttons",
+      "slug": "core/buttons",
+      "category": "design",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        },
+        {
+          "control": "Change items justification",
+          "options": [
+            "Left",
+            "Center",
+            "Right",
+            "Space between"
+          ]
+        },
+        {
+          "control": "Change orientation",
+          "options": [
+            "Horizontal",
+            "Vertical"
+          ]
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Button",
+      "slug": "core/button",
+      "category": "design",
+      "parent": "core/buttons",
+      "toolbar_default": [
+        {
+          "control": "Align text",
+          "options": [
+            "Left",
+            "Center",
+            "Right"
+          ]
+        },
+        {
+          "control": "Bold"
+        },
+        {
+          "control": "Italic"
+        },
+        {
+          "control": "Link"
+        },
+        {
+          "control": "More",
+          "type": "dropdown"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Width (25% / 50% / 75% / 100%)",
+          "Link settings (new tab, rel, link rel)"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Border",
+          "Shadow",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML element (a / button)",
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ],
+        "block_styles": [
+          "Fill",
+          "Outline"
+        ]
+      }
+    },
+    {
+      "name": "Columns",
+      "slug": "core/columns",
+      "category": "design",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        },
+        {
+          "control": "Change vertical alignment",
+          "options": [
+            "Top",
+            "Middle",
+            "Bottom"
+          ]
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Stack on mobile"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Border",
+          "Shadow",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Column",
+      "slug": "core/column",
+      "category": "design",
+      "parent": "core/columns",
+      "toolbar_default": [
+        {
+          "control": "Change vertical alignment",
+          "options": [
+            "Top",
+            "Middle",
+            "Bottom"
+          ]
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Width %"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Border",
+          "Shadow",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Group",
+      "slug": "core/group",
+      "category": "design",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        },
+        {
+          "control": "Change layout / variation",
+          "options": [
+            "Group",
+            "Row",
+            "Stack",
+            "Grid"
+          ]
+        },
+        {
+          "control": "Change items justification",
+          "description": "Row/Grid variations: left / center / right / space-between."
+        },
+        {
+          "control": "Change orientation",
+          "description": "Row variation."
+        }
+      ],
+      "options_menu": {
+        "adds": [
+          {
+            "item": "Ungroup",
+            "description": "Release inner blocks and remove the wrapper."
+          }
+        ]
+      },
+      "sidebar": {
+        "settings": [
+          "Layout type (Flow / Constrained / Flex / Grid)",
+          "Justification & orientation",
+          "Inner block spacing (blockGap)",
+          "Min height",
+          "Sticky position"
+        ],
+        "styles": [
+          "Color",
+          "Background image",
+          "Typography",
+          "Border",
+          "Shadow",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML element (div / header / main / section / article / aside / footer)",
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      },
+      "notes": "Row, Stack and Grid are variations of this block (different default layout)."
+    },
+    {
+      "name": "Separator",
+      "slug": "core/separator",
+      "category": "design",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [],
+        "styles": [
+          "Color"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ],
+        "block_styles": [
+          "Default",
+          "Wide Line",
+          "Dots"
+        ]
+      }
+    },
+    {
+      "name": "Spacer",
+      "slug": "core/spacer",
+      "category": "design",
+      "toolbar_default": [],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Height (px/em/rem/vh/vw/%)",
+          "Width (in horizontal layouts)"
+        ],
+        "styles": [
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      },
+      "notes": "Height is also adjustable by dragging the on-canvas handle."
+    },
+    {
+      "name": "Accordion",
+      "slug": "core/accordion",
+      "category": "design",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Auto-close other panels",
+          "Heading level",
+          "Show icon",
+          "Icon position"
+        ],
+        "styles": [
+          "Color",
+          "Background",
+          "Typography",
+          "Shadow",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      },
+      "notes": "Container for core/accordion-item (each holds an accordion-heading + accordion-panel). May require Gutenberg plugin depending on version."
+    },
+    {
+      "name": "Archives",
+      "slug": "core/archives",
+      "category": "widgets",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Display as dropdown",
+          "Show post counts",
+          "Group by (Year/Month/Week/Day/Post)"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Calendar",
+      "slug": "core/calendar",
+      "category": "widgets",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [],
+        "styles": [
+          "Color",
+          "Typography"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Categories / Terms List",
+      "slug": "core/categories",
+      "category": "widgets",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Display as dropdown",
+          "Show hierarchy",
+          "Show post counts",
+          "Show only top-level",
+          "Show empty terms",
+          "Taxonomy"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Custom HTML",
+      "slug": "core/html",
+      "category": "widgets",
+      "toolbar_default": [
+        {
+          "control": "HTML / Preview",
+          "type": "toggle"
+        }
+      ],
+      "options_menu": {
+        "omits": [
+          {
+            "item": "Edit as HTML",
+            "reason": "The whole block is already HTML."
+          },
+          {
+            "item": "Copy styles"
+          },
+          {
+            "item": "Paste styles"
+          }
+        ]
+      },
+      "sidebar": {
+        "settings": [],
+        "styles": [],
+        "advanced": [
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Latest Comments",
+      "slug": "core/latest-comments",
+      "category": "widgets",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Display avatar",
+          "Display date",
+          "Display excerpt",
+          "Number of comments"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Latest Posts",
+      "slug": "core/latest-posts",
+      "category": "widgets",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        },
+        {
+          "control": "List view / Grid view",
+          "type": "toggle"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Post content (excerpt/full) & length",
+          "Display author",
+          "Display date",
+          "Display featured image (size/align/dimensions)",
+          "Number of items",
+          "Columns (grid)",
+          "Order by",
+          "Filter by category"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Page List",
+      "slug": "core/page-list",
+      "category": "widgets",
+      "toolbar_default": [],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Parent page (start from)"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "RSS",
+      "slug": "core/rss",
+      "category": "widgets",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        },
+        {
+          "control": "Edit RSS URL"
+        },
+        {
+          "control": "List view / Grid view",
+          "type": "toggle"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Number of items",
+          "Columns (grid)",
+          "Display author",
+          "Display date",
+          "Display excerpt & length"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Search",
+      "slug": "core/search",
+      "category": "widgets",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        },
+        {
+          "control": "Toggle search label",
+          "type": "toggle"
+        },
+        {
+          "control": "Change button position",
+          "options": [
+            "Button outside",
+            "Button inside",
+            "No button",
+            "Button only"
+          ]
+        },
+        {
+          "control": "Use button with icon",
+          "type": "toggle"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Width (% / px)",
+          "Button text / Label"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Border",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Shortcode",
+      "slug": "core/shortcode",
+      "category": "widgets",
+      "toolbar_default": [],
+      "options_menu": {
+        "omits": [
+          {
+            "item": "Copy styles"
+          },
+          {
+            "item": "Paste styles"
+          }
+        ]
+      },
+      "sidebar": {
+        "settings": [],
+        "styles": [],
+        "advanced": [
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Social Icons",
+      "slug": "core/social-links",
+      "category": "widgets",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        },
+        {
+          "control": "Change items justification",
+          "options": [
+            "Left",
+            "Center",
+            "Right",
+            "Space between"
+          ]
+        },
+        {
+          "control": "Change orientation",
+          "options": [
+            "Horizontal",
+            "Vertical"
+          ]
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Icon color",
+          "Icon background color",
+          "Show labels",
+          "Open links in new tab",
+          "Size (Small–Huge)"
+        ],
+        "styles": [
+          "Color",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ],
+        "block_styles": [
+          "Default",
+          "Logos Only",
+          "Pill Shape"
+        ]
+      },
+      "notes": "Each nested core/social-link icon has a small toolbar to set its URL."
+    },
+    {
+      "name": "Social Link",
+      "slug": "core/social-link",
+      "category": "widgets",
+      "parent": "core/social-links",
+      "toolbar_default": [
+        {
+          "control": "Set / edit URL"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "URL",
+          "Link label",
+          "Rel"
+        ],
+        "styles": [],
+        "advanced": [
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Tag Cloud",
+      "slug": "core/tag-cloud",
+      "category": "widgets",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Taxonomy",
+          "Show post counts",
+          "Number of tags",
+          "Smallest/Largest font size"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Legacy Widget",
+      "slug": "core/legacy-widget",
+      "category": "widgets",
+      "toolbar_default": [
+        {
+          "control": "Change widget",
+          "type": "dropdown"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Selected widget's own form fields"
+        ],
+        "styles": [],
+        "advanced": []
+      }
+    },
+    {
+      "name": "Navigation",
+      "slug": "core/navigation",
+      "category": "theme",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        },
+        {
+          "control": "Change items justification",
+          "options": [
+            "Left",
+            "Center",
+            "Right",
+            "Space between"
+          ]
+        },
+        {
+          "control": "Change orientation",
+          "options": [
+            "Horizontal",
+            "Vertical"
+          ]
+        },
+        {
+          "control": "Add submenus / Open on click"
+        },
+        {
+          "control": "Menu selector",
+          "type": "dropdown",
+          "description": "Switch / create the menu the block displays."
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Select / create menu",
+          "Display submenus on click",
+          "Show arrow",
+          "Overlay menu (Off / Mobile / Always)",
+          "Overlay colors"
+        ],
+        "styles": [
+          "Color (text/background/submenu/overlay)",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Custom Link",
+      "slug": "core/navigation-link",
+      "category": "design",
+      "parent": "core/navigation",
+      "toolbar_default": [
+        {
+          "control": "Edit link (URL)"
+        },
+        {
+          "control": "Bold"
+        },
+        {
+          "control": "Italic"
+        }
+      ],
+      "options_menu": {
+        "adds": [
+          {
+            "item": "Add submenu"
+          }
+        ]
+      },
+      "sidebar": {
+        "settings": [
+          "Link (URL, label, description, title, rel)"
+        ],
+        "styles": [],
+        "advanced": [
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Submenu",
+      "slug": "core/navigation-submenu",
+      "category": "design",
+      "parent": "core/navigation",
+      "toolbar_default": [
+        {
+          "control": "Edit link (URL)"
+        },
+        {
+          "control": "Convert to link"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Link (URL, label, description, title, rel)"
+        ],
+        "styles": [],
+        "advanced": [
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Home Link",
+      "slug": "core/home-link",
+      "category": "design",
+      "parent": "core/navigation",
+      "toolbar_default": [],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Label",
+          "Description",
+          "Open in new tab"
+        ],
+        "styles": [
+          "Typography"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Site Logo",
+      "slug": "core/site-logo",
+      "category": "theme",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "Left",
+            "Center",
+            "Right",
+            "Wide",
+            "Full"
+          ],
+          "theme_dependent": "wide/full only"
+        },
+        {
+          "control": "Replace"
+        },
+        {
+          "control": "Crop / Resize"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Image width",
+          "Link image to home",
+          "Open in new tab",
+          "Use as site icon"
+        ],
+        "styles": [
+          "Border",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ],
+        "block_styles": [
+          "Default",
+          "Rounded"
+        ]
+      }
+    },
+    {
+      "name": "Site Title",
+      "slug": "core/site-title",
+      "category": "theme",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide",
+            "Full"
+          ],
+          "theme_dependent": true
+        },
+        {
+          "control": "Align text",
+          "options": [
+            "Left",
+            "Center",
+            "Right"
+          ]
+        },
+        {
+          "control": "Bold"
+        },
+        {
+          "control": "Italic"
+        },
+        {
+          "control": "Link"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Make title a link to home",
+          "Open in new tab",
+          "HTML element (h1–h6 / p)"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Site Tagline",
+      "slug": "core/site-tagline",
+      "category": "theme",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "theme_dependent": true
+        },
+        {
+          "control": "Align text",
+          "options": [
+            "Left",
+            "Center",
+            "Right"
+          ]
+        },
+        {
+          "control": "Bold"
+        },
+        {
+          "control": "Italic"
+        },
+        {
+          "control": "Link"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Query Loop",
+      "slug": "core/query",
+      "category": "theme",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Inherit query from template",
+          "Post type",
+          "Order by",
+          "Sticky posts",
+          "Filters: Categories / Tags / Authors / Keyword",
+          "Items per page",
+          "Offset",
+          "Max pages",
+          "Display layout (List / Grid + columns)"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      },
+      "notes": "Container; child blocks (Post Template, Pagination, No Results) render inside."
+    },
+    {
+      "name": "Post Template",
+      "slug": "core/post-template",
+      "category": "theme",
+      "parent": "core/query",
+      "toolbar_default": [
+        {
+          "control": "Change layout",
+          "options": [
+            "List view",
+            "Grid view"
+          ]
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Post Title",
+      "slug": "core/post-title",
+      "category": "theme",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "theme_dependent": true
+        },
+        {
+          "control": "Align text",
+          "options": [
+            "Left",
+            "Center",
+            "Right"
+          ]
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Make title a link",
+          "Open in new tab",
+          "HTML element (h1–h6 / p)"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Post Content",
+      "slug": "core/post-content",
+      "category": "theme",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Post Excerpt",
+      "slug": "core/post-excerpt",
+      "category": "theme",
+      "toolbar_default": [
+        {
+          "control": "Align text",
+          "options": [
+            "Left",
+            "Center",
+            "Right"
+          ]
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Show 'Read more' link",
+          "More text",
+          "Max words / excerpt length"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Post Featured Image",
+      "slug": "core/post-featured-image",
+      "category": "theme",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "theme_dependent": "wide/full only"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Link to post",
+          "Open in new tab",
+          "Width & Height",
+          "Scale",
+          "Aspect ratio",
+          "Use as overlay/placeholder"
+        ],
+        "styles": [
+          "Border",
+          "Shadow",
+          "Dimensions",
+          "Duotone filter"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Post Date",
+      "slug": "core/post-date",
+      "category": "theme",
+      "toolbar_default": [
+        {
+          "control": "Align text",
+          "options": [
+            "Left",
+            "Center",
+            "Right"
+          ]
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Date format",
+          "Link to post",
+          "Display last modified date"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Post Author",
+      "slug": "core/post-author",
+      "category": "theme",
+      "toolbar_default": [
+        {
+          "control": "Align text",
+          "options": [
+            "Left",
+            "Center",
+            "Right"
+          ]
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Show avatar (size)",
+          "Show bio",
+          "Link author name"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Post Terms",
+      "slug": "core/post-terms",
+      "category": "theme",
+      "toolbar_default": [
+        {
+          "control": "Align text",
+          "options": [
+            "Left",
+            "Center",
+            "Right"
+          ]
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Taxonomy (Categories / Tags)",
+          "Separator",
+          "Prefix / Suffix"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Read More",
+      "slug": "core/read-more",
+      "category": "theme",
+      "toolbar_default": [],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Link text",
+          "Open in new tab"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Border",
+          "Dimensions"
+        ],
+        "advanced": [
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Pagination",
+      "slug": "core/query-pagination",
+      "category": "theme",
+      "parent": "core/query",
+      "toolbar_default": [
+        {
+          "control": "Change items justification",
+          "options": [
+            "Left",
+            "Center",
+            "Right",
+            "Space between"
+          ]
+        },
+        {
+          "control": "Change orientation"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Show arrow (None / Arrow / Chevron)"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "No Results",
+      "slug": "core/query-no-results",
+      "category": "theme",
+      "parent": "core/query",
+      "toolbar_default": [],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Comments",
+      "slug": "core/comments",
+      "category": "theme",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "HTML element"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      },
+      "notes": "Container for comment template + pagination + title."
+    },
+    {
+      "name": "Avatar",
+      "slug": "core/avatar",
+      "category": "theme",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "Left",
+            "Center",
+            "Right"
+          ]
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Image size",
+          "Link to user profile",
+          "Open in new tab"
+        ],
+        "styles": [
+          "Border",
+          "Dimensions",
+          "Duotone filter"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Breadcrumbs",
+      "slug": "core/breadcrumbs",
+      "category": "theme",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": true
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Separator",
+          "Show home item",
+          "Show current page",
+          "Show on homepage"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      },
+      "notes": "Availability depends on Gutenberg plugin version."
+    },
+    {
+      "name": "Template Part",
+      "slug": "core/template-part",
+      "category": "theme",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "theme_dependent": true
+        },
+        {
+          "control": "Replace template part",
+          "type": "dropdown"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Area (Header / Footer / General)",
+          "HTML element"
+        ],
+        "styles": [],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Login/out",
+      "slug": "core/loginout",
+      "category": "theme",
+      "toolbar_default": [],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Display login as form",
+          "Redirect to current URL"
+        ],
+        "styles": [
+          "Color",
+          "Typography",
+          "Dimensions"
+        ],
+        "advanced": [
+          "Additional CSS class(es)"
+        ]
+      }
+    },
+    {
+      "name": "Pattern",
+      "slug": "core/block",
+      "category": "reusable",
+      "toolbar_default": [],
+      "options_menu": {
+        "adds": [
+          {
+            "item": "Edit original",
+            "description": "Open the synced pattern's source for editing."
+          },
+          {
+            "item": "Detach",
+            "description": "Convert this instance back to regular blocks."
+          },
+          {
+            "item": "Rename"
+          }
+        ]
+      },
+      "sidebar": {
+        "settings": [
+          "Pattern name / sync status"
+        ],
+        "styles": [],
+        "advanced": []
+      },
+      "notes": "A synced pattern (formerly Reusable Block); editing the original updates every instance."
+    },
+    {
+      "name": "Embed",
+      "slug": "core/embed",
+      "category": "embed",
+      "toolbar_default": [
+        {
+          "control": "Align",
+          "options": [
+            "None",
+            "Left",
+            "Center",
+            "Right",
+            "Wide width",
+            "Full width"
+          ],
+          "theme_dependent": "wide/full only"
+        },
+        {
+          "control": "Edit URL"
+        }
+      ],
+      "options_menu": "common",
+      "sidebar": {
+        "settings": [
+          "Resize for smaller devices (responsive)"
+        ],
+        "styles": [
+          "Dimensions (margin)"
+        ],
+        "advanced": [
+          "HTML anchor",
+          "Additional CSS class(es)"
+        ]
+      },
+      "notes": "Same toolbar/sidebar applies to all provider variations (YouTube, X/Twitter, Vimeo, Spotify, WordPress, SoundCloud, Flickr, etc.) registered via oEmbed."
+    }
+  ]
+}

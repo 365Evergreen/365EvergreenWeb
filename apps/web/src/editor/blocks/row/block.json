@@ -1,0 +1,15 @@
+{
+  "name": "core/row",
+  "title": "Row",
+  "category": "layout",
+  "description": "Horizontal layout shell with wrap and alignment settings.",
+  "attributes": {
+    "title": { "type": "string", "default": "Row" },
+    "text": { "type": "string", "default": "Horizontal layout content summary" },
+    "justify": { "type": "string", "default": "space-between" },
+    "gap": { "type": "string", "default": "16px" },
+    "wrap": { "type": "boolean", "default": true },
+    "className": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "wide" }
+  }
+}

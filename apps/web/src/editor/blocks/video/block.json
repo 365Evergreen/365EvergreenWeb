@@ -1,0 +1,17 @@
+{
+  "name": "core/video",
+  "title": "Video",
+  "category": "media",
+  "description": "Video source with optional caption.",
+  "attributes": {
+    "src": { "type": "string", "default": "" },
+    "caption": { "type": "string", "default": "" },
+    "poster": { "type": "string", "default": "" },
+    "autoplay": { "type": "boolean", "default": false },
+    "loop": { "type": "boolean", "default": false },
+    "muted": { "type": "boolean", "default": false },
+    "controls": { "type": "boolean", "default": true },
+    "className": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "wide" }
+  }
+}

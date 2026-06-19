@@ -1,0 +1,83 @@
+<title>Debugging and Error Handling in Power Automate Flows</title>
+<article>
+  <header>
+    <h1>Debugging and Error Handling in Power Automate Flows</h1>
+    <p><time datetime="2026-06-20">June 20, 2026</time> · 8 min read</p>
+  </header>
+
+  <section>
+    <h2>Why error handling isn’t optional</h2>
+    <p>
+      Flows run in the real world: APIs go down, permissions change, data is messy. If you don’t
+      design for failure, users will experience silent breaks and inconsistent outcomes. Good
+      error handling turns unpredictable failures into controlled, observable events.
+    </p>
+  </section>
+
+  <section>
+    <h2>Using run history effectively</h2>
+    <p>
+      The first stop for debugging is the flow’s run history. Each run shows the trigger, actions,
+      inputs, outputs, and any errors. Start by:
+    </p>
+    <ul>
+      <li>Checking which action failed and its error message.</li>
+      <li>Inspecting the raw inputs and outputs for malformed data.</li>
+      <li>Confirming whether the trigger fired as expected.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Scopes and run-after configuration</h2>
+    <p>
+      Scopes let you group actions and treat them as a unit. Combine scopes with <strong>run-after</strong>
+      settings to implement try/catch-style patterns:
+    </p>
+    <ul>
+      <li>
+        Put your main logic in a “Try” scope.
+      </li>
+      <li>
+        Add a “Catch” scope configured to run after the Try scope has <em>Failed</em> or
+        <em>Timed out</em>.
+      </li>
+      <li>
+        In the Catch scope, log the error, notify support, or perform compensating actions.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Defensive expressions</h2>
+    <p>
+      Use expressions like <code>coalesce()</code>, <code>if()</code>, and <code>empty()</code>
+      to guard against null or missing values. Instead of assuming a property exists, check it
+      and provide a default.
+    </p>
+    <p>
+      For example:
+    </p>
+    <pre><code>@coalesce(triggerOutputs()?['body/Title'], 'Untitled')</code></pre>
+    <p>
+      This ensures your flow doesn’t fail just because a user left a field blank.
+    </p>
+  </section>
+
+  <section>
+    <h2>Notifying the right people</h2>
+    <p>
+      When something goes wrong, someone needs to know. Build dedicated error notification paths
+      that send concise, actionable messages to the right channel—often a Teams channel or a
+      shared mailbox—rather than spamming individual users.
+    </p>
+  </section>
+
+  <section>
+    <h2>Building a culture of observability</h2>
+    <p>
+      Over time, treat flows like any other application: they deserve logging, monitoring, and
+      continuous improvement. Establish standards for error handling, logging destinations, and
+      alerting so that every new flow is easier to support than the last.
+    </p>
+  </section>
+</article>

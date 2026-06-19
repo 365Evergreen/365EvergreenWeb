@@ -1,0 +1,15 @@
+﻿Block,Category,Purpose
+Paragraph,Text,Standard body text block for writing content.
+Heading,Text,Creates semantic headings (H1–H6).
+List,Text,Ordered/unordered lists.
+Quote,Text,Blockquote with citation.
+Pullquote,Text,Stylized highlighted quote.
+Table,Text,Tabular data.
+Verse,Text,Poetry/verse with preserved line breaks.
+Code,Text,Preformatted code snippet.
+Preformatted,Text,Preformatted text with fixed spacing.
+Details,Text,Expand/collapse text (HTML <details>).
+Classic,Text,Legacy TinyMCE editor block.
+Footnotes,Text,Adds footnote references.
+Stretchy Paragraph,Text,Auto-expanding paragraph (experimental).
+Stretchy Heading,Text,Auto-expanding heading (experimental).

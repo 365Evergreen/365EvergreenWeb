@@ -1,0 +1,4 @@
+.pe-block[data-block-type="file"] .pe-block-file {
+  display: grid;
+  gap: 0.25rem;
+}

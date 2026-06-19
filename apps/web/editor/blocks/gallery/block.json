@@ -1,0 +1,15 @@
+{
+  "name": "core/gallery",
+  "title": "Gallery",
+  "category": "media",
+  "description": "Responsive grid of images.",
+  "attributes": {
+    "images": { "type": "array", "default": [] },
+    "columns": { "type": "number", "default": 3 },
+    "crop": { "type": "boolean", "default": true },
+    "linkTo": { "type": "string", "default": "none" },
+    "lightbox": { "type": "boolean", "default": false },
+    "style": { "type": "object", "default": {} },
+    "className": { "type": "string", "default": "" }
+  }
+}

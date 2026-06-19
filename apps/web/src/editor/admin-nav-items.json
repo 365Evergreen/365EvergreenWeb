@@ -1,0 +1,9 @@
+[
+  { "label": "Dashboard", "href": "admin-centre" },
+  { "label": "Pages", "href": "site-pages" },
+  { "label": "Posts", "href": "site-posts" },
+  { "label": "Media library", "href": "images" },
+  { "label": "Documents", "href": "documents" },
+  { "label": "Appearance", "href": "appearance" },
+  { "label": "Knowledge", "href": "knowledge" }
+]

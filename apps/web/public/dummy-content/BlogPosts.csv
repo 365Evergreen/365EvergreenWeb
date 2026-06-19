@@ -1,0 +1,2 @@
+PartitionKey,RowKey,blobPath,blobPath@type,categories,categories@type,date,date@type,excerpt,excerpt@type,featuredImage,featuredImage@type,slug,slug@type,status,status@type,tags,tags@type,title,title@type
+2026,my-post-slug,posts/2026/05/my-post-slug.json,String,architecture,String,2026-05-30T12:14:36.8231200Z,String,Sample metadata row created by azure-table-provisioning.ps1,String,media/sample.jpg,String,my-post-slug,String,published,String,"azure,swa",String,My Post Title,String

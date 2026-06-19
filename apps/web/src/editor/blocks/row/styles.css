@@ -1,0 +1,31 @@
+.pe-block-row {
+  display: flex;
+  align-items: stretch;
+  min-height: 120px;
+}
+
+.pe-block-row__content,
+.pe-block-row__slot {
+  flex: 1 1 220px;
+  border: 1px dashed #cbd5e1;
+  border-radius: 1rem;
+  padding: 1rem;
+  background: #fff;
+}
+
+.pe-block-row__title,
+.pe-block-row__text {
+  margin: 0;
+}
+
+.pe-block-row__text {
+  margin-top: 0.5rem;
+  color: #475569;
+}
+
+.pe-block-row__slot {
+  display: grid;
+  place-items: center;
+  color: #64748b;
+  background: #f8fafc;
+}

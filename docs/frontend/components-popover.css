@@ -1,0 +1,42 @@
+/* Extracted popover core styles from block-toolbar.css */
+.components-popover__content {
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 0 0 1px #ccc, 0 2px 3px #0000000d, 0 4px 5px #0000000a, 0 12px 12px #00000008, 0 16px 16px #00000005;
+    box-sizing: border-box;
+    width: min-content;
+}
+
+.is-alternate .components-popover__content {
+    border-radius: 2px;
+    box-shadow: 0 0 0 1px #1e1e1e;
+}
+
+.is-unstyled .components-popover__content {
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.components-popover.is-expanded .components-popover__content {
+    box-shadow: 0 -1px 0 0 #ccc;
+    height: calc(100% - 48px);
+    overflow-y: visible;
+    position: static;
+    width: auto;
+}
+
+.components-popover.is-expanded.is-alternate .components-popover__content {
+    box-shadow: 0 -1px 0 #1e1e1e;
+}
+
+.components-popover__header {
+    align-items: center;
+    background: #fff;
+    display: flex;
+    height: 48px;
+    justify-content: space-between;
+    padding: 0 8px 0 16px;
+}
+
+/* End extracted core popover styles */

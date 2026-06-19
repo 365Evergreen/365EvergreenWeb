@@ -1,0 +1,31 @@
+﻿Block,Category,Purpose
+Group,Design,Container for grouping blocks.
+Row,Design,Horizontal flex layout.
+Stack,Design,Vertical layout stack.
+Columns,Design,Multi-column layout.
+Column,Design,Individual column inside Columns.
+Separator,Design,Horizontal divider line.
+Spacer,Design,Adjustable vertical spacing.
+Buttons,Design,Container for multiple buttons.
+Button,Design,Call-to-action button.
+Navigation,Design,Menu/navigation block.
+Navigation Link,Design,Individual link inside Navigation.
+Page Break,Design,Splits content into paginated pages.
+More,Design,Adds “Read More” break.
+Site Logo,Design,Displays site logo.
+Site Title,Design,Displays site title.
+Site Tagline,Design,Displays site tagline.
+Query Loop,Design,Template for listing posts.
+Query Pagination,Design,Pagination controls for Query Loop.
+Query Pagination Next,Design,Next page link.
+Query Pagination Previous,Design,Previous page link.
+Post Template,Design,Template for each post in Query Loop.
+Post Title,Design,Displays post title.
+Post Content,Design,Displays post content.
+Post Excerpt,Design,Displays excerpt.
+Post Featured Image,Design,Displays featured image.
+Post Date,Design,Displays post date.
+Post Author,Design,Displays author name.
+Post Categories,Design,Displays categories.
+Post Tags,Design,Displays tags.
+Read More,Design,“Read more” link for posts.

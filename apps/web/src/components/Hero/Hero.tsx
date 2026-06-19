@@ -7,6 +7,7 @@ export default function Hero({
   subtitle,
   ctaLabel,
   ctaLink,
+  onCtaClick,
   imageSrc,
   imageAlt,
 }: HeroProps) {
@@ -20,10 +21,16 @@ export default function Hero({
           </h1>
           {subtitle ? <p className={styles.subtitle}>{subtitle}</p> : null}
         </div>
-        {ctaLabel && ctaLink ? (
-          <Link to={ctaLink} className={styles.cta}>
-            {ctaLabel}
-          </Link>
+        {ctaLabel ? (
+          onCtaClick ? (
+            <button type="button" className={styles.cta} onClick={onCtaClick}>
+              {ctaLabel}
+            </button>
+          ) : ctaLink ? (
+            <Link to={ctaLink} className={styles.cta}>
+              {ctaLabel}
+            </Link>
+          ) : null
         ) : null}
       </div>
       <div className={styles.image}>

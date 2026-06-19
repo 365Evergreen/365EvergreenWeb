@@ -1,0 +1,31 @@
+.pe-block-card {
+  display: grid;
+  gap: 0.875rem;
+  width: 100%;
+  box-sizing: border-box;
+  color: #111827;
+}
+
+.pe-block-card.align-wide {
+  width: min(100%, 72rem);
+}
+
+.pe-block-card.align-full {
+  width: calc(100% + 36px);
+  margin-left: -18px;
+  margin-right: -18px;
+}
+
+.pe-block-card__title,
+.pe-block-card__text {
+  margin: 0;
+}
+
+.pe-block-card__title {
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: 700;
+}
+
+.pe-block-card__text {
+  color: inherit;
+}

@@ -1,0 +1,13 @@
+{
+  "name": "core/media-text",
+  "title": "Media & Text",
+  "category": "media",
+  "description": "Two-column media with text area.",
+  "attributes": {
+    "media": { "type": "object", "default": { "type": "image", "src": "", "alt": "" } },
+    "text": { "type": "array", "default": [] },
+    "layout": { "type": "string", "default": "media-left" },
+    "gap": { "type": "string", "default": "16px" },
+    "className": { "type": "string", "default": "" }
+  }
+}

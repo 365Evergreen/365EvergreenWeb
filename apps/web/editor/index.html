@@ -1,0 +1,646 @@
+
+<script>
+  // Try loading root stylesheet used in production; if it fails (404/html), fall back to local design-system
+  (function () {
+    const tryHref = '/styles.css';
+    const fallback = '../../design-system/styles.css';
+    function loadHref(href) {
+      const l = document.createElement('link');
+      l.rel = 'stylesheet';
+      l.href = href;
+      l.onload = () => { };
+      l.onerror = () => {
+        if (href !== fallback) { loadHref(fallback); }
+      };
+      document.head.appendChild(l);
+    }
+    loadHref(tryHref);
+
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('embed') === '1') document.documentElement.classList.add('pe-embed-mode');
+  })();
+</script>
+<link rel="stylesheet" href="./index.css">
+<link rel="stylesheet" href="./blocks/paragraph/styles.css">
+<link rel="stylesheet" href="./blocks/heading/styles.css">
+<link rel="stylesheet" href="./blocks/code/styles.css">
+<link rel="stylesheet" href="./blocks/list/styles.css">
+<link rel="stylesheet" href="./blocks/image/styles.css">
+<link rel="stylesheet" href="./blocks/gallery/styles.css">
+<link rel="stylesheet" href="./blocks/video/styles.css">
+<link rel="stylesheet" href="./blocks/audio/styles.css">
+<link rel="stylesheet" href="./blocks/file/styles.css">
+<link rel="stylesheet" href="./blocks/media-text/styles.css">
+<link rel="stylesheet" href="./blocks/cover/styles.css">
+<link rel="stylesheet" href="./blocks/separator/styles.css">
+<link rel="stylesheet" href="./blocks/group/styles.css">
+<link rel="stylesheet" href="./blocks/stack/styles.css">
+<link rel="stylesheet" href="./blocks/columns/styles.css">
+<link rel="stylesheet" href="./blocks/column/styles.css">
+<link rel="stylesheet" href="./blocks/spacer/styles.css">
+<link rel="stylesheet" href="./blocks/card/styles.css">
+<link rel="stylesheet" href="./blocks/hero/styles.css">
+<link rel="stylesheet" href="./blocks/embed/styles.css">
+<link rel="stylesheet" href="./blocks/row/styles.css">
+<link rel="stylesheet" href="./blocks/grid/styles.css">
+<link rel="stylesheet" href="./blocks/divider/styles.css">
+<link rel="stylesheet" href="./blocks/background/styles.css">
+<link rel="stylesheet" href="./blocks/icon/styles.css">
+<link rel="stylesheet" href="./blocks/callout/styles.css">
+<link rel="stylesheet" href="./blocks/accordion/styles.css">
+<link rel="stylesheet" href="./blocks/drawer/styles.css">
+<link rel="stylesheet" href="./blocks/search-results/styles.css">
+
+<div id="site-header" data-app="private" data-auth="true" data-nav="false" data-search="false"
+  data-tenant="365evergreen.com" data-title="365 Evergreen Editor"></div>
+
+<div class="editor-header edit-post-header">
+  <button type="button" id="cb-back" class="site-logo-replace components-button is-compact has-icon"
+    aria-label="Back to pages" title="Back to pages"><span class="cb-icon" data-icon="arrow_left"></span></button>
+
+  <div class="editor-header__toolbar" style="transform: none;">
+    <div role="toolbar" aria-orientation="horizontal" aria-label="Document tools"
+      class="components-accessible-toolbar editor-document-tools edit-post-header-toolbar is-unstyled">
+    <div class="editor-document-tools__left">
+      <button type="button" id=":r3:" data-toolbar-item="true" aria-disabled="false"
+        class="components-button editor-history__undo is-next-40px-default-size is-compact has-icon" aria-label="Undo"
+        tabindex="-1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
+            aria-hidden="true" focusable="false">
+            <path
+              d="M18.3 11.7c-.6-.6-1.4-.9-2.3-.9H6.7l2.9-3.3-1.1-1-4.5 5L8.5 16l1-1-2.7-2.7H16c.5 0 .9.2 1.3.5 1 1 1 3.4 1 4.5v.3h1.5v-.2c0-1.5 0-4.3-1.5-5.7z">
+            </path>
+          </svg></button>
+        <button type="button" id=":r5:" data-toolbar-item="true" aria-disabled="true"
+          class="components-button editor-history__redo is-next-40px-default-size is-compact has-icon" aria-label="Redo"
+          tabindex="-1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
+            aria-hidden="true" focusable="false">
+            <path
+              d="M15.6 6.5l-1.1 1 2.9 3.3H8c-.9 0-1.7.3-2.3.9-1.4 1.5-1.4 4.2-1.4 5.6v.2h1.5v-.3c0-1.1 0-3.5 1-4.5.3-.3.7-.5 1.3-.5h9.2L14.5 15l1.1 1.1 4.6-4.6-4.6-5z">
+            </path>
+          </svg></button>
+        <button type="button" id="cb-document-overview" aria-pressed="false" aria-expanded="false" data-toolbar-item="true"
+          class="components-button components-toolbar-button editor-document-tools__document-overview-toggle is-compact has-icon"
+          aria-label="Document Overview" tabindex="-1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+            width="24" height="24" aria-hidden="true" focusable="false">
+            <path d="M3 6h11v1.5H3V6Zm3.5 5.5h11V13h-11v-1.5ZM21 17H10v1.5h11V17Z"></path>
+          </svg></button>
+      </div>
+    </div>
+  </div>
+  <div class="editor-header__center" style="transform: none;">
+    <div class="editor-document-bar">
+      <button type="button" id="cb-title-command" class="components-button editor-document-bar__command is-compact"
+        aria-label="Jump to page title">
+        <div class="editor-document-bar__title" style="opacity: 1; transform: translateX(0%);">
+          <h1 data-wp-c16t="true" data-wp-component="Text"
+            class="components-truncate components-text css-hfddxo e19lxcc00"><span
+              class="editor-document-bar__post-title">Privacy Policy</span><span
+              class="editor-document-bar__post-type-label">· Page</span></h1>
+        </div>
+        <span class="editor-document-bar__shortcut">Ctrl+K</span>
+      </button>
+    </div>
+    <div id="cb-toolbar-center-host" class="cb-toolbar-center-host" aria-hidden="true"></div>
+  </div>
+  <div class="editor-header__settings" style="transform: none;">
+    <div class="store-setup-button-container">
+      <button type="button" id="cb-save" aria-disabled="false"
+        class="components-button editor-post-save-draft is-compact is-tertiary" aria-label="Save draft">Save
+        draft</button>
+      <div class="components-dropdown components-dropdown-menu editor-preview-dropdown editor-preview-dropdown--desktop"
+        tabindex="-1"><button type="button" id="cb-preview-toggle" aria-haspopup="true" aria-expanded="false"
+            class="components-button editor-preview-dropdown__toggle components-dropdown-menu__toggle is-compact has-icon has-icon-right"
+            aria-label="View"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
+              aria-hidden="true" focusable="false">
+              <path
+                d="M20.5 16h-.7V8c0-1.1-.9-2-2-2H6.2c-1.1 0-2 .9-2 2v8h-.7c-.8 0-1.5.7-1.5 1.5h20c0-.8-.7-1.5-1.5-1.5zM5.7 8c0-.3.2-.5.5-.5h11.6c.3 0 .5.2.5.5v7.6H5.7V8z">
+              </path>
+            </svg></button>
+        <div id="cb-preview-menu" class="cb-menu" hidden>
+            <button type="button" data-preview-device="desktop">Desktop preview</button>
+            <button type="button" data-preview-device="tablet">Tablet preview</button>
+            <button type="button" data-preview-device="mobile">Mobile preview</button>
+            <button type="button" id="cb-view-published" data-preview-action="published" hidden>View published page</button>
+        </div>
+      </div>
+      <div class="interface-pinned-items"><button type="button" id="cb-edit-pages" aria-pressed="false"
+            aria-controls="gutenberg-edit-pages-panel:gutenberg-edit-pages-panel" aria-expanded="false"
+            aria-disabled="false" class="components-button is-compact has-icon" aria-label="Edit Pages"><svg
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"
+            focusable="false">
+            <path d="M14.5 5.5h-7V7h7V5.5ZM7.5 9h7v1.5h-7V9Zm7 3.5h-7V14h7v-1.5Z"></path>
+            <path
+              d="M16 2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2ZM6 3.5h10a.5.5 0 0 1 .5.5v12a.5.5 0 0 1-.5.5H6a.5.5 0 0 1-.5-.5V4a.5.5 0 0 1 .5-.5Z">
+            </path>
+            <path d="M20 8v11c0 .69-.31 1-.999 1H6v1.5h13c1.52 0 2.499-.982 2.499-2.5V8H20Z"></path>
+            </svg></button>
+            
+            <button class="components-button"  type="button" id="cb-settings" aria-pressed="true" aria-controls="edit-post:block" aria-expanded="true"
+          aria-disabled="false" class="components-button is-compact is-pressed has-icon" aria-label="Settings"><svg
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"
+            focusable="false">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M18 4H6c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-4 14.5H6c-.3 0-.5-.2-.5-.5V6c0-.3.2-.5.5-.5h8v13zm4.5-.5c0 .3-.2.5-.5.5h-2.5v-13H18c.3 0 .5.2.5.5v12z">
+            </path>
+          </svg></button></div>
+      <button type="button" id="cb-publish" aria-disabled="false" aria-expanded="false"
+        class="components-button editor-post-publish-panel__toggle editor-post-publish-button__button is-primary is-compact">Publish</button>
+      <div class="components-dropdown components-dropdown-menu" tabindex="-1"><button type="button" id="cb-more" aria-haspopup="true"
+          aria-expanded="false" class="components-button components-dropdown-menu__toggle is-compact has-icon"
+          aria-label="Options"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
+            aria-hidden="true" focusable="false">
+            <path d="M13 19h-2v-2h2v2zm0-6h-2v-2h2v2zm0-6h-2V5h2v2z"></path>
+          </svg></button>
+        <div id="cb-more-menu" class="cb-menu" hidden>
+          <button type="button" data-action="toggle-top-toolbar">Top toolbar</button>
+          <button type="button" data-action="toggle-spotlight">Spotlight mode</button>
+          <button type="button" data-action="toggle-fullscreen">Fullscreen mode</button>
+          <button type="button" data-action="copy-content">Copy all content</button>
+          <button type="button" data-action="keyboard-shortcuts">Keyboard shortcuts</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Inject command-bar icons from design-system/icon-registry.json (dev: synchronous so available before scripts run)
+    (function () {
+      try {
+        var req = new XMLHttpRequest();
+        req.open('GET', '../../design-system/icon-registry.json', false);
+        req.send(null);
+        if (req.status === 200 || req.responseText) {
+          var reg = JSON.parse(req.responseText);
+          var items = reg && reg.regular ? reg.regular : [];
+          var map = {};
+          items.forEach(function (it) { if (it && it.title && it.source) map[it.title] = it.source; });
+
+          var get = function (name) { return map[name] || '' };
+          var btnToggle = document.getElementById('cb-toggle-blocks');
+          var undoBtn = document.getElementById('cb-undo');
+          var redoBtn = document.getElementById('cb-redo');
+          var leftPanelToggle = document.getElementById('pe-toggle-left');
+          var root = document.documentElement;
+
+          // map of friendly icon names to registry titles (closest matches)
+          var lookup = {
+            arrow_left: 'ic_fluent_arrow_left_24_regular',
+            arrow_right: 'ic_fluent_arrow_right_24_regular',
+            panel_left: 'ic_fluent_panel_left_24_regular',
+            edit_24: 'ic_fluent_edit_24_regular',
+            eye_24: 'ic_fluent_eye_24_regular',
+            arrow_undo_24: 'ic_fluent_arrow_undo_24_regular',
+            arrow_redo_24: 'ic_fluent_arrow_redo_24_regular',
+            desktop_24: 'ic_fluent_screen_cast_24_regular',
+            tablet_24: 'ic_fluent_device_tablet_24_regular',
+            mobile_24: 'ic_fluent_device_laptop_mobile_24_regular',
+            save_24: 'ic_fluent_save_24_regular',
+            send_24: 'ic_fluent_send_24_regular',
+            settings_24: 'ic_fluent_settings_24_regular',
+            more_vertical_24: 'ic_fluent_more_vertical_24_regular'
+          };
+
+          function setIconFor(el, key) {
+            if (!el) return;
+            var title = lookup[key] || key;
+            var src = map[title] || '';
+            if (src) el.innerHTML = src;
+          }
+
+          // set icons for all elements that request them via data-icon
+          Array.from(document.querySelectorAll('[data-icon]')).forEach(function (node) {
+            var name = node.getAttribute('data-icon');
+            setIconFor(node, name);
+          });
+
+          // update toggle behavior for blocks panel
+          function updateToggleIcon() {
+            if (!btnToggle) return;
+            var el = btnToggle.querySelector('.cb-icon');
+            if (root.classList.contains('collapsed-left')) {
+              setIconFor(el, 'panel_left');
+              btnToggle.title = 'Open blocks panel';
+            } else {
+              setIconFor(el, 'panel_left');
+              btnToggle.title = 'Toggle blocks panel';
+            }
+          }
+
+          updateToggleIcon();
+
+          if (btnToggle) {
+            btnToggle.addEventListener('click', function (e) {
+              e.preventDefault();
+              if (leftPanelToggle) {
+                leftPanelToggle.click();
+                setTimeout(updateToggleIcon, 50);
+              } else {
+                var cur = root.classList.toggle('collapsed-left');
+                localStorage.setItem('editor.leftCollapsed', cur ? '1' : '0');
+                updateToggleIcon();
+              }
+            });
+          }
+        }
+      } catch (e) { }
+    })();
+  </script>
+</div>
+<script>
+  (function () {
+    try {
+      var params = new URLSearchParams(window.location.search || '');
+      var isPost = String(params.get('kind') || '').toLowerCase() === 'post';
+      if (!isPost) return;
+      var typeLabel = document.querySelector('.editor-document-bar__post-type-label');
+      if (typeLabel) typeLabel.textContent = '· Post';
+      var backButton = document.getElementById('cb-back');
+      if (backButton) {
+        backButton.setAttribute('aria-label', 'Back to posts');
+        backButton.setAttribute('title', 'Back to posts');
+      }
+      var editPagesButton = document.getElementById('cb-edit-pages');
+      if (editPagesButton) {
+        editPagesButton.setAttribute('aria-label', 'Back to posts');
+      }
+    } catch (e) { }
+  })();
+</script>
+<main id="pe-app" class="page-wrap pe-app">
+  <!-- Title removed for full-bleed canvas harness -->
+
+  <div class="editor-shell">
+    <aside class="panel" id="pe-inserter-panel">
+      <button class="panel-toggle" id="pe-toggle-left" aria-label="Toggle blocks panel">☰</button>
+      <div class="panel-content">
+        <h2>Blocks</h2>
+        <div id="pe-inserter-modes" class="pe-inline-row"></div>
+        <!-- tabs removed: show all blocks in a single panel -->
+        <div id="pe-mru" class="pe-status-line"></div>
+        <div id="pe-patterns" class="pe-patterns"></div>
+        <label class="pe-search-label"><input id="pe-inserter-search" class="pe-search-input"
+            placeholder="Search blocks"></label>
+        <div id="pe-block-groups"></div>
+      </div>
+    </aside>
+
+    <section class="panel canvas">
+      <h2>Canvas</h2>
+      <label>Title <input id="pe-canvas-title" class="pe-canvas-input"></label>
+      <div id="pe-editor-canvas" class="pe-editor-canvas"></div>
+    </section>
+
+    <aside class="panel" id="pe-inspector">
+      <button class="panel-toggle" id="pe-toggle-right" aria-label="Toggle inspector panel">☰</button>
+      <div class="panel-content">
+        <div class="pe-inspector-tabs">
+          <button id="pe-tab-page" class="pe-inspector-tab active" data-tab="page">Page</button>
+          <button id="pe-tab-block" class="pe-inspector-tab" data-tab="block">Block</button>
+          <div id="pe-inspector-unsaved" class="pe-inspector-unsaved" title="Unsaved changes" hidden>●</div>
+        </div>
+        <div id="pe-inspector-content">Select a block</div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="./blocks.js"></script>
+  <script src="./core/block-registry.js"></script>
+  <script src="./blocks/paragraph/controls.js"></script>
+  <script src="./blocks/paragraph/edit.js"></script>
+  <script src="./blocks/paragraph/save.js"></script>
+  <script src="./blocks/paragraph/popovers/link-popover.js"></script>
+  <script src="./blocks/paragraph/popovers/color-popover.js"></script>
+  <script src="./blocks/paragraph/index.js"></script>
+  <script src="./blocks/heading/controls.js"></script>
+  <script src="./blocks/heading/edit.js"></script>
+  <script src="./blocks/heading/save.js"></script>
+  <script src="./blocks/heading/popovers/typography-popover.js"></script>
+  <script src="./blocks/heading/index.js"></script>
+  <script src="./blocks/code/controls.js"></script>
+  <script src="./blocks/code/edit.js"></script>
+  <script src="./blocks/code/save.js"></script>
+  <script src="./blocks/code/popovers/language-popover.js"></script>
+  <script src="./blocks/code/index.js"></script>
+  <script src="./blocks/list/controls.js"></script>
+  <script src="./blocks/list/edit.js"></script>
+  <script src="./blocks/list/save.js"></script>
+  <script src="./blocks/list/popovers/list-settings-popover.js"></script>
+  <script src="./blocks/list/index.js"></script>
+  <script src="./blocks/image/controls.js"></script>
+  <script src="./blocks/image/edit.js"></script>
+  <script src="./blocks/image/save.js"></script>
+  <script src="./blocks/image/popovers/focal-point-popover.js"></script>
+  <script src="./blocks/image/popovers/alt-text-popover.js"></script>
+  <script src="./blocks/image/index.js"></script>
+  <script src="./blocks/gallery/controls.js"></script>
+  <script src="./blocks/gallery/edit.js"></script>
+  <script src="./blocks/gallery/save.js"></script>
+  <script src="./blocks/gallery/popovers/crop-popover.js"></script>
+  <script src="./blocks/gallery/popovers/lightbox-popover.js"></script>
+  <script src="./blocks/gallery/index.js"></script>
+  <script src="./blocks/video/controls.js"></script>
+  <script src="./blocks/video/edit.js"></script>
+  <script src="./blocks/video/save.js"></script>
+  <script src="./blocks/video/popovers/poster-popover.js"></script>
+  <script src="./blocks/video/popovers/tracks-popover.js"></script>
+  <script src="./blocks/video/index.js"></script>
+  <script src="./blocks/audio/controls.js"></script>
+  <script src="./blocks/audio/edit.js"></script>
+  <script src="./blocks/audio/save.js"></script>
+  <script src="./blocks/audio/popovers/playback-popover.js"></script>
+  <script src="./blocks/audio/index.js"></script>
+  <script src="./blocks/file/controls.js"></script>
+  <script src="./blocks/file/edit.js"></script>
+  <script src="./blocks/file/save.js"></script>
+  <script src="./blocks/file/popovers/link-popover.js"></script>
+  <script src="./blocks/file/index.js"></script>
+  <script src="./blocks/media-text/controls.js"></script>
+  <script src="./blocks/media-text/edit.js"></script>
+  <script src="./blocks/media-text/save.js"></script>
+  <script src="./blocks/media-text/popovers/media-position-popover.js"></script>
+  <script src="./blocks/media-text/index.js"></script>
+  <script src="./blocks/cover/controls.js"></script>
+  <script src="./blocks/cover/edit.js"></script>
+  <script src="./blocks/cover/save.js"></script>
+  <script src="./blocks/cover/popovers/background-popover.js"></script>
+  <script src="./blocks/cover/popovers/layout-popover.js"></script>
+  <script src="./blocks/cover/index.js"></script>
+  <script src="./blocks/separator/controls.js"></script>
+  <script src="./blocks/separator/edit.js"></script>
+  <script src="./blocks/separator/save.js"></script>
+  <script src="./blocks/separator/index.js"></script>
+  <script src="./blocks/group/controls.js"></script>
+  <script src="./blocks/group/edit.js"></script>
+  <script src="./blocks/group/save.js"></script>
+  <script src="./blocks/group/index.js"></script>
+  <script src="./blocks/stack/controls.js"></script>
+  <script src="./blocks/stack/edit.js"></script>
+  <script src="./blocks/stack/save.js"></script>
+  <script src="./blocks/stack/index.js"></script>
+  <script src="./blocks/columns/controls.js"></script>
+  <script src="./blocks/columns/edit.js"></script>
+  <script src="./blocks/columns/save.js"></script>
+  <script src="./blocks/columns/index.js"></script>
+  <script src="./blocks/column/controls.js"></script>
+  <script src="./blocks/column/edit.js"></script>
+  <script src="./blocks/column/save.js"></script>
+  <script src="./blocks/column/index.js"></script>
+  <script src="./blocks/spacer/controls.js"></script>
+  <script src="./blocks/spacer/edit.js"></script>
+  <script src="./blocks/spacer/save.js"></script>
+  <script src="./blocks/spacer/index.js"></script>
+  <script src="./blocks/card/controls.js"></script>
+  <script src="./blocks/card/edit.js"></script>
+  <script src="./blocks/card/save.js"></script>
+  <script src="./blocks/card/popovers/content-popover.js"></script>
+  <script src="./blocks/card/popovers/surface-popover.js"></script>
+  <script src="./blocks/card/index.js"></script>
+  <script src="./blocks/hero/controls.js"></script>
+  <script src="./blocks/hero/edit.js"></script>
+  <script src="./blocks/hero/save.js"></script>
+  <script src="./blocks/hero/popovers/background-popover.js"></script>
+  <script src="./blocks/hero/popovers/content-popover.js"></script>
+  <script src="./blocks/hero/popovers/cta-popover.js"></script>
+  <script src="./blocks/hero/index.js"></script>
+  <script src="./blocks/embed/controls.js"></script>
+  <script src="./blocks/embed/edit.js"></script>
+  <script src="./blocks/embed/save.js"></script>
+  <script src="./blocks/embed/index.js"></script>
+  <script src="./blocks/row/controls.js"></script>
+  <script src="./blocks/row/edit.js"></script>
+  <script src="./blocks/row/save.js"></script>
+  <script src="./blocks/row/index.js"></script>
+  <script src="./blocks/grid/controls.js"></script>
+  <script src="./blocks/grid/edit.js"></script>
+  <script src="./blocks/grid/save.js"></script>
+  <script src="./blocks/grid/index.js"></script>
+  <script src="./blocks/divider/controls.js"></script>
+  <script src="./blocks/divider/edit.js"></script>
+  <script src="./blocks/divider/save.js"></script>
+  <script src="./blocks/divider/index.js"></script>
+  <script src="./blocks/background/controls.js"></script>
+  <script src="./blocks/background/edit.js"></script>
+  <script src="./blocks/background/save.js"></script>
+  <script src="./blocks/background/index.js"></script>
+  <script src="./blocks/icon/controls.js"></script>
+  <script src="./blocks/icon/edit.js"></script>
+  <script src="./blocks/icon/save.js"></script>
+  <script src="./blocks/icon/index.js"></script>
+  <script src="./blocks/callout/controls.js"></script>
+  <script src="./blocks/callout/edit.js"></script>
+  <script src="./blocks/callout/save.js"></script>
+  <script src="./blocks/callout/index.js"></script>
+  <script src="./blocks/accordion/controls.js"></script>
+  <script src="./blocks/accordion/edit.js"></script>
+  <script src="./blocks/accordion/save.js"></script>
+  <script src="./blocks/accordion/index.js"></script>
+  <script src="./blocks/drawer/controls.js"></script>
+  <script src="./blocks/drawer/edit.js"></script>
+  <script src="./blocks/drawer/save.js"></script>
+  <script src="./blocks/drawer/index.js"></script>
+  <script src="./blocks/search-results/controls.js"></script>
+  <script src="./blocks/search-results/edit.js"></script>
+  <script src="./blocks/search-results/save.js"></script>
+  <script src="./blocks/search-results/index.js"></script>
+  <script src="./blocks/runtime-utils.js"></script>
+  <script src="./blocks/form/runtime.js"></script>
+  <script src="./blocks/field_text/index.js"></script>
+  <script src="./blocks/field_textarea/index.js"></script>
+  <script src="./blocks/field_email/index.js"></script>
+  <script src="./blocks/field_phone/index.js"></script>
+  <script src="./blocks/field_number/index.js"></script>
+  <script src="./blocks/field_select/index.js"></script>
+  <script src="./blocks/field_radio/index.js"></script>
+  <script src="./blocks/field_checkbox/index.js"></script>
+  <script src="./blocks/field_checkbox_group/index.js"></script>
+  <script src="./blocks/field_date/index.js"></script>
+  <script src="./blocks/field_file/index.js"></script>
+  <script src="./blocks/field_hidden/index.js"></script>
+  <script src="./blocks/form/index.js"></script>
+  <script>
+    (function () {
+      if (!window.EditorBlockRegistry || typeof window.EditorBlockRegistry.finalize !== 'function') return;
+      window.EditorBlockRegistry.finalize(window.EDITOR_BLOCK_DEFINITIONS, window.EDITOR_BLOCK_ORDER);
+    })();
+  </script>
+  <script>
+    // Merge icons from block-registry.json into the in-memory block definitions
+    // Resolve icon *keys* (e.g. ic_fluent_...) to actual SVG `source` from the centralized icon registry.
+    (function () {
+      try {
+        if (!window.EDITOR_BLOCK_DEFINITIONS) return;
+
+        // Load icon registry (synchronously during dev bootstrap so the inserter shows icons immediately)
+        var iconMap = {};
+        try {
+          var rIcons = new XMLHttpRequest();
+          rIcons.open('GET', '../../design-system/icon-registry.json', false);
+          rIcons.send(null);
+          if (rIcons.status === 200 && rIcons.responseText) {
+            try {
+              var regIcons = JSON.parse(rIcons.responseText);
+              var items = regIcons && regIcons.regular ? regIcons.regular : [];
+              items.forEach(function (it) { if (it && it.title && it.source) iconMap[it.title] = it.source; });
+            } catch (e) { }
+          }
+        } catch (e) { }
+
+        var req = new XMLHttpRequest();
+        req.open('GET', '../block-registry.json', false);
+        req.send(null);
+        if (req.status === 200 || req.responseText) {
+          try {
+            var reg = JSON.parse(req.responseText);
+            var types = reg && reg.blockTypes ? reg.blockTypes : {};
+            Object.keys(types).forEach(function (k) {
+              var t = types[k];
+              if (t && t.icon && window.EDITOR_BLOCK_DEFINITIONS[k]) {
+                var iconVal = t.icon;
+                // If the block registry stores an icon key, replace with the SVG source
+                if (iconMap[iconVal]) {
+                  window.EDITOR_BLOCK_DEFINITIONS[k].icon = iconMap[iconVal];
+                } else {
+                  // otherwise keep whatever was provided (could be inline svg or fallback char)
+                  window.EDITOR_BLOCK_DEFINITIONS[k].icon = iconVal;
+                }
+              }
+            });
+          } catch (e) { }
+        }
+      } catch (e) { }
+    })();
+  </script>
+  <script src="./core.js"></script>
+  <script src="../media-library.js"></script>
+  <script src="./inserter.js"></script>
+  <script src="./canvas.js"></script>
+  <script src="./inspector.js"></script>
+  <script src="./toolbar.js"></script>
+  <script src="./toolbar-factory.js"></script>
+  <script>
+    // Load the global site header script (production path) with a fallback to design-system copy
+    (function () {
+      function loadScript(primary, fallback) {
+        const s = document.createElement('script');
+        s.src = primary;
+        s.onload = () => { };
+        s.onerror = () => { if (fallback) loadScript(fallback); };
+        document.head.appendChild(s);
+      }
+      loadScript('/site-header.js', '../../design-system/site-header.js');
+    })();
+  </script>
+  <script>
+    // Wire ToolbarFactory to the center host when available
+    (function () {
+      try {
+        var host = document.getElementById('cb-toolbar-center-host');
+        if (!host) return;
+        // prefer the exposed API if available
+        if (window.ToolbarFactory && typeof ToolbarFactory.setTopToolbarHost === 'function') {
+          ToolbarFactory.setTopToolbarHost(host);
+        } else {
+          // retry when toolbar factory loads later
+          var iv = setInterval(function () { if (window.ToolbarFactory && typeof ToolbarFactory.setTopToolbarHost === 'function') { clearInterval(iv); ToolbarFactory.setTopToolbarHost(host); } }, 250);
+        }
+      } catch (e) { }
+    })();
+  </script>
+  <script>
+    // Inject admin link into the site header, only when running under the private app path
+    (function () {
+      try {
+        if (!location.pathname || !location.pathname.includes('/app-private')) return;
+        function findIconSource(title) {
+          try {
+            var req = new XMLHttpRequest();
+            req.open('GET', '../../design-system/icon-registry.json', false);
+            req.send(null);
+            if (req.status === 200 && req.responseText) {
+              var reg = JSON.parse(req.responseText);
+              var items = reg && reg.regular ? reg.regular : [];
+              for (var i = 0; i < items.length; i++) {
+                var it = items[i];
+                if (it && it.title === title && it.source) return it.source;
+              }
+            }
+          } catch (e) { }
+          return null;
+        }
+
+        window.addEventListener('load', function () {
+          try {
+            var header = document.getElementById('site-header');
+            if (!header) return;
+            if (document.getElementById('site-admin-link')) return; // already present
+            var a = document.createElement('a');
+            a.id = 'site-admin-link';
+            a.className = 'site-admin-link';
+            a.href = '../admin/';
+            a.title = 'Admin';
+            var iconSpan = document.createElement('span');
+            iconSpan.className = 'cb-icon';
+            // try registry title used elsewhere
+            var svg = findIconSource('ic_fluent_settings_24_regular') || findIconSource('ic_fluent_app_folder_settings_24_regular');
+            if (svg) iconSpan.innerHTML = svg; else iconSpan.innerHTML = '';
+            a.appendChild(iconSpan);
+            header.appendChild(a);
+          } catch (e) { }
+        });
+      } catch (e) { }
+    })();
+  </script>
+  <script>
+    // Wire collapsible panels for the harness; persist state in localStorage
+    (function () {
+      const leftToggle = document.getElementById('pe-toggle-left');
+      const rightToggle = document.getElementById('pe-toggle-right');
+      const root = document.documentElement;
+      const iconMap = (function () {
+        try {
+          const req = new XMLHttpRequest();
+          req.open('GET', '../../design-system/icon-registry.json', false);
+          req.send(null);
+          if (req.status === 200 && req.responseText) {
+            const reg = JSON.parse(req.responseText);
+            return (reg && reg.regular || []).reduce((acc, item) => {
+              if (item && item.title && item.source) acc[item.title] = item.source;
+              return acc;
+            }, {});
+          }
+        } catch (e) { }
+        return {};
+      })();
+      function setLeftToggleIcon() {
+        if (!leftToggle) return;
+        const icon = root.classList.contains('collapsed-left')
+          ? iconMap.ic_fluent_arrow_expand_24_regular
+          : iconMap.ic_fluent_panel_left_24_regular;
+        leftToggle.innerHTML = icon || '☰';
+        leftToggle.title = root.classList.contains('collapsed-left') ? 'Expand blocks panel' : 'Collapse blocks panel';
+        leftToggle.setAttribute('aria-label', leftToggle.title);
+      }
+      function applyState() {
+        if (localStorage.getItem('editor.leftCollapsed') === '1') root.classList.add('collapsed-left'); else root.classList.remove('collapsed-left');
+        if (localStorage.getItem('editor.rightCollapsed') === '1') root.classList.add('collapsed-right'); else root.classList.remove('collapsed-right');
+        setLeftToggleIcon();
+      }
+      applyState();
+      if (leftToggle) leftToggle.addEventListener('click', () => {
+        const cur = root.classList.toggle('collapsed-left');
+        localStorage.setItem('editor.leftCollapsed', cur ? '1' : '0');
+        setLeftToggleIcon();
+      });
+      if (rightToggle) rightToggle.addEventListener('click', () => {
+        const cur = root.classList.toggle('collapsed-right');
+        localStorage.setItem('editor.rightCollapsed', cur ? '1' : '0');
+      });
+      // keyboard shortcuts: Alt+1/Alt+3 to toggle
+      window.addEventListener('keydown', (e) => {
+        if (e.altKey && !e.shiftKey && !e.ctrlKey) {
+          if (e.key === '1') { leftToggle && leftToggle.click(); e.preventDefault(); }
+          if (e.key === '3') { rightToggle && rightToggle.click(); e.preventDefault(); }
+        }
+      });
+    })();
+  </script>
+</main>

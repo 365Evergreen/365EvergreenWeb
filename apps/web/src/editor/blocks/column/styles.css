@@ -1,0 +1,14 @@
+.pe-block[data-block-type="column"] .pe-block-column {
+  min-height: 100%;
+}
+
+.pe-block[data-block-type="column"] .pe-block-column__empty {
+  align-items: center;
+  border: 1px dashed #cbd5e1;
+  border-radius: 0.75rem;
+  color: #64748b;
+  display: flex;
+  justify-content: center;
+  min-height: 6rem;
+  padding: 1rem;
+}

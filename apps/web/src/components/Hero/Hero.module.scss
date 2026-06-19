@@ -1,4 +1,4 @@
-.hero {
+.hero {margin-top: calc(-1 * (var(--space-10) + var(--space-6)));
   display: grid;
   grid-template-columns: 60% 40%;
   min-height: min(44rem, calc(100svh - 8rem));
@@ -6,15 +6,29 @@
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--surface);
+  position: relative;
+  width: 100%;
 }
 
 .content {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: var(--space-5);
   padding: var(--space-8) var(--space-6);
 }
+
+@media (min-width: 1025px) {
+  .hero {
+    width: calc(100% + var(--space-10) * 2);
+    margin-inline: calc(var(--space-10) * -1);
+    margin-top: calc(-1 * (var(--space-10) + var(--space-6)));
+    padding-top: calc(var(--space-6) + 2rem);
+  }
+}
+
 
 .copy {
   max-width: 32.5rem;
@@ -35,7 +49,8 @@
 .title {
   margin: 0;
   font-size: clamp(1.85rem, 6vw, 2.85rem);
-  line-height: 1.1;
+  line-height: 1.5;
+  font-weight: 450;
   letter-spacing: -0.02em;
   opacity: 0;
   transform: translateY(10px);
@@ -59,7 +74,7 @@
   background: var(--accent);
   color: var(--text-inverted);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 300;
   padding: var(--space-3) var(--space-6);
   transition: background-color 0.2s ease;
 }
@@ -69,9 +84,19 @@
 }
 
 .image {
-  position: relative;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
   overflow: hidden;
   background: #ebedf0;
+}
+
+.image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 70%);
+  pointer-events: none;
 }
 
 .imageElement {

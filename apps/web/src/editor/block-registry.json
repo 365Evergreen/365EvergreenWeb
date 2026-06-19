@@ -1,0 +1,1382 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "registryVersion": 2,
+  "site": "storage-swa",
+  "description": "Block registry for page content managed by the static HTML site editor and serialized into saved pages.",
+  "documentModel": {
+    "type": "document",
+    "metaFields": {
+      "title": {
+        "type": "string",
+        "required": true
+      },
+      "path": {
+        "type": "string",
+        "required": true,
+        "pattern": ".*\\.html$"
+      },
+      "status": {
+        "type": "string",
+        "enum": ["draft", "published"],
+        "default": "draft"
+      }
+    },
+    "blockShape": {
+      "required": ["id", "type"],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "children": {
+          "type": "array",
+          "default": []
+        }
+      }
+    }
+  },
+  "blockTypes": {
+    "paragraph": {
+      "status": "implemented",
+      "category": "text",
+      "label": "Paragraph",
+      "icon": "ic_fluent_text_24_regular",
+      "description": "Body copy with inline formatting and alignment.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["html", "align", "className"]
+      },
+      "defaults": {
+        "html": "",
+        "align": "left",
+        "className": ""
+      },
+      "supports": {
+        "inlineEditing": true,
+        "alignment": ["left", "center", "right", "justify"],
+        "toolbar": ["bold", "italic", "link", "alignment", "transform"],
+        "children": false
+      },
+      "output": {
+        "tag": "p"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "html": { "type": "string" },
+          "align": {
+            "type": "string",
+            "enum": ["left", "center", "right", "justify"],
+            "default": "left"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "heading": {
+      "status": "implemented",
+      "category": "text",
+      "label": "Heading",
+      "icon": "ic_fluent_text_bold_24_regular",
+      "description": "Semantic heading block with level and alignment controls.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["text", "level", "align"]
+      },
+      "defaults": {
+        "text": "Heading",
+        "level": 2,
+        "align": "left"
+      },
+      "supports": {
+        "inlineEditing": true,
+        "alignment": ["left", "center", "right"],
+        "toolbar": ["level", "alignment", "transform"],
+        "children": false
+      },
+      "output": {
+        "tag": "h{level}"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "text": { "type": "string" },
+          "level": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 6,
+            "default": 2
+          },
+          "align": {
+            "type": "string",
+            "enum": ["left", "center", "right"],
+            "default": "left"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "image": {
+      "status": "implemented",
+      "category": "media",
+      "label": "Image",
+      "icon": "ic_fluent_image_24_regular",
+      "description": "Single image with caption, sizing, alignment, and link support.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["src", "alt", "caption", "linkHref", "width", "height", "align", "className"]
+      },
+      "defaults": {
+        "src": "",
+        "alt": "",
+        "caption": "",
+        "linkHref": "",
+        "width": "",
+        "height": "",
+        "align": "wide",
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["left", "center", "right", "wide", "full"],
+        "toolbar": ["replace", "alignment", "caption", "link"],
+        "assetSources": ["upload", "library", "url"],
+        "children": false
+      },
+      "output": {
+        "tag": "figure"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "src": { "type": "string" },
+          "alt": { "type": "string" },
+          "caption": { "type": "string" },
+          "linkHref": { "type": "string" },
+          "width": { "type": ["string", "integer"] },
+          "height": { "type": ["string", "integer"] },
+          "align": {
+            "type": "string",
+            "enum": ["left", "center", "right", "wide", "full"],
+            "default": "wide"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "cover": {
+      "status": "implemented",
+      "category": "media",
+      "label": "Cover",
+      "icon": "ic_fluent_image_multiple_24_regular",
+      "description": "Hero-style cover section with background media, overlay, and nested content.",
+      "editorModel": {
+        "children": true,
+        "propKeys": ["background", "overlay", "minHeight", "contentPosition", "style", "className"]
+      },
+      "defaults": {
+        "background": {
+          "type": null,
+          "src": null,
+          "alt": "",
+          "poster": "",
+          "focalPoint": { "x": 0.5, "y": 0.5 },
+          "fixed": false
+        },
+        "overlay": { "color": "#000000", "opacity": 0.5 },
+        "minHeight": "50vh",
+        "contentPosition": "center center",
+        "style": { "layout": "default", "spacing": {} },
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["default", "wide", "full"],
+        "assetSources": ["upload", "library", "featured", "url"],
+        "children": true
+      },
+      "output": {
+        "tag": "section"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "background": { "type": "object" },
+          "overlay": { "type": "object" },
+          "minHeight": { "type": "string" },
+          "contentPosition": { "type": "string" },
+          "style": { "type": "object" },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "video": {
+      "status": "implemented",
+      "category": "media",
+      "label": "Video",
+      "icon": "ic_fluent_video_24_regular",
+      "description": "Self-hosted video with playback settings and optional caption.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["src", "caption", "poster", "autoplay", "loop", "muted", "controls", "align", "className"]
+      },
+      "defaults": {
+        "src": "",
+        "caption": "",
+        "poster": "",
+        "autoplay": false,
+        "loop": false,
+        "muted": false,
+        "controls": true,
+        "align": "wide",
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["left", "center", "right", "wide", "full"],
+        "toolbar": ["replace", "alignment", "caption", "playback"],
+        "children": false
+      },
+      "output": {
+        "tag": "figure"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "src": { "type": "string" },
+          "caption": { "type": "string" },
+          "poster": { "type": "string" },
+          "autoplay": { "type": "boolean", "default": false },
+          "loop": { "type": "boolean", "default": false },
+          "muted": { "type": "boolean", "default": false },
+          "controls": { "type": "boolean", "default": true },
+          "align": {
+            "type": "string",
+            "enum": ["left", "center", "right", "wide", "full"],
+            "default": "wide"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "code": {
+      "status": "implemented",
+      "category": "text",
+      "label": "Code",
+      "icon": "ic_fluent_code_24_regular",
+      "description": "Preformatted code snippet with optional language hint.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["code", "language", "align"]
+      },
+      "defaults": {
+        "code": "",
+        "language": "",
+        "align": "left"
+      },
+      "supports": {
+        "alignment": ["left", "wide", "full"],
+        "toolbar": ["language"],
+        "children": false
+      },
+      "output": {
+        "tag": "pre"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" },
+          "language": { "type": "string" },
+          "align": {
+            "type": "string",
+            "enum": ["left", "wide", "full"],
+            "default": "left"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "embed": {
+      "status": "implemented",
+      "category": "embed",
+      "label": "Embed",
+      "icon": "ic_fluent_open_24_regular",
+      "description": "External embed via URL or trusted embed HTML.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["url", "html", "provider", "caption", "aspectRatio", "align", "className"]
+      },
+      "defaults": {
+        "url": "",
+        "html": "",
+        "provider": "",
+        "caption": "",
+        "aspectRatio": "16x9",
+        "align": "wide",
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["left", "center", "right", "wide", "full"],
+        "toolbar": ["preview", "alignment"],
+        "children": false
+      },
+      "output": {
+        "tag": "figure"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "url": { "type": "string" },
+          "html": { "type": "string" },
+          "provider": { "type": "string" },
+          "caption": { "type": "string" },
+          "aspectRatio": {
+            "type": "string",
+            "enum": ["16x9", "4x3", "1x1"],
+            "default": "16x9"
+          },
+          "align": {
+            "type": "string",
+            "enum": ["left", "center", "right", "wide", "full"],
+            "default": "wide"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "separator": {
+      "status": "implemented",
+      "category": "design",
+      "label": "Separator",
+      "icon": "ic_fluent_divider_short_24_regular",
+      "description": "Simple section separator with basic line style variants.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["style", "align", "className"]
+      },
+      "defaults": {
+        "style": "default",
+        "align": "full",
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["left", "wide", "full"],
+        "toolbar": ["style", "alignment"],
+        "children": false
+      },
+      "output": {
+        "tag": "hr"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "style": {
+            "type": "string",
+            "enum": ["default", "solid", "dashed", "dots", "short"],
+            "default": "default"
+          },
+          "align": {
+            "type": "string",
+            "enum": ["left", "wide", "full"],
+            "default": "full"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "group": {
+      "status": "implemented",
+      "category": "design",
+      "label": "Group",
+      "icon": "ic_fluent_group_24_regular",
+      "description": "Section wrapper shell with layout, spacing, and color controls.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["title", "text", "tag", "layout", "backgroundColor", "textColor", "padding", "margin", "align", "className"]
+      },
+      "defaults": {
+        "title": "Section heading",
+        "text": "",
+        "tag": "section",
+        "layout": "stack",
+        "backgroundColor": "",
+        "textColor": "",
+        "padding": "2rem 1.5rem",
+        "margin": "",
+        "align": "wide",
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["left", "wide", "full"],
+        "toolbar": ["layout", "alignment", "outline"],
+        "children": false,
+        "futureChildren": true
+      },
+      "output": {
+        "tag": "{tag}"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "text": { "type": "string" },
+          "tag": {
+            "type": "string",
+            "enum": ["div", "section", "article", "aside"],
+            "default": "section"
+          },
+          "layout": {
+            "type": "string",
+            "enum": ["stack", "row"],
+            "default": "stack"
+          },
+          "backgroundColor": { "type": "string" },
+          "textColor": { "type": "string" },
+          "padding": { "type": "string" },
+          "margin": { "type": "string" },
+          "align": {
+            "type": "string",
+            "enum": ["left", "wide", "full"],
+            "default": "wide"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "button": {
+      "status": "implemented",
+      "category": "interactive",
+      "label": "Button",
+      "icon": "ic_fluent_control_button_24_regular",
+      "description": "Call-to-action button with link, color, and radius controls.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["text", "url", "variant", "backgroundColor", "textColor", "radius", "align", "className"]
+      },
+      "defaults": {
+        "text": "Call to action",
+        "url": "#",
+        "variant": "primary",
+        "backgroundColor": "",
+        "textColor": "",
+        "radius": "999px",
+        "align": "left",
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["left", "center", "right"],
+        "toolbar": ["link", "style", "alignment"],
+        "children": false
+      },
+      "output": {
+        "tag": "a"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "text": { "type": "string" },
+          "url": { "type": "string" },
+          "variant": {
+            "type": "string",
+            "enum": ["primary", "secondary"],
+            "default": "primary"
+          },
+          "backgroundColor": { "type": "string" },
+          "textColor": { "type": "string" },
+          "radius": { "type": "string" },
+          "align": {
+            "type": "string",
+            "enum": ["left", "center", "right"],
+            "default": "left"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "spacer": {
+      "status": "implemented",
+      "category": "design",
+      "label": "Spacer",
+      "icon": "ic_fluent_arrow_bidirectional_up_down_24_regular",
+      "description": "Vertical whitespace block with preset or custom height.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["height", "preset", "align", "className"]
+      },
+      "defaults": {
+        "height": "48px",
+        "preset": "medium",
+        "align": "full",
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["left", "wide", "full"],
+        "toolbar": ["size", "alignment"],
+        "children": false
+      },
+      "output": {
+        "tag": "div"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "height": { "type": "string" },
+          "preset": {
+            "type": "string",
+            "enum": ["small", "medium", "large"],
+            "default": "medium"
+          },
+          "align": {
+            "type": "string",
+            "enum": ["left", "wide", "full"],
+            "default": "full"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "divider": {
+      "status": "implemented",
+      "category": "design",
+      "label": "Divider",
+      "icon": "ic_fluent_divider_short_24_regular",
+      "description": "Decorative divider with style, thickness, and width controls.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["style", "thickness", "width", "align", "className"]
+      },
+      "defaults": {
+        "style": "solid",
+        "thickness": "2px",
+        "width": "full",
+        "align": "full",
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["left", "wide", "full"],
+        "toolbar": ["style", "alignment"],
+        "children": false
+      },
+      "output": {
+        "tag": "div"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "style": {
+            "type": "string",
+            "enum": ["solid", "dashed", "gradient", "ornament"],
+            "default": "solid"
+          },
+          "thickness": { "type": "string" },
+          "width": {
+            "type": "string",
+            "enum": ["full", "wide", "short"],
+            "default": "full"
+          },
+          "align": {
+            "type": "string",
+            "enum": ["left", "wide", "full"],
+            "default": "full"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "card": {
+      "status": "implemented",
+      "category": "design",
+      "label": "Card",
+      "icon": "ic_fluent_contact_card_24_regular",
+      "description": "Highlighted container shell with background, radius, and shadow settings.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["title", "text", "backgroundColor", "borderRadius", "shadow", "padding", "align", "className"]
+      },
+      "defaults": {
+        "title": "Card title",
+        "text": "Card body copy",
+        "backgroundColor": "#ffffff",
+        "borderRadius": "24px",
+        "shadow": "medium",
+        "padding": "1.5rem",
+        "align": "wide",
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["left", "wide", "full"],
+        "toolbar": ["surface", "alignment"],
+        "children": false,
+        "futureChildren": true
+      },
+      "output": {
+        "tag": "section"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "text": { "type": "string" },
+          "backgroundColor": { "type": "string" },
+          "borderRadius": { "type": "string" },
+          "shadow": {
+            "type": "string",
+            "enum": ["soft", "medium", "outlined"],
+            "default": "medium"
+          },
+          "padding": { "type": "string" },
+          "align": {
+            "type": "string",
+            "enum": ["left", "wide", "full"],
+            "default": "wide"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "hero": {
+      "status": "implemented",
+      "category": "design",
+      "label": "Hero",
+      "icon": "ic_fluent_star_24_regular",
+      "description": "Banner shell with background treatment, overlay, and optional CTA.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["eyebrow", "title", "text", "backgroundImage", "backgroundColor", "overlayColor", "minHeight", "ctaText", "ctaHref", "align", "className"]
+      },
+      "defaults": {
+        "eyebrow": "",
+        "title": "Hero title",
+        "text": "Supporting hero copy",
+        "backgroundImage": "",
+        "backgroundColor": "#0f172a",
+        "overlayColor": "rgba(15,23,42,0.45)",
+        "minHeight": "320px",
+        "ctaText": "",
+        "ctaHref": "",
+        "align": "full",
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["left", "center", "right", "wide", "full"],
+        "toolbar": ["background", "cta", "alignment"],
+        "children": false,
+        "futureChildren": true
+      },
+      "output": {
+        "tag": "section"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "eyebrow": { "type": "string" },
+          "title": { "type": "string" },
+          "text": { "type": "string" },
+          "backgroundImage": { "type": "string" },
+          "backgroundColor": { "type": "string" },
+          "overlayColor": { "type": "string" },
+          "minHeight": { "type": "string" },
+          "ctaText": { "type": "string" },
+          "ctaHref": { "type": "string" },
+          "align": {
+            "type": "string",
+            "enum": ["left", "center", "right", "wide", "full"],
+            "default": "full"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "icon": {
+      "status": "implemented",
+      "category": "design",
+      "label": "Icon",
+      "icon": "ic_fluent_star_24_regular",
+      "description": "Standalone icon or symbol with size, color, and accessibility label.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["icon", "size", "color", "label", "align", "className"]
+      },
+      "defaults": {
+        "icon": "star",
+        "size": "48px",
+        "color": "#02760c",
+        "label": "",
+        "align": "left",
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["left", "center", "right"],
+        "toolbar": ["icon", "color", "alignment"],
+        "children": false
+      },
+      "output": {
+        "tag": "span"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "icon": {
+            "type": "string",
+            "enum": ["star", "check", "info", "warning", "arrow", "spark", "heart"],
+            "default": "star"
+          },
+          "size": { "type": "string" },
+          "color": { "type": "string" },
+          "label": { "type": "string" },
+          "align": {
+            "type": "string",
+            "enum": ["left", "center", "right"],
+            "default": "left"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "callout": {
+      "status": "implemented",
+      "category": "design",
+      "label": "Callout",
+      "icon": "ic_fluent_alert_24_regular",
+      "description": "Notice shell for tips, warnings, successes, and errors.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["variant", "title", "text", "showIcon", "align", "className"]
+      },
+      "defaults": {
+        "variant": "info",
+        "title": "Notice title",
+        "text": "Important supporting message.",
+        "showIcon": true,
+        "align": "wide",
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["left", "wide", "full"],
+        "toolbar": ["variant", "alignment"],
+        "children": false
+      },
+      "output": {
+        "tag": "aside"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "variant": {
+            "type": "string",
+            "enum": ["info", "success", "warning", "error"],
+            "default": "info"
+          },
+          "title": { "type": "string" },
+          "text": { "type": "string" },
+          "showIcon": { "type": "boolean", "default": true },
+          "align": {
+            "type": "string",
+            "enum": ["left", "wide", "full"],
+            "default": "wide"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "background": {
+      "status": "implemented",
+      "category": "design",
+      "label": "Background",
+      "icon": "ic_fluent_color_fill_24_regular",
+      "description": "Stylized wrapper shell with background and spacing controls.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["title", "text", "background", "overlay", "padding", "borderRadius", "align", "className"]
+      },
+      "defaults": {
+        "title": "Background section",
+        "text": "Wrapped content summary",
+        "background": "linear-gradient(135deg, #eff6ff 0%, #ffffff 100%)",
+        "overlay": "",
+        "padding": "2rem",
+        "borderRadius": "24px",
+        "align": "wide",
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["left", "wide", "full"],
+        "toolbar": ["background", "alignment"],
+        "children": false,
+        "futureChildren": true
+      },
+      "output": {
+        "tag": "section"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "text": { "type": "string" },
+          "background": { "type": "string" },
+          "overlay": { "type": "string" },
+          "padding": { "type": "string" },
+          "borderRadius": { "type": "string" },
+          "align": {
+            "type": "string",
+            "enum": ["left", "wide", "full"],
+            "default": "wide"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "columns": {
+      "status": "implemented",
+      "category": "layout",
+      "label": "Columns",
+      "icon": "ic_fluent_text_column_three_24_regular",
+      "description": "Flat multi-column layout shell with adjustable count and gap.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["columns", "gap", "text", "align", "className"]
+      },
+      "defaults": {
+        "columns": 2,
+        "gap": "24px",
+        "text": "Add column content summary",
+        "align": "wide",
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["left", "wide", "full"],
+        "toolbar": ["columns", "gap", "alignment"],
+        "children": false,
+        "futureChildren": true
+      },
+      "output": {
+        "tag": "section"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "columns": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 4,
+            "default": 2
+          },
+          "gap": { "type": "string" },
+          "text": { "type": "string" },
+          "align": {
+            "type": "string",
+            "enum": ["left", "wide", "full"],
+            "default": "wide"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "grid": {
+      "status": "implemented",
+      "category": "layout",
+      "label": "Grid",
+      "icon": "ic_fluent_grid_24_regular",
+      "description": "Container grid with editable cells, configurable column count, minimum width, and gap.",
+      "editorModel": {
+        "children": true,
+        "container": "grid-cells",
+        "propKeys": ["columns", "minWidth", "gap", "text", "align", "className"]
+      },
+      "defaults": {
+        "columns": 3,
+        "minWidth": "180px",
+        "gap": "20px",
+        "text": "Add grid content summary",
+        "align": "wide",
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["left", "wide", "full"],
+        "toolbar": ["columns", "gap", "alignment"],
+        "children": true
+      },
+      "output": {
+        "tag": "section"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "columns": {
+            "type": "integer",
+            "minimum": 2,
+            "maximum": 5,
+            "default": 3
+          },
+          "minWidth": { "type": "string" },
+          "gap": { "type": "string" },
+          "text": { "type": "string" },
+          "align": {
+            "type": "string",
+            "enum": ["left", "wide", "full"],
+            "default": "wide"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+      "search-results": {
+        "status": "implemented",
+        "category": "interactive",
+        "label": "Search Results",
+        "icon": "ic_fluent_reading_list_24_regular",
+        "description": "Dynamic, filterable grid of search results pulled from a data source (keyword or storage path).",
+        "editorModel": {
+          "children": false,
+          "propKeys": ["dataSource", "template", "columns", "pageSize", "showModified", "showContributors", "align", "className"]
+        },
+        "defaults": {
+          "dataSource": "",
+          "template": "card",
+          "columns": 3,
+          "pageSize": 6,
+          "showModified": true,
+          "showContributors": true,
+          "align": "wide",
+          "className": ""
+        },
+        "supports": {
+          "alignment": ["left", "wide", "full"],
+          "toolbar": ["dataSource", "template", "columns"],
+          "children": false
+        },
+        "output": {
+          "tag": "section"
+        },
+        "propsSchema": {
+          "type": "object",
+          "properties": {
+            "dataSource": { "type": "string", "description": "Keyword or path/URL to JSON results (e.g., 'site-pages' or '/data/site-pages.json')" },
+            "template": { "type": "string", "enum": ["card", "compact", "list"], "default": "card" },
+            "columns": { "type": "integer", "minimum": 1, "maximum": 6, "default": 3 },
+            "pageSize": { "type": "integer", "minimum": 1, "default": 6 },
+            "showModified": { "type": "boolean", "default": true },
+            "showContributors": { "type": "boolean", "default": true },
+            "align": { "type": "string", "enum": ["left", "wide", "full"], "default": "wide" },
+            "className": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+    "row": {
+      "status": "implemented",
+      "category": "layout",
+      "label": "Row",
+      "icon": "ic_fluent_split_horizontal_24_regular",
+      "description": "Horizontal layout shell with justify, gap, and wrapping controls.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["title", "text", "justify", "gap", "wrap", "align", "className"]
+      },
+      "defaults": {
+        "title": "Row",
+        "text": "Horizontal layout content summary",
+        "justify": "space-between",
+        "gap": "16px",
+        "wrap": true,
+        "align": "wide",
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["left", "wide", "full"],
+        "toolbar": ["layout", "alignment"],
+        "children": false,
+        "futureChildren": true
+      },
+      "output": {
+        "tag": "section"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "text": { "type": "string" },
+          "justify": {
+            "type": "string",
+            "enum": ["flex-start", "center", "space-between", "space-around"],
+            "default": "space-between"
+          },
+          "gap": { "type": "string" },
+          "wrap": { "type": "boolean", "default": true },
+          "align": {
+            "type": "string",
+            "enum": ["left", "wide", "full"],
+            "default": "wide"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "accordion": {
+      "status": "implemented",
+      "category": "interactive",
+      "label": "Accordion",
+      "icon": "ic_fluent_chevron_down_24_regular",
+      "description": "Collapsible shell block with title, body, and open-state controls.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["title", "text", "open", "showIcon", "align", "className"]
+      },
+      "defaults": {
+        "title": "Accordion item",
+        "text": "Collapsible content summary",
+        "open": false,
+        "showIcon": true,
+        "align": "wide",
+        "className": ""
+      },
+      "supports": {
+        "alignment": ["left", "wide", "full"],
+        "toolbar": ["toggle", "alignment"],
+        "children": false,
+        "futureChildren": true
+      },
+      "output": {
+        "tag": "details"
+      },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "title": { "type": "string" },
+          "text": { "type": "string" },
+          "open": { "type": "boolean", "default": false },
+          "showIcon": { "type": "boolean", "default": true },
+          "align": {
+            "type": "string",
+            "enum": ["left", "wide", "full"],
+            "default": "wide"
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "gallery": {
+      "status": "implemented",
+      "category": "media",
+      "label": "Gallery",
+      "icon": "ic_fluent_image_multiple_24_regular",
+      "description": "Responsive grid of images.",
+      "editorModel": {
+        "children": false,
+        "propKeys": ["images", "columns", "crop", "linkTo", "lightbox", "style", "className"]
+      },
+      "defaults": {
+        "images": [],
+        "columns": 3,
+        "crop": true,
+        "linkTo": "none",
+        "lightbox": false,
+        "style": {
+          "spacing": { "gap": "12px" },
+          "border": { "radius": "", "width": "", "color": "#d1d5db" },
+          "layout": "default"
+        },
+        "className": ""
+      },
+      "supports": {
+        "toolbar": ["columns", "crop", "linkTo", "lightbox", "transform"],
+        "children": false
+      },
+      "output": { "tag": "div" },
+      "propsSchema": {
+        "type": "object",
+        "properties": {
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string" },
+                "src": { "type": "string" },
+                "alt": { "type": "string" },
+                "caption": { "type": "string" }
+              },
+              "required": ["id", "src", "alt", "caption"],
+              "additionalProperties": true
+            }
+          },
+          "columns": { "type": "integer", "minimum": 1, "maximum": 8 },
+          "crop": { "type": "boolean" },
+          "linkTo": { "type": "string", "enum": ["none", "media", "attachment"] },
+          "lightbox": { "type": "boolean" },
+          "style": {
+            "type": "object",
+            "properties": {
+              "spacing": {
+                "type": "object",
+                "properties": {
+                  "gap": { "type": "string" }
+                },
+                "additionalProperties": false
+              },
+              "border": {
+                "type": "object",
+                "properties": {
+                  "radius": { "type": "string" },
+                  "width": { "type": "string" },
+                  "color": { "type": "string" }
+                },
+                "additionalProperties": false
+              },
+              "layout": { "type": "string", "enum": ["default", "wide", "full"] }
+            },
+            "additionalProperties": false
+          },
+          "className": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "audio": {
+      "status": "implemented",
+      "category": "media",
+      "label": "Audio",
+      "icon": "ic_fluent_music_note_1_24_regular",
+      "description": "Audio player for uploaded or linked audio files.",
+      "editorModel": { "children": false, "propKeys": ["src", "title", "artist", "autoplay", "loop", "preload", "className"] },
+      "defaults": { "src": "", "title": "", "artist": "", "autoplay": false, "loop": false, "preload": "metadata", "className": "" },
+      "supports": { "toolbar": ["replace"], "children": false },
+      "output": { "tag": "div" },
+      "propsSchema": { "type": "object", "properties": { "src": { "type": "string" }, "title": { "type": "string" }, "artist": { "type": "string" }, "autoplay": { "type": "boolean" }, "loop": { "type": "boolean" }, "preload": { "type": "string" }, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "file": {
+      "status": "implemented",
+      "category": "media",
+      "label": "File",
+      "icon": "ic_fluent_document_24_regular",
+      "description": "Downloadable file link block (PDF, doc, etc).",
+      "editorModel": { "children": false, "propKeys": ["src", "filename", "filesize", "description", "className"] },
+      "defaults": { "src": "", "filename": "", "filesize": "", "description": "", "className": "" },
+      "supports": { "toolbar": ["replace"], "children": false },
+      "output": { "tag": "a" },
+      "propsSchema": { "type": "object", "properties": { "src": { "type": "string" }, "filename": { "type": "string" }, "filesize": { "type": "string" }, "description": { "type": "string" }, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "media-text": {
+      "status": "implemented",
+      "category": "media",
+      "label": "Media & Text",
+      "icon": "ic_fluent_picture_in_picture_24_regular",
+      "description": "Two-column media with text area.",
+      "editorModel": { "children": false, "propKeys": ["media", "text", "layout", "gap", "className"] },
+      "defaults": { "media": { "type": "image", "src": "", "alt": "" }, "text": [], "layout": "media-left", "gap": "16px", "className": "" },
+      "supports": { "toolbar": ["layout"], "children": false },
+      "output": { "tag": "section" },
+      "propsSchema": { "type": "object", "properties": { "media": { "type": "object" }, "text": { "type": "array" }, "layout": { "type": "string" }, "gap": { "type": "string" }, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "list": {
+      "status": "implemented",
+      "category": "text",
+      "label": "List",
+      "icon": "ic_fluent_list_24_regular",
+      "description": "Ordered or unordered list.",
+      "editorModel": { "children": false, "propKeys": ["ordered", "items", "className"] },
+      "defaults": { "ordered": false, "items": ["List item"], "className": "" },
+      "supports": { "toolbar": ["ordering"], "children": false },
+      "output": { "tag": "ul" },
+      "propsSchema": { "type": "object", "properties": { "ordered": { "type": "boolean" }, "items": { "type": "array" }, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "stack": {
+      "status": "implemented",
+      "category": "design",
+      "label": "Stack",
+      "icon": "ic_fluent_stack_24_regular",
+      "description": "Vertical stack layout container.",
+      "editorModel": { "children": false, "propKeys": ["gap", "align", "className"] },
+      "defaults": { "gap": "16px", "align": "wide", "className": "" },
+      "supports": { "toolbar": ["spacing"], "children": true },
+      "output": { "tag": "div" },
+      "propsSchema": { "type": "object", "properties": { "gap": { "type": "string" }, "align": { "type": "string" }, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "column": {
+      "status": "implemented",
+      "category": "design",
+      "label": "Column",
+      "icon": "ic_fluent_text_column_one_24_regular",
+      "description": "Single column container used inside Columns.",
+      "editorModel": { "children": false, "propKeys": ["width", "className"] },
+      "defaults": { "width": "1fr", "className": "" },
+      "supports": { "children": true },
+      "output": { "tag": "div" },
+      "propsSchema": { "type": "object", "properties": { "width": { "type": "string" }, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "form": {
+      "status": "implemented",
+      "category": "interactive",
+      "label": "Form",
+      "icon": "ic_fluent_form_new_24_regular",
+      "description": "Form container block for fields and submission settings.",
+      "editorModel": { "children": false, "propKeys": ["fields", "layout", "submitAction", "validationMode", "className"] },
+      "defaults": { "fields": [], "layout": "stack", "submitAction": { "type": "swa", "config": {} }, "validationMode": "inline", "className": "" },
+      "supports": { "children": true },
+      "output": { "tag": "form" },
+      "propsSchema": { "type": "object", "properties": { "fields": { "type": "array" }, "layout": { "type": "string" }, "submitAction": { "type": "object" }, "validationMode": { "type": "string" }, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "field_text": {
+      "status": "implemented",
+      "category": "interactive",
+      "label": "Text Field",
+      "icon": "ic_fluent_text_field_24_regular",
+      "description": "Single-line text input field.",
+      "editorModel": { "children": false, "propKeys": ["name", "label", "placeholder", "required", "min", "max", "className"] },
+      "defaults": { "name": "field", "label": "Text", "placeholder": "", "required": false, "min": null, "max": null, "className": "" },
+      "supports": { "children": false },
+      "output": { "tag": "input" },
+      "propsSchema": { "type": "object", "properties": { "name": { "type": "string" }, "label": { "type": "string" }, "placeholder": { "type": "string" }, "required": { "type": "boolean" }, "min": {}, "max": {}, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "field_textarea": {
+      "status": "implemented",
+      "category": "interactive",
+      "label": "Textarea Field",
+      "icon": "ic_fluent_text_field_24_regular",
+      "description": "Multi-line textarea field.",
+      "editorModel": { "children": false, "propKeys": ["name", "label", "rows", "placeholder", "required", "className"] },
+      "defaults": { "name": "textarea", "label": "Long text", "rows": 4, "placeholder": "", "required": false, "className": "" },
+      "supports": { "children": false },
+      "output": { "tag": "textarea" },
+      "propsSchema": { "type": "object", "properties": { "name": { "type": "string" }, "label": { "type": "string" }, "rows": { "type": "integer" }, "placeholder": { "type": "string" }, "required": { "type": "boolean" }, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "field_email": {
+      "status": "implemented",
+      "category": "interactive",
+      "label": "Email Field",
+      "icon": "ic_fluent_mail_24_regular",
+      "description": "Email input with basic validation.",
+      "editorModel": { "children": false, "propKeys": ["name", "label", "placeholder", "required", "className"] },
+      "defaults": { "name": "email", "label": "Email", "placeholder": "", "required": false, "className": "" },
+      "supports": { "children": false },
+      "output": { "tag": "input" },
+      "propsSchema": { "type": "object", "properties": { "name": { "type": "string" }, "label": { "type": "string" }, "placeholder": { "type": "string" }, "required": { "type": "boolean" }, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "field_phone": {
+      "status": "implemented",
+      "category": "interactive",
+      "label": "Phone Field",
+      "icon": "ic_fluent_phone_24_regular",
+      "description": "Phone input with optional mask.",
+      "editorModel": { "children": false, "propKeys": ["name", "label", "placeholder", "required", "className"] },
+      "defaults": { "name": "phone", "label": "Phone", "placeholder": "", "required": false, "className": "" },
+      "supports": { "children": false },
+      "output": { "tag": "input" },
+      "propsSchema": { "type": "object", "properties": { "name": { "type": "string" }, "label": { "type": "string" }, "placeholder": { "type": "string" }, "required": { "type": "boolean" }, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "field_number": {
+      "status": "implemented",
+      "category": "interactive",
+      "label": "Number Field",
+      "icon": "ic_fluent_number_symbol_24_regular",
+      "description": "Numeric input field.",
+      "editorModel": { "children": false, "propKeys": ["name", "label", "min", "max", "step", "required", "className"] },
+      "defaults": { "name": "number", "label": "Number", "min": null, "max": null, "step": 1, "required": false, "className": "" },
+      "supports": { "children": false },
+      "output": { "tag": "input" },
+      "propsSchema": { "type": "object", "properties": { "name": { "type": "string" }, "label": { "type": "string" }, "min": {}, "max": {}, "step": { "type": "number" }, "required": { "type": "boolean" }, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "field_select": {
+      "status": "implemented",
+      "category": "interactive",
+      "label": "Select Field",
+      "icon": "ic_fluent_chevron_down_24_regular",
+      "description": "Dropdown select field.",
+      "editorModel": { "children": false, "propKeys": ["name", "label", "options", "required", "className"] },
+      "defaults": { "name": "select", "label": "Choose", "options": [{ "label": "Option 1", "value": "1" }], "required": false, "className": "" },
+      "supports": { "children": false },
+      "output": { "tag": "select" },
+      "propsSchema": { "type": "object", "properties": { "name": { "type": "string" }, "label": { "type": "string" }, "options": { "type": "array" }, "required": { "type": "boolean" }, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "field_radio": {
+      "status": "implemented",
+      "category": "interactive",
+      "label": "Radio Group",
+      "icon": "ic_fluent_radio_button_24_regular",
+      "description": "Single-choice radio group.",
+      "editorModel": { "children": false, "propKeys": ["name", "label", "options", "required", "className"] },
+      "defaults": { "name": "radio", "label": "Choose", "options": [{ "label": "Yes", "value": "yes" }, { "label": "No", "value": "no" }], "required": false, "className": "" },
+      "supports": { "children": false },
+      "output": { "tag": "div" },
+      "propsSchema": { "type": "object", "properties": { "name": { "type": "string" }, "label": { "type": "string" }, "options": { "type": "array" }, "required": { "type": "boolean" }, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "field_checkbox": {
+      "status": "implemented",
+      "category": "interactive",
+      "label": "Checkbox",
+      "icon": "ic_fluent_checkbox_checked_24_regular",
+      "description": "Single checkbox field.",
+      "editorModel": { "children": false, "propKeys": ["name", "label", "required", "className"] },
+      "defaults": { "name": "checkbox", "label": "Check", "required": false, "className": "" },
+      "supports": { "children": false },
+      "output": { "tag": "input" },
+      "propsSchema": { "type": "object", "properties": { "name": { "type": "string" }, "label": { "type": "string" }, "required": { "type": "boolean" }, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "field_checkbox_group": {
+      "status": "implemented",
+      "category": "interactive",
+      "label": "Checkbox Group",
+      "icon": "ic_fluent_checkbox_2_24_regular",
+      "description": "Multiple-choice checkbox group.",
+      "editorModel": { "children": false, "propKeys": ["name", "label", "options", "required", "className"] },
+      "defaults": { "name": "checkboxes", "label": "Options", "options": [{ "label": "A", "value": "a" }], "required": false, "className": "" },
+      "supports": { "children": false },
+      "output": { "tag": "div" },
+      "propsSchema": { "type": "object", "properties": { "name": { "type": "string" }, "label": { "type": "string" }, "options": { "type": "array" }, "required": { "type": "boolean" }, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "field_date": {
+      "status": "implemented",
+      "category": "interactive",
+      "label": "Date Field",
+      "icon": "ic_fluent_calendar_day_24_regular",
+      "description": "Date picker field.",
+      "editorModel": { "children": false, "propKeys": ["name", "label", "required", "className"] },
+      "defaults": { "name": "date", "label": "Date", "required": false, "className": "" },
+      "supports": { "children": false },
+      "output": { "tag": "input" },
+      "propsSchema": { "type": "object", "properties": { "name": { "type": "string" }, "label": { "type": "string" }, "required": { "type": "boolean" }, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "field_file": {
+      "status": "implemented",
+      "category": "interactive",
+      "label": "File Field",
+      "icon": "ic_fluent_folder_24_regular",
+      "description": "File upload field for forms.",
+      "editorModel": { "children": false, "propKeys": ["name", "label", "accept", "multiple", "required", "className"] },
+      "defaults": { "name": "file", "label": "Upload", "accept": "", "multiple": false, "required": false, "className": "" },
+      "supports": { "children": false },
+      "output": { "tag": "input" },
+      "propsSchema": { "type": "object", "properties": { "name": { "type": "string" }, "label": { "type": "string" }, "accept": { "type": "string" }, "multiple": { "type": "boolean" }, "required": { "type": "boolean" }, "className": { "type": "string" } }, "additionalProperties": false }
+    },
+    "field_hidden": {
+      "status": "implemented",
+      "category": "interactive",
+      "label": "Hidden Field",
+      "icon": "ic_fluent_eye_hide_24_regular",
+      "description": "Hidden input for metadata.",
+      "editorModel": { "children": false, "propKeys": ["name", "value", "className"] },
+      "defaults": { "name": "hidden", "value": "", "className": "" },
+      "supports": { "children": false },
+      "output": { "tag": "input" },
+      "propsSchema": { "type": "object", "properties": { "name": { "type": "string" }, "value": { "type": "string" }, "className": { "type": "string" } }, "additionalProperties": false }
+    }
+  }
+}

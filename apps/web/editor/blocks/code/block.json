@@ -1,0 +1,13 @@
+{
+  "name": "core/code",
+  "title": "Code",
+  "category": "text",
+  "description": "Preformatted code block.",
+  "attributes": {
+    "code": { "type": "string", "default": "" },
+    "language": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "left" },
+    "className": { "type": "string", "default": "" },
+    "style": { "type": "object", "default": {} }
+  }
+}

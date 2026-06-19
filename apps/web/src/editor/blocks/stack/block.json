@@ -1,0 +1,12 @@
+{
+  "name": "core/stack",
+  "title": "Stack",
+  "category": "design",
+  "description": "Vertical stack layout container.",
+  "attributes": {
+    "gap": { "type": "string", "default": "16px" },
+    "align": { "type": "string", "default": "wide" },
+    "className": { "type": "string", "default": "" },
+    "children": { "type": "array", "default": [] }
+  }
+}

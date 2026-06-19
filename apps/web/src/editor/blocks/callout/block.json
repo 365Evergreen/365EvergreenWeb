@@ -1,0 +1,14 @@
+{
+  "name": "core/callout",
+  "title": "Callout",
+  "category": "design",
+  "description": "Notice block for tips, warnings, and status messages.",
+  "attributes": {
+    "variant": { "type": "string", "default": "info" },
+    "title": { "type": "string", "default": "Notice title" },
+    "text": { "type": "string", "default": "Important supporting message." },
+    "showIcon": { "type": "boolean", "default": true },
+    "className": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "wide" }
+  }
+}

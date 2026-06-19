@@ -1,0 +1,19 @@
+{
+  "name": "core/image",
+  "title": "Image",
+  "category": "media",
+  "description": "Uploaded or library-backed image block.",
+  "attributes": {
+    "src": { "type": "string", "default": "" },
+    "alt": { "type": "string", "default": "" },
+    "caption": { "type": "string", "default": "" },
+    "link": { "type": "object", "default": { "href": "", "target": "_blank" } },
+    "width": { "type": "string", "default": "" },
+    "height": { "type": "string", "default": "" },
+    "loading": { "type": "string", "default": "lazy" },
+    "focalPoint": { "type": "object", "default": { "x": 50, "y": 50 } },
+    "style": { "type": "object", "default": { "border": "", "radius": "" } },
+    "className": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "wide" }
+  }
+}

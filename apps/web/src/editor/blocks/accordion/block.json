@@ -1,0 +1,14 @@
+{
+  "name": "core/accordion",
+  "title": "Accordion",
+  "category": "interactive",
+  "description": "Collapsible shell block for grouped content.",
+  "attributes": {
+    "title": { "type": "string", "default": "Accordion item" },
+    "text": { "type": "string", "default": "Collapsible content summary" },
+    "open": { "type": "boolean", "default": false },
+    "showIcon": { "type": "boolean", "default": true },
+    "className": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "wide" }
+  }
+}

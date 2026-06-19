@@ -1,0 +1,12 @@
+{
+  "name": "core/spacer",
+  "title": "Spacer",
+  "category": "design",
+  "description": "Vertical whitespace block with adjustable height.",
+  "attributes": {
+    "height": { "type": "string", "default": "48px" },
+    "preset": { "type": "string", "default": "medium" },
+    "className": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "full" }
+  }
+}

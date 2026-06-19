@@ -1,0 +1,8 @@
+﻿Block,Category,Purpose
+Image,Media,Displays an image with caption.
+Gallery,Media,Multi-image gallery grid.
+Audio,Media,Embeds audio files.
+Video,Media,Embeds self‑hosted video.
+File,Media,Downloadable file link with icon.
+Media & Text,Media,Side‑by‑side media and text layout.
+Cover,Media,Hero-style image/video with overlay text.

@@ -1,0 +1,4 @@
+.pe-block[data-block-type="media-text"] .pe-block-media-text {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}

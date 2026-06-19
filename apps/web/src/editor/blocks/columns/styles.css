@@ -1,0 +1,11 @@
+.pe-block[data-block-type="columns"] .pe-block-columns {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: var(--pe-columns-template, repeat(2, minmax(0, 1fr)));
+}
+
+.pe-block[data-block-type="columns"] .pe-block-columns__summary {
+  color: #64748b;
+  grid-column: 1 / -1;
+  margin: 0;
+}

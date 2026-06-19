@@ -1,0 +1,76 @@
+
+<title>Power Automate Best Practices for Reliable Cloud Flows</title>
+<article>
+  <header>
+    <h1>Power Automate Best Practices for Reliable Cloud Flows</h1>
+    <p><time datetime="2026-06-20">June 20, 2026</time> · 9 min read</p>
+  </header>
+
+  <section>
+    <h2>Think like a solution, not a single flow</h2>
+    <p>
+      It’s tempting to build one giant flow that does everything. In practice, this leads to
+      brittle, hard-to-maintain automation. Instead, think in terms of modular solutions:
+      multiple flows, shared connections, and clear responsibilities.
+    </p>
+  </section>
+
+  <section>
+    <h2>Use solutions and environments</h2>
+    <p>
+      For anything beyond a quick personal automation, build flows inside <strong>solutions</strong>.
+      Solutions enable ALM: you can move flows between dev, test, and production environments,
+      use environment variables, and manage dependencies cleanly.
+    </p>
+  </section>
+
+  <section>
+    <h2>Design for failure and retries</h2>
+    <ul>
+      <li>
+        <strong>Configure retry policies:</strong>
+        For actions that call external services, use custom retry policies where appropriate.
+      </li>
+      <li>
+        <strong>Use scopes with run-after:</strong>
+        Group actions into scopes and configure <em>run after</em> settings to handle
+        <em>Failed</em>, <em>Timed out</em>, or <em>Skipped</em> states gracefully.
+      </li>
+      <li>
+        <strong>Log errors:</strong>
+        Write error details to a central log (SharePoint list, Dataverse table, or Application
+        Insights via HTTP) for later analysis.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Keep flows readable</h2>
+    <p>
+      Flows are often maintained by people who didn’t build them. Use clear naming and structure:
+    </p>
+    <ul>
+      <li><strong>Rename every action</strong> to something meaningful, not “Compose 17”.</li>
+      <li><strong>Add comments</strong> using notes to explain non-obvious expressions.</li>
+      <li><strong>Use child flows</strong> to encapsulate reusable logic.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Manage connections and permissions</h2>
+    <p>
+      Connections are security boundaries. Avoid building production flows that run under a
+      personal account. Use service accounts where allowed by policy, and ensure DLP policies
+      are configured to prevent risky data movement.
+    </p>
+  </section>
+
+  <section>
+    <h2>Monitor and optimize</h2>
+    <p>
+      Once a flow is live, your job isn’t done. Use the Power Automate analytics and run history
+      to monitor failures, performance, and usage. Identify long-running actions, unnecessary
+      loops, and noisy error patterns, then iterate on the design.
+    </p>
+  </section>
+</article>

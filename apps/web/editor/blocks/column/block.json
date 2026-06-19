@@ -1,0 +1,11 @@
+{
+  "name": "core/column",
+  "title": "Column",
+  "category": "design",
+  "description": "Single column container used inside Columns.",
+  "attributes": {
+    "width": { "type": "string", "default": "1fr" },
+    "className": { "type": "string", "default": "" },
+    "children": { "type": "array", "default": [] }
+  }
+}

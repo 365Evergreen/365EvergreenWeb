@@ -1,0 +1,52 @@
+[
+  {
+    "id": "post-001",
+    "slug": "power-automate-care",
+    "title": "What Is Power Automate and Why Should You Care?",
+    "summary": "Learn why Power Automate matters and how it fits into modern workflow automation.",
+    "status": "published",
+    "publishedDate": "2026-06-20T09:00:00Z",
+    "tags": ["power automate", "workflow", "automation"],
+    "content": { "path": "/dummy-content/post01.html" }
+  },
+  {
+    "id": "post-002",
+    "slug": "approval-flows-first-flow",
+    "title": "Building Your First Approval Flow in Power Automate",
+    "summary": "A practical guide to building approval workflows with Power Automate.",
+    "status": "published",
+    "publishedDate": "2026-06-20T09:15:00Z",
+    "tags": ["power automate", "approvals", "workflow"],
+    "content": { "path": "/dummy-content/post02.html" }
+  },
+  {
+    "id": "post-003",
+    "slug": "power-automate-sharepoint-workflows",
+    "title": "Power Automate and SharePoint: Modern Workflows Done Right",
+    "summary": "Why Power Automate is the modern alternative to classic SharePoint workflows.",
+    "status": "published",
+    "publishedDate": "2026-06-20T09:30:00Z",
+    "tags": ["power automate", "sharepoint", "workflow"],
+    "content": { "path": "/dummy-content/post03.html" }
+  },
+  {
+    "id": "post-004",
+    "slug": "power-automate-best-practices",
+    "title": "Power Automate Best Practices for Reliable Cloud Flows",
+    "summary": "Best practices for designing, monitoring, and operating reliable Power Automate flows.",
+    "status": "published",
+    "publishedDate": "2026-06-20T09:45:00Z",
+    "tags": ["power automate", "best practices", "cloud"],
+    "content": { "path": "/dummy-content/post04.html" }
+  },
+  {
+    "id": "post-005",
+    "slug": "power-automate-debugging-errors",
+    "title": "Debugging and Error Handling in Power Automate Flows",
+    "summary": "How to handle failures and build observability into your Power Automate solutions.",
+    "status": "published",
+    "publishedDate": "2026-06-20T10:00:00Z",
+    "tags": ["power automate", "debugging", "error handling"],
+    "content": { "path": "/dummy-content/post05.html" }
+  }
+]

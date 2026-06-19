@@ -1,0 +1,60 @@
+{
+  "blocks": {
+    "paragraph": "TextParagraph20Regular",
+    "heading": "TextHeader120Regular",
+    "list": "TextBulletList20Regular",
+    "quote": "TextQuote20Regular",
+    "pullquote": "TextQuote20Filled",
+    "code": "Code20Regular",
+    "table": "Table20Regular",
+    "image": "Image20Regular",
+    "gallery": "ImageMultiple20Regular",
+    "video": "Video20Regular",
+    "audio": "Speaker220Regular",
+    "file": "Document20Regular",
+    "cover": "ImageSparkle20Regular",
+    "mediaText": "ImageTable20Regular",
+    "group": "Tab20Regular",
+    "row": "ColumnTriple20Regular",
+    "stack": "ColumnSingle20Regular",
+    "columns": "ColumnTriple20Regular",
+    "column": "Column20Regular",
+    "separator": "LineHorizontal120Regular",
+    "spacer": "ArrowBidirectionalUpDown20Regular",
+    "buttons": "AppsListDetail20Regular",
+    "button": "CursorClick20Regular",
+    "accordion": "ChevronDown20Regular",
+    "accordionItem": "ChevronRight20Regular",
+    "embed": "Link20Regular"
+  },
+  "navigation": {
+    "home": "Home20Regular",
+    "page": "Document20Regular",
+    "section": "Folder20Regular",
+    "external": "ArrowSquareOut20Regular",
+    "menu": "Navigation20Regular",
+    "submenu": "ChevronRight20Regular",
+    "breadcrumb": "ChevronRight20Regular"
+  },
+  "actions": {
+    "add": "Add20Regular",
+    "edit": "Edit20Regular",
+    "delete": "Delete20Regular",
+    "duplicate": "Copy20Regular",
+    "move": "ReOrderDotsVertical20Regular",
+    "settings": "Settings20Regular",
+    "save": "Save20Regular",
+    "publish": "Send20Regular",
+    "preview": "Eye20Regular",
+    "undo": "ArrowUndo20Regular",
+    "redo": "ArrowRedo20Regular"
+  },
+  "editor": {
+    "blockSelector": "AppsList20Regular",
+    "documentOutline": "TextBulletListTree20Regular",
+    "propertiesPanel": "Settings20Regular",
+    "closePanel": "Dismiss20Regular",
+    "expand": "ChevronDown20Regular",
+    "collapse": "ChevronUp20Regular"
+  }
+}

@@ -1,0 +1,16 @@
+.editorHeaderToolbar {
+  transform: none;
+}
+
+.editorHeaderCenter {
+  transform: none;
+}
+
+.editorDocumentBarTitle {
+  opacity: 1;
+  transform: translateX(0%);
+}
+
+.editorHeaderSettings {
+  transform: none;
+}

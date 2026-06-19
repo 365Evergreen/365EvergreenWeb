@@ -1,0 +1,13 @@
+{
+  "name": "core/file",
+  "title": "File",
+  "category": "media",
+  "description": "Downloadable file link block.",
+  "attributes": {
+    "src": { "type": "string", "default": "" },
+    "filename": { "type": "string", "default": "" },
+    "filesize": { "type": "string", "default": "" },
+    "description": { "type": "string", "default": "" },
+    "className": { "type": "string", "default": "" }
+  }
+}

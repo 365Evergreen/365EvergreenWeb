@@ -1,0 +1,20 @@
+.pe-block-grid {
+  display: grid;
+}
+
+.pe-block-grid__cell {
+  min-height: 120px;
+  display: grid;
+  place-items: center;
+  border: 1px dashed #cbd5e1;
+  border-radius: 1rem;
+  background: #f8fafc;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.pe-block-grid__summary {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #475569;
+}

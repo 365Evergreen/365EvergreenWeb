@@ -1,0 +1,41 @@
+control,variable,type,label,contexts
+select-parent,parentSelectorButton,button,Select parent block,
+open-transform-picker,blockTypeButton,button,Change block type or style,paragraph;heading
+transform,blockTypeSelect,select,Block type,paragraph;heading
+move-up,moveUpButton,button,Move up,paragraph;heading;code;gallery:block;list:block;image
+move-down,moveDownButton,button,Move down,paragraph;heading;code;gallery:block;list:block;image
+align,alignSelect,select,Alignment,paragraph;heading;image
+bold,boldButton,button,Bold,paragraph;heading;list:item
+italic,italicButton,button,Italic,paragraph;heading;list:item
+link,linkButton,button,Link,paragraph;heading;list:item
+inline-code,inlineCodeButton,button,Inline code,paragraph;heading;list:item
+font-size,fontSizeSelect,select,Font size,paragraph;heading;list:item
+font-weight,fontWeightSelect,select,Font weight,paragraph;heading;list:item
+line-height,lineHeightSelect,select,Line height,paragraph;heading;list:item
+text-color,textColorInput,color,Text color,paragraph;heading;list:item
+background-color,backgroundColorInput,color,Background color,paragraph;heading;list:item
+reset-styles,resetStylesButton,button,Reset styles,paragraph;heading;list:item
+heading-level,headingLevelSelect,select,Heading level,heading
+language,codeLanguageSelect,select,Code language,code
+toggle-list,toggleListModeButton,toggle,Toggle list,list:block
+marker-style,markerStyleSelect,select,Marker style,
+item-gap,itemGapSelect,select,List item gap,
+indent-width,indentWidthSelect,select,List indent,
+upload-image,uploadButton,button,Upload image,
+media-library,libraryButton,button,Media library,
+insert-image-url,urlButton,button,Insert image URL,
+replace-image,replaceImageButton,button,Replace image,image
+focal-point,focalPointButton,button,Focal point,image
+gallery-add-images,galleryAddImagesButton,button,Add gallery images,gallery:block
+gallery-columns,galleryColumnsSelect,select,Gallery columns,gallery:block
+gallery-crop-toggle,galleryCropToggleButton,toggle,Gallery crop,gallery:block
+gallery-link-to,galleryLinkSelect,select,Gallery link,gallery:block
+gallery-lightbox-toggle,galleryLightboxToggleButton,toggle,Gallery lightbox,gallery:block
+gallery-layout,galleryLayoutSelect,select,Gallery layout,gallery:block
+gallery-to-images,galleryToImagesButton,button,Convert to images,gallery:block
+gallery-replace-image,galleryReplaceImageButton,button,Replace gallery image,gallery:image
+gallery-remove-image,galleryRemoveImageButton,button,Remove gallery image,gallery:image
+gallery-image-link,galleryImageLinkButton,button,Gallery image link,gallery:image
+gallery-image-crop-toggle,galleryImageCropButton,toggle,Gallery image crop,gallery:image
+gallery-to-gallery,galleryToGalleryButton,button,Convert to gallery,image
+delete,optionsButton,menu,Options / Delete,paragraph;heading;gallery:block;image

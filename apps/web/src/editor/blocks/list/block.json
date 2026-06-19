@@ -1,0 +1,14 @@
+{
+  "name": "core/list",
+  "title": "List",
+  "category": "text",
+  "description": "Ordered or unordered list.",
+  "attributes": {
+    "ordered": { "type": "boolean", "default": false },
+    "items": { "type": "array", "default": [] },
+    "align": { "type": "string", "default": "left" },
+    "className": { "type": "string", "default": "" },
+    "markerStyle": { "type": "string", "default": "disc" },
+    "style": { "type": "object", "default": {} }
+  }
+}

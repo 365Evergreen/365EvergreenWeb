@@ -1,0 +1,9 @@
+{
+  "name": "drawer",
+  "title": "Drawer",
+  "category": "Interactive",
+  "description": "Slide-out drawer with a nested block canvas.",
+  "supports": {
+    "children": true
+  }
+}

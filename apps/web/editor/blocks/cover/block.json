@@ -1,0 +1,43 @@
+{
+  "name": "cover",
+  "title": "Cover",
+  "category": "media",
+  "description": "Hero-style cover block with background media, overlay, and nested content.",
+  "supports": {
+    "children": true,
+    "alignment": ["default", "wide", "full"]
+  },
+  "attributes": {
+    "background": {
+      "type": "object",
+      "default": {
+        "type": null,
+        "src": null,
+        "alt": "",
+        "poster": "",
+        "focalPoint": { "x": 0.5, "y": 0.5 },
+        "fixed": false,
+        "autoplay": true,
+        "loop": true
+      }
+    },
+    "overlay": {
+      "type": "object",
+      "default": {
+        "color": "#000000",
+        "opacity": 0.5
+      }
+    },
+    "minHeight": { "type": "string", "default": "50vh" },
+    "contentPosition": { "type": "string", "default": "center center" },
+    "children": { "type": "array", "default": [] },
+    "style": {
+      "type": "object",
+      "default": {
+        "layout": "default",
+        "spacing": {}
+      }
+    },
+    "className": { "type": "string", "default": "" }
+  }
+}

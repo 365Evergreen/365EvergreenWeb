@@ -70,24 +70,25 @@ body {
 a,
 button {
   font: inherit;
+  font-weight: 300;
 }
 
 a {
   color: inherit;
 }
 
-a:focus-visible,
+/*a:focus-visible,
 button:focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 2px;
-}
+}*/
 
 .app-shell {
   min-height: 100svh;
   display: grid;
   grid-template-rows: auto 1fr auto;
   margin: 0 auto;
-  max-width: 1200px;
+  /* max-width: 1200px; */
   background: var(--surface);
   border-inline: 1px solid var(--border);
 }
@@ -162,12 +163,12 @@ h2 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid transparent;
+ /* border: 1px solid transparent;*/
   border-radius: var(--radius-sm);
   text-decoration: none;
   padding: var(--space-3) var(--space-6);
   transition: background-color 0.2s ease, border-color 0.2s ease;
-  font-weight: 600;
+  font-weight: 450;
 }
 
 .button--primary {
@@ -180,7 +181,7 @@ h2 {
 }
 
 .button--secondary {
-  border-color: var(--border);
+ /* border-color: var(--border);*/
   color: var(--text-primary);
   background: var(--surface);
 }

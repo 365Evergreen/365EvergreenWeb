@@ -1,0 +1,13 @@
+{
+  "name": "core/divider",
+  "title": "Divider",
+  "category": "design",
+  "description": "Decorative divider with style and thickness controls.",
+  "attributes": {
+    "style": { "type": "string", "default": "solid" },
+    "thickness": { "type": "string", "default": "2px" },
+    "width": { "type": "string", "default": "full" },
+    "className": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "full" }
+  }
+}

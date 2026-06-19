@@ -1,0 +1,128 @@
+.pe-block-drawer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--panel-radius);
+  background: var(--panel);
+  box-shadow: inset 0 0 0 1px rgba(16, 110, 190, 0.08);
+}
+
+.pe-block-drawer__preview {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.pe-block-drawer__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--text);
+}
+
+.pe-block-drawer__meta strong {
+  font-size: 0.95rem;
+}
+
+.pe-block-drawer__meta span {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.pe-block-drawer__actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pe-drawer-shell {
+  z-index: 1200;
+}
+
+.pe-drawer-shell.is-overlay-disabled .site-drawer-backdrop,
+.pe-block-drawer--saved.is-overlay-disabled .site-drawer-backdrop {
+  display: none;
+}
+
+.pe-drawer-panel {
+  z-index: 1201;
+}
+
+.pe-drawer-panel--right {
+  right: 0;
+}
+
+.pe-drawer-panel--left {
+  left: 0;
+  right: auto;
+  border-left: 0;
+  border-right: 1px solid var(--border);
+  box-shadow: 16px 0 40px rgba(15, 23, 42, 0.18);
+  transform: translateX(-100%);
+}
+
+.site-drawer[open] .pe-drawer-panel--left {
+  transform: translateX(0);
+}
+
+.pe-drawer-panel__title {
+  color: var(--text);
+}
+
+.pe-drawer-dismiss {
+  color: var(--muted);
+}
+
+.pe-drawer-dismiss svg {
+  width: 20px;
+  height: 20px;
+}
+
+.pe-drawer-panel__content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pe-drawer-panel__footer {
+  background: #fafafa;
+}
+
+.pe-drawer-panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.pe-drawer-canvas {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 180px;
+}
+
+.pe-drawer-canvas__empty {
+  display: grid;
+  gap: 12px;
+  justify-items: start;
+  border: 1px dashed #bfd2ff;
+  border-radius: 14px;
+  padding: 20px;
+  background: #ffffff;
+  color: var(--muted);
+}
+
+.pe-drawer-canvas__empty p {
+  margin: 0;
+}
+
+.pe-drawer-panel__hint {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--muted);
+}

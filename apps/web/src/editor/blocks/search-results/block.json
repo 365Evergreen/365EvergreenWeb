@@ -1,0 +1,16 @@
+{
+  "name": "core/search-results",
+  "title": "Search Results",
+  "category": "interactive",
+  "description": "Dynamic, filterable grid of search results with card templates.",
+  "attributes": {
+    "dataSource": { "type": "string", "default": "" },
+    "template": { "type": "string", "default": "card" },
+    "columns": { "type": "number", "default": 3 },
+    "pageSize": { "type": "number", "default": 6 },
+    "showModified": { "type": "boolean", "default": true },
+    "showContributors": { "type": "boolean", "default": true },
+    "className": { "type": "string", "default": "" },
+    "align": { "type": "string", "default": "wide" }
+  }
+}

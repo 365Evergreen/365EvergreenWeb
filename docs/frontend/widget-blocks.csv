@@ -1,0 +1,11 @@
+﻿Block,Category,Purpose
+Shortcode,Widgets,Executes legacy shortcodes.
+Archives,Widgets,Displays monthly archive list.
+Calendar,Widgets,Calendar of posts.
+Categories List,Widgets,Displays categories list.
+Latest Posts,Widgets,Shows recent posts.
+Latest Comments,Widgets,Shows recent comments.
+RSS,Widgets,Displays RSS feed.
+Search,Widgets,Search form.
+Tag Cloud,Widgets,Tag cloud visualization.
+Page List,Widgets,Auto-generated list of pages.

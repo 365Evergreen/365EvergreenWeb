@@ -1,0 +1,14 @@
+.pe-block-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.pe-block-icon__glyph {
+  line-height: 1;
+}
+
+.pe-block-icon__label {
+  color: #334155;
+  font-weight: 600;
+}

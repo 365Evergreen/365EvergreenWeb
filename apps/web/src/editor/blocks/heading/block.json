@@ -1,0 +1,13 @@
+{
+  "name": "core/heading",
+  "title": "Heading",
+  "category": "text",
+  "description": "Section title with level control.",
+  "attributes": {
+    "text": { "type": "string", "default": "Heading" },
+    "level": { "type": "number", "default": 2 },
+    "align": { "type": "string", "default": "left" },
+    "className": { "type": "string", "default": "" },
+    "style": { "type": "object", "default": {} }
+  }
+}
