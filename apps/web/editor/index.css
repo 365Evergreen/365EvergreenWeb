@@ -1173,7 +1173,7 @@ main#pe-app.page-wrap.pe-app {
 .editor-header__settings {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 60px;
 }
 
 .editor-document-bar { display: flex; align-items: center; gap: 4px; }

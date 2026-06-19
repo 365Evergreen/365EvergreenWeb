@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useLayoutEffect } from 'react'
 import styles from './EditorPage.module.css'
 import '../editor/index.css'
 import '../editor/blocks/paragraph/styles.css'
@@ -33,13 +33,52 @@ import '../editor/blocks/search-results/styles.css'
 // Editor JS modules are loaded dynamically after the component mounts so markup exists before runtime initialization.
 import '../editor/styles.css'
 
+type EditorWindow = Window & {
+  EditorBlockRegistry?: { finalize?: (definitions: Record<string, unknown>, order: unknown) => void }
+  EDITOR_BLOCK_DEFINITIONS?: Record<string, unknown>
+  EDITOR_BLOCK_ORDER?: string[]
+  ToolbarFactory?: { setTopToolbarHost?: (host: HTMLElement) => void }
+  PAGE_MANAGER_API_BASE?: string
+}
+
+function waitForEditorDom(timeout = 2000) {
+  return new Promise<void>((resolve) => {
+    const requiredIds = [
+      'pe-editor-canvas',
+      'pe-block-groups',
+      'pe-patterns',
+      'pe-inserter-search',
+      'pe-inserter-panel',
+      'pe-inserter-modes',
+      'pe-canvas-title',
+      'pe-inspector-content'
+    ]
+
+    const hasDom = () => requiredIds.every((id) => document.getElementById(id) !== null)
+    if (hasDom()) {
+      resolve()
+      return
+    }
+
+    const start = Date.now()
+    const interval = window.setInterval(() => {
+      if (hasDom() || Date.now() - start > timeout) {
+        window.clearInterval(interval)
+        resolve()
+      }
+    }, 10)
+  })
+}
+
 export default function EditorPage() {
-  useEffect(() => {
+  useLayoutEffect(() => {
     const params = new URLSearchParams(window.location.search)
 
     if (params.get('embed') === '1') {
       document.documentElement.classList.add('pe-embed-mode')
     }
+
+    document.documentElement.classList.add('pe-editor-fullwidth')
 
     if (String(params.get('kind') || '').toLowerCase() === 'post') {
       const typeLabel = document.querySelector('.editor-document-bar__post-type-label')
@@ -57,7 +96,9 @@ export default function EditorPage() {
       }
     }
 
-    const w = window as any
+    const w = window as EditorWindow
+    let cleanupCollapsible: (() => void) | null = null
+    let cancelled = false
 
     async function loadEditorScripts() {
       const definitionImports = [
@@ -220,15 +261,15 @@ export default function EditorPage() {
       for (const loader of definitionImports) {
         try {
           await loader
-        } catch (e) {
-          console.error('Failed loading editor definition', e)
+        } catch (error) {
+          console.error('Failed loading editor definition', error)
         }
       }
 
       try {
         await import('../editor/core.js')
-      } catch (e) {
-        console.error('Failed loading editor core', e)
+      } catch (error) {
+        console.error('Failed loading editor core', error)
       }
 
       finalizeEditorBlocks()
@@ -246,8 +287,8 @@ export default function EditorPage() {
       for (const loader of runtimeImports) {
         try {
           await loader
-        } catch (e) {
-          console.error('Failed loading editor runtime', e)
+        } catch (error) {
+          console.error('Failed loading editor runtime', error)
         }
       }
     }
@@ -255,8 +296,10 @@ export default function EditorPage() {
     function finalizeEditorBlocks() {
       try {
         if (!w.EditorBlockRegistry || typeof w.EditorBlockRegistry.finalize !== 'function') return
-        w.EditorBlockRegistry.finalize(w.EDITOR_BLOCK_DEFINITIONS, w.EDITOR_BLOCK_ORDER)
-      } catch (e) { }
+        w.EditorBlockRegistry.finalize(w.EDITOR_BLOCK_DEFINITIONS || {}, w.EDITOR_BLOCK_ORDER)
+      } catch (error) {
+        console.warn('Failed to finalize editor blocks', error)
+      }
     }
 
     function mergeBlockDefinitionIcons() {
@@ -266,45 +309,47 @@ export default function EditorPage() {
         const iconMap: Record<string, string> = {}
         try {
           const rIcons = new XMLHttpRequest()
-          rIcons.open('GET', '../../design-system/icon-registry.json', false)
+          rIcons.open('GET', 'https://sa365evergreenwebsite.blob.core.windows.net/$web/assets/icon-registry.json', false)
           rIcons.send(null)
           if (rIcons.status === 200 && rIcons.responseText) {
             const regIcons = JSON.parse(rIcons.responseText)
             const items = regIcons && regIcons.regular ? regIcons.regular : []
-            items.forEach((it: any) => { if (it && it.title && it.source) iconMap[it.title] = it.source })
+            items.forEach((it: Record<string, unknown>) => {
+              if (it && typeof it === 'object' && 'title' in it && 'source' in it) {
+                const title = String((it as { title: unknown }).title)
+                const source = String((it as { source: unknown }).source)
+                iconMap[title] = source
+              }
+            })
           }
-        } catch (e) { }
+        } catch (error) {
+          console.warn('Failed to load icon registry for editor block definitions', error)
+        }
 
         const req = new XMLHttpRequest()
-        req.open('GET', '../block-registry.json', false)
+        req.open('GET', 'https://sa365evergreenwebsite.blob.core.windows.net/$web/assets/block-registry.json', false)
         req.send(null)
         if (req.status === 200 || req.responseText) {
           try {
-            const reg = JSON.parse(req.responseText)
-            const types = reg && reg.blockTypes ? reg.blockTypes : {}
+            const reg = JSON.parse(req.responseText) as Record<string, unknown>
+            const types = (reg && typeof reg === 'object' && 'blockTypes' in reg) ? (reg.blockTypes as Record<string, unknown>) : {}
             Object.keys(types).forEach((k) => {
               const t = types[k]
-              if (t && t.icon && w.EDITOR_BLOCK_DEFINITIONS[k]) {
-                const iconVal = t.icon
-                w.EDITOR_BLOCK_DEFINITIONS[k].icon = iconMap[iconVal] || iconVal
+              if (t && typeof t === 'object' && 'icon' in t && w.EDITOR_BLOCK_DEFINITIONS?.[k]) {
+                const iconVal = String((t as { icon: unknown }).icon)
+                ;(w.EDITOR_BLOCK_DEFINITIONS[k] as Record<string, unknown>).icon = iconMap[iconVal] || iconVal
               }
             })
-          } catch (e) { }
+          } catch (error) {
+            console.warn('Failed to merge editor block definition icons', error)
+          }
         }
-      } catch (e) { }
-    }
-
-    function loadSiteHeaderScript() {
-      function loadScript(primary: string, fallback: string) {
-        const s = document.createElement('script')
-        s.src = primary
-        s.onload = () => { }
-        s.onerror = () => { if (fallback) loadScript(fallback, '') }
-        document.head.appendChild(s)
+      } catch (error) {
+        console.warn('Failed to merge editor block definition icons', error)
       }
-      loadScript('/site-header.js', '../../design-system/site-header.js')
     }
 
+   
     function wireToolbarCenterHost() {
       try {
         const host = document.getElementById('cb-toolbar-center-host')
@@ -320,47 +365,7 @@ export default function EditorPage() {
           }, 250)
           return () => window.clearInterval(iv)
         }
-      } catch (e) { }
-    }
-
-    function injectAdminLink() {
-      try {
-        if (!location.pathname || !location.pathname.includes('/app-private')) return
-        function findIconSource(title: string) {
-          try {
-            const req = new XMLHttpRequest()
-            req.open('GET', '../../design-system/icon-registry.json', false)
-            req.send(null)
-            if (req.status === 200 && req.responseText) {
-              const reg = JSON.parse(req.responseText)
-              const items = reg && reg.regular ? reg.regular : []
-              for (let i = 0; i < items.length; i += 1) {
-                const it = items[i]
-                if (it && it.title === title && it.source) return it.source
-              }
-            }
-          } catch (e) { }
-          return null
-        }
-
-        window.addEventListener('load', function () {
-          try {
-            const header = document.getElementById('site-header')
-            if (!header || document.getElementById('site-admin-link')) return
-            const a = document.createElement('a')
-            a.id = 'site-admin-link'
-            a.className = 'site-admin-link'
-            a.href = '../admin/'
-            a.title = 'Admin'
-            const iconSpan = document.createElement('span')
-            iconSpan.className = 'cb-icon'
-            const svg = findIconSource('ic_fluent_settings_24_regular') || findIconSource('ic_fluent_app_folder_settings_24_regular')
-            iconSpan.innerHTML = svg || ''
-            a.appendChild(iconSpan)
-            header.appendChild(a)
-          } catch (e) { }
-        })
-      } catch (e) { }
+      } catch { /* empty */ }
     }
 
     function wireCollapsiblePanels() {
@@ -370,16 +375,18 @@ export default function EditorPage() {
       const iconMap = (() => {
         try {
           const req = new XMLHttpRequest()
-          req.open('GET', '../../design-system/icon-registry.json', false)
+          req.open('GET', 'https://sa365evergreenwebsite.blob.core.windows.net/$web/assets/icon-registry.json', false)
           req.send(null)
           if (req.status === 200 && req.responseText) {
             const reg = JSON.parse(req.responseText)
-            return (reg && reg.regular || []).reduce((acc: Record<string, string>, item: any) => {
-              if (item && item.title && item.source) acc[item.title] = item.source
+            return (reg && reg.regular || []).reduce((acc: Record<string, string>, item: never) => {
+              if (item && typeof item === 'object' && 'title' in item && 'source' in item) {
+                acc[(item as { title: string }).title] = (item as { source: string }).source
+              }
               return acc
             }, {})
           }
-        } catch (e) { }
+        } catch { /* empty */ }
         return {}
       })()
 
@@ -414,11 +421,17 @@ export default function EditorPage() {
         const cur = root.classList.toggle('collapsed-right')
         localStorage.setItem('editor.rightCollapsed', cur ? '1' : '0')
       }
-      const onKeyDown = (e: KeyboardEvent) => {
-        if (!e.altKey || e.shiftKey || e.ctrlKey) return
-        if (e.key === '1') { leftToggle && leftToggle.click(); e.preventDefault() }
-        if (e.key === '3') { rightToggle && rightToggle.click(); e.preventDefault() }
-      }
+const onKeyDown = (e: KeyboardEvent) => {
+  if (!e.altKey || e.shiftKey || e.ctrlKey) return;
+  
+  if (e.key === '1' && leftToggle) {
+    leftToggle.click();
+    e.preventDefault();
+  } else if (e.key === '3' && rightToggle) {
+    rightToggle.click();
+    e.preventDefault();
+  }
+};
 
       if (leftToggle) leftToggle.addEventListener('click', leftClick)
       if (rightToggle) rightToggle.addEventListener('click', rightClick)
@@ -431,36 +444,30 @@ export default function EditorPage() {
       }
     }
 
-    let cleanupCollapsible: (() => void) | null = null
-
     async function initEditorRuntime() {
+      await waitForEditorDom()
+      if (cancelled) return
       await loadEditorScripts()
       finalizeEditorBlocks()
       mergeBlockDefinitionIcons()
-      loadSiteHeaderScript()
-      wireToolbarCenterHost()
-      injectAdminLink()
+    
+      const toolbarCleanup = wireToolbarCenterHost()
       cleanupCollapsible = wireCollapsiblePanels()
+      if (toolbarCleanup) toolbarCleanup()
     }
 
-    initEditorRuntime()
+    void initEditorRuntime()
 
     return () => {
+      cancelled = true
+      document.documentElement.classList.remove('pe-editor-fullwidth')
       if (cleanupCollapsible) cleanupCollapsible()
     }
   }, [])
 
   return (
     <>
-      <div
-        id="site-header"
-        data-app="private"
-        data-auth="true"
-        data-nav="false"
-        data-search="false"
-        data-tenant="365evergreen.com"
-        data-title="365 Evergreen Editor"
-      />
+
 
       <div className="editor-header edit-post-header">
         <button
@@ -529,7 +536,7 @@ export default function EditorPage() {
             <button
               type="button"
               id="cb-title-command"
-              className="components-button editor-document-bar__command is-compact"
+              className={`components-button editor-document-bar__command is-compact ${styles.editorDocumentBarCommand}`}
               aria-label="Jump to page title"
             >
               <div className={`editor-document-bar__title ${styles.editorDocumentBarTitle}`}>
@@ -579,7 +586,7 @@ export default function EditorPage() {
                 type="button"
                 id="cb-edit-pages"
                 aria-pressed="false"
-                aria-controls="gutenberg-edit-pages-panel:gutenberg-edit-pages-panel"
+                data-aria-controls="gutenberg-edit-pages-panel:gutenberg-edit-pages-panel"
                 aria-expanded="false"
                 aria-disabled="false"
                 className="components-button is-compact has-icon"
@@ -595,7 +602,6 @@ export default function EditorPage() {
                 type="button"
                 id="cb-settings"
                 aria-pressed="true"
-                aria-controls="edit-post-block"
                 data-aria-controls="edit-post:block"
                 aria-expanded="true"
                 aria-disabled="false"

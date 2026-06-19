@@ -35,20 +35,48 @@
   const defs = window.EDITOR_BLOCK_DEFINITIONS || {};
   // load icon registry synchronously so we can use registry SVGs for chevrons
   const _iconRegistry = (function(){
-    try{
-      const xhr = new XMLHttpRequest(); xhr.open('GET','../../design-system/icon-registry.json', false); xhr.send(null);
-      if (xhr.status === 200 && xhr.responseText){
-        const reg = JSON.parse(xhr.responseText);
-        const map = {};
-        (reg && reg.regular || []).forEach(it=>{ if (it && it.title && it.source) map[it.title]=it.source; });
-        return map;
+    const sources = [
+      'https://sa365evergreenwebsite.blob.core.windows.net/$web/assets/icon-registry.json',
+      './icon-registry.json',
+      '../editor/icon-registry.json'
+    ];
+    for (const src of sources) {
+      try {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', src, false);
+        xhr.send(null);
+        if (xhr.status === 200 && xhr.responseText) {
+          const reg = JSON.parse(xhr.responseText);
+          const map = {};
+          (reg && reg.regular || []).forEach(it=>{ if (it && it.title && it.source) map[it.title]=it.source; });
+          return map;
+        }
+      } catch (e) {
+        // try next source
       }
-    }catch(e){}
+    }
     return {};
   })();
   const blockOrder = Array.isArray(window.EDITOR_BLOCK_ORDER) ? window.EDITOR_BLOCK_ORDER : Object.keys(defs);
   const blockOrderIndex = new Map(blockOrder.map((key, index) => [key, index]));
   function getTitle(def, key){ return (def && (def.title || def.label)) || key || '' }
+  function escapeHtml(value){
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+  function getIconHtml(icon){
+    if (icon === null || icon === undefined) return ''
+    if (typeof icon !== 'string') icon = String(icon)
+    const trimmed = icon.trim()
+    if (!trimmed) return ''
+    if (trimmed.startsWith('<svg')) return trimmed
+    if (_iconRegistry[trimmed]) return _iconRegistry[trimmed]
+    return `<span>${escapeHtml(trimmed)}</span>`
+  }
   const modes = ['Blocks','Patterns','Media','Forms'];
   let activeMode = 'Blocks';
   const CATEGORY_ORDER = ['Text','Media','Embed','Layout','Design','Interactive','Custom'];
@@ -178,7 +206,7 @@
       b.type = 'button';
       b.dataset.key = item.key;
       b.title = getTitle(item.def, item.key);
-         const icon = item.def.icon || '';
+      const icon = getIconHtml(item.def.icon || '')
       b.innerHTML = `<div class="tile-icon">${icon}</div><div class="tile-title">${getTitle(item.def,item.key)}</div>`;
       b.setAttribute('aria-label', getTitle(item.def, item.key) + ' - ' + (item.def.description || ''));
       b.addEventListener('click', ()=>{
@@ -265,7 +293,7 @@
       visibleItems.forEach(item=>{
         const b = document.createElement('button'); b.className='block-tile'; b.draggable=true; b.tabIndex=0;
         b.dataset.key = item.key;
-           const icon = item.def.icon || '';
+        const icon = getIconHtml(item.def.icon || '')
         b.innerHTML = `<div class="tile-icon">${icon}</div><div class="tile-title">${getTitle(item.def,item.key)}</div>`;
         b.setAttribute('aria-label', getTitle(item.def,item.key) + ' - ' + (item.def.description||''));
         b.addEventListener('click',()=>{
@@ -297,7 +325,8 @@
       const text = (getTitle(item.def,item.key)||'') + ' ' + (item.def.description||'');
       if (q && !fuzzyMatch(text,q)) return;
       const node = document.createElement('div'); node.className='block-item'; node.dataset.type = item.key; node.tabIndex=0;
-      node.innerHTML = `<div class="block-icon">${item.def.icon||item.def.fallbackIcon||'▦'}</div><div class="block-meta"><strong>${getTitle(item.def,item.key)}</strong><div class="desc">${item.def.description||''}</div></div>`;
+      const icon = getIconHtml(item.def.icon || item.def.fallbackIcon || '▦')
+      node.innerHTML = `<div class="block-icon">${icon}</div><div class="block-meta"><strong>${getTitle(item.def,item.key)}</strong><div class="desc">${item.def.description||''}</div></div>`;
       node.addEventListener('click', ()=>{ emitInsertFromType(item.key); closeInlineInserter(); });
       container.appendChild(node);
     });

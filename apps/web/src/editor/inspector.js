@@ -531,6 +531,11 @@
     return /post/i.test(label && label.textContent ? label.textContent : '');
   }
 
+  function isInspectorFocused(){
+    const active = document.activeElement;
+    return !!(active && target.contains(active) && ['INPUT','TEXTAREA','SELECT'].includes(active.tagName));
+  }
+
   function renderPage(){
     const page = EditorCore.getPage() || { attrs: {} };
     target.innerHTML = '';
@@ -608,6 +613,7 @@
   });
 
   EditorCore.on('state:changed', (state) => {
+    if (isInspectorFocused()) return;
     const block = state && state.selectedId ? (state.blocks || []).find((entry) => entry.id === state.selectedId) : null;
     if (!block || block.type !== 'gallery') selectedGalleryImageId = null;
     // update unsaved indicator for page
@@ -620,6 +626,7 @@
   });
 
   EditorCore.on('page:changed', ()=>{
+    if (isInspectorFocused()) return;
     const pageTabActive = document.getElementById('pe-tab-page') && document.getElementById('pe-tab-page').classList.contains('active');
     if (pageTabActive) renderPage();
   });

@@ -1,9 +1,15 @@
 .editorHeaderToolbar {
-  transform: none;
+    gap: 140px;
+    transform: none;
 }
 
 .editorHeaderCenter {
   transform: none;
+  min-width: 280px;
+}
+
+.editorDocumentBarCommand {
+  min-width: 260px;
 }
 
 .editorDocumentBarTitle {

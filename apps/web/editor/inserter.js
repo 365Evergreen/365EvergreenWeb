@@ -152,7 +152,10 @@
 
   function renderPatterns(){
     const patterns = Object.keys(defs).filter(k=> defs[k].pattern);
-    if(!patterns.length){ patternsEl.style.display='none'; return; }
+    if(!patterns.length || !patternsEl){
+      if (patternsEl) patternsEl.style.display='none';
+      return;
+    }
     patternsEl.style.display='block';
     patternsEl.innerHTML = '<strong>Patterns</strong>';
     patterns.forEach(k=>{

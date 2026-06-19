@@ -113,6 +113,14 @@ button:focus-visible {
   padding: var(--space-8) var(--space-4);
 }
 
+html.pe-editor-fullwidth .main-content,
+html.pe-editor-fullwidth .page-shell {
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+}
+
 .page-shell {
   display: grid;
   gap: var(--space-10);
