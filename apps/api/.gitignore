@@ -1,0 +1,9 @@
+local.settings.json
+node_modules/
+
+# Azure Functions build artifacts
+bin/
+obj/
+
+# Function runtime logs
+*.log

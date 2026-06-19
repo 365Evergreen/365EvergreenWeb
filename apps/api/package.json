@@ -1,0 +1,12 @@
+{
+  "name": "365-evergreen-api",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@azure/data-tables": "^13.3.2",
+    "@azure/storage-blob": "^12.32.0"
+  },
+  "scripts": {
+    "start": "func start"
+  }
+}

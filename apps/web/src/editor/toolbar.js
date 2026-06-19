@@ -6,13 +6,10 @@
   const RICH_TEXT_TYPES = new Set(['paragraph', 'heading', 'list']);
   const EditorGalleryUtils = window.EditorGalleryUtils || {};
   const PrivateMediaLibrary = window.PrivateMediaLibrary || null;
-  const DEPLOYED_API_BASE = 'https://storage-swa-ccctdwfnbneeaegr.australiaeast-01.azurewebsites.net/api';
   const UPSERT_POST_PATH = '/upsert-post';
   const GET_POST_ADMIN_PATH = '/get-post-admin';
-  const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  const isStaticWebAppsHost = /\.azurestaticapps\.net$/i.test(window.location.hostname);
   const configuredApiBase = typeof window.PAGE_MANAGER_API_BASE === 'string' ? window.PAGE_MANAGER_API_BASE.trim() : '';
-  const API_BASE = configuredApiBase || ((isLocalHost || isStaticWebAppsHost) ? '/api' : DEPLOYED_API_BASE);
+  const API_BASE = configuredApiBase || '/api';
   const CREATE_PAGE_PATH = '/create-page';
   const EDIT_PAGE_PATH = '/edit-page';
   const routeParams = new URLSearchParams(window.location.search);
@@ -1410,77 +1407,99 @@
 
 /* Command bar wiring: live editor header actions, preview, settings, menus, undo/redo */
 (function(){
-  if (!window.EditorCore) return;
-  const root = document.documentElement;
-  const rootShell = document.querySelector('.editor-shell');
-  const header = document.querySelector('.editor-header.edit-post-header');
-  if (!header) return;
+  if (window.__editorCommandBarWired) return;
+  window.__editorCommandBarWired = true;
 
-  const btnBack = document.getElementById('cb-back');
-  const btnSave = document.getElementById('cb-save');
-  const btnPublish = document.getElementById('cb-publish');
-  const btnUndo = document.querySelector('.editor-history__undo');
-  const btnRedo = document.querySelector('.editor-history__redo');
-  const btnOverview = document.getElementById('cb-document-overview');
-  const btnPreviewToggle = document.getElementById('cb-preview-toggle');
-  const previewMenu = document.getElementById('cb-preview-menu');
-  const btnViewPublished = document.getElementById('cb-view-published');
-  const btnEditPages = document.getElementById('cb-edit-pages');
-  const btnSettings = document.getElementById('cb-settings');
-  const btnMore = document.getElementById('cb-more');
-  const moreMenu = document.getElementById('cb-more-menu');
-  const btnTitle = document.getElementById('cb-title-command');
-  const titleInput = document.getElementById('pe-canvas-title');
-  const titleText = document.querySelector('.editor-document-bar__post-title');
-  const rightToggle = document.getElementById('pe-toggle-right');
-  const topToolbarHost = document.getElementById('cb-toolbar-center-host');
-  const DEPLOYED_API_BASE = 'https://storage-swa-ccctdwfnbneeaegr.australiaeast-01.azurewebsites.net/api';
-  const UPSERT_POST_PATH = '/upsert-post';
-  const GET_POST_ADMIN_PATH = '/get-post-admin';
-  const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  const isStaticWebAppsHost = /\.azurestaticapps\.net$/i.test(window.location.hostname);
-  const configuredApiBase = typeof window.PAGE_MANAGER_API_BASE === 'string' ? window.PAGE_MANAGER_API_BASE.trim() : '';
-  const API_BASE = configuredApiBase || ((isLocalHost || isStaticWebAppsHost) ? '/api' : DEPLOYED_API_BASE);
-  const CREATE_PAGE_PATH = '/create-page';
-  const EDIT_PAGE_PATH = '/edit-page';
-  const routeParams = new URLSearchParams(window.location.search);
-  const editorKind = String(routeParams.get('kind') || 'page').toLowerCase() === 'post' ? 'post' : 'page';
-  const overviewMenu = document.createElement('div');
-  overviewMenu.id = 'cb-overview-menu';
-  overviewMenu.className = 'cb-menu cb-menu--overview';
-  overviewMenu.hidden = true;
-  document.body.appendChild(overviewMenu);
+  const maxAttempts = 30;
+  let attemptCount = 0;
+  const readyInterval = window.setInterval(() => {
+    attemptCount += 1;
+    if (attemptCount > maxAttempts || tryInitCommandBar()) {
+      window.clearInterval(readyInterval);
+    }
+  }, 100);
 
-  const history = { stack: [], index: -1 };
-  const previewWidths = { desktop: '1200px', tablet: '820px', mobile: '420px' };
+  tryInitCommandBar();
 
-  function snapshot(){ return JSON.stringify(EditorCore.getState()); }
-  function pushHistory(){
-    try{
-      const s = snapshot();
-      if (history.index >= 0 && history.stack[history.index] === s) return;
-      history.stack = history.stack.slice(0, history.index + 1);
-      history.stack.push(s);
-      history.index = history.stack.length - 1;
-      updateUndoRedoButtons();
-    }catch(e){}
-  }
-  function updateUndoRedoButtons(){
-    if (btnUndo) btnUndo.disabled = history.index <= 0;
-    if (btnRedo) btnRedo.disabled = history.index >= history.stack.length - 1;
-  }
-  function undo(){
-    if (history.index <= 0) return;
-    history.index--;
-    EditorCore.setState(JSON.parse(history.stack[history.index]));
-    updateUndoRedoButtons();
-  }
-  function redo(){
-    if (history.index >= history.stack.length - 1) return;
-    history.index++;
-    EditorCore.setState(JSON.parse(history.stack[history.index]));
-    updateUndoRedoButtons();
-  }
+  function tryInitCommandBar() {
+    if (!window.EditorCore) return false;
+    const root = document.documentElement;
+    const rootShell = document.querySelector('.editor-shell');
+    const header = document.querySelector('.editor-header.edit-post-header');
+    if (!header) return false;
+
+    const btnBack = document.getElementById('cb-back');
+    const btnSave = document.getElementById('cb-save');
+    const btnPublish = document.getElementById('cb-publish');
+    const btnUndo = document.querySelector('.editor-history__undo');
+    const btnRedo = document.querySelector('.editor-history__redo');
+    const btnOverview = document.getElementById('cb-document-overview');
+    const btnPreviewToggle = document.getElementById('cb-preview-toggle');
+    const previewMenu = document.getElementById('cb-preview-menu');
+    const btnViewPublished = document.getElementById('cb-view-published');
+    const btnEditPages = document.getElementById('cb-edit-pages');
+    const btnSettings = document.getElementById('cb-settings');
+    const btnMore = document.getElementById('cb-more');
+    const moreMenu = document.getElementById('cb-more-menu');
+    const btnTitle = document.getElementById('cb-title-command');
+    const titleInput = document.getElementById('pe-canvas-title');
+    const titleText = document.querySelector('.editor-document-bar__post-title');
+    const rightToggle = document.getElementById('pe-toggle-right');
+    const topToolbarHost = document.getElementById('cb-toolbar-center-host');
+    const UPSERT_POST_PATH = '/upsert-post';
+    const GET_POST_ADMIN_PATH = '/get-post-admin';
+    const configuredApiBase = typeof window.PAGE_MANAGER_API_BASE === 'string' ? window.PAGE_MANAGER_API_BASE.trim() : '';
+    const API_BASE = configuredApiBase || '/api';
+    const CREATE_PAGE_PATH = '/create-page';
+    const EDIT_PAGE_PATH = '/edit-page';
+    const routeParams = new URLSearchParams(window.location.search);
+    const editorKind = String(routeParams.get('kind') || 'page').toLowerCase() === 'post' ? 'post' : 'page';
+    const overviewMenu = document.createElement('div');
+    overviewMenu.id = 'cb-overview-menu';
+    overviewMenu.className = 'cb-menu cb-menu--overview';
+    overviewMenu.hidden = true;
+    document.body.appendChild(overviewMenu);
+
+    const history = { stack: [], index: -1 };
+    const previewWidths = { desktop: '1200px', tablet: '820px', mobile: '420px' };
+
+    function snapshot(){ return JSON.stringify(EditorCore.getState()); }
+    function pushHistory(){
+      try{
+        const s = snapshot();
+        if (history.index >= 0 && history.stack[history.index] === s) return;
+        history.stack = history.stack.slice(0, history.index + 1);
+        history.stack.push(s);
+        history.index = history.stack.length - 1;
+        updateUndoRedoButtons();
+      }catch(e){ console.warn('Failed to push history', e); }
+    }
+
+    function updateUndoRedoButtons(){
+      if (btnUndo) btnUndo.disabled = history.index <= 0;
+      if (btnRedo) btnRedo.disabled = history.index >= history.stack.length - 1;
+    }
+
+    function navigateBack(){
+      if (!btnBack) return;
+      const page = EditorCore.getPage ? EditorCore.getPage() : null;
+      if (editorKind === 'post') {
+        window.location.href = '/posts';
+      } else {
+        window.location.href = '/pages';
+      }
+    }
+
+    function saveDraft(){ if (!btnSave || btnSave.disabled) return; /* actual function body below */ }
+    function publishPage(){ if (!btnPublish || btnPublish.disabled) return; /* actual function body below */ }
+    function toggleMenu(button, menu, beforeOpen){ return; }
+    function setTopToolbarEnabled(enabled){ return; }
+
+    function cleanupMenu() {
+      if (btnOverview && overviewMenu && !overviewMenu.isConnected) document.body.appendChild(overviewMenu);
+    }
+
+    // Existing wiring code continues below, unchanged...
 
   function isPostEditor(){
     return (typeof editorKind !== 'undefined') && editorKind === 'post';
@@ -2144,4 +2163,6 @@
   syncMenuToggles();
   updateUndoRedoButtons();
   initializePostEditor();
+  return true;
+}
 })();

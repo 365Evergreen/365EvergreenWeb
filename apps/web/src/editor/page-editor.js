@@ -1,5 +1,4 @@
 (() => {
-  const DEPLOYED_API_BASE = 'https://storage-swa-ccctdwfnbneeaegr.australiaeast-01.azurewebsites.net/api';
   const IMAGE_LIBRARY_PATH = '/images';
   const IMAGE_UPLOAD_PATH = '/upload-image';
   const CREATE_PAGE_PATH = '/create-page';
@@ -62,7 +61,7 @@
   const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
   const isStaticWebAppsHost = /\.azurestaticapps\.net$/i.test(window.location.hostname);
   const isRepoRootPrivatePreview = /^\/app-private\//i.test(window.location.pathname);
-  const API_BASE = window.PAGE_MANAGER_API_BASE || ((isLocalHost || isStaticWebAppsHost) ? '/api' : DEPLOYED_API_BASE);
+  const API_BASE = window.PAGE_MANAGER_API_BASE || '/api';
   const domParser = new DOMParser();
 
   let nextBlockIdValue = 1;

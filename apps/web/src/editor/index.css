@@ -56,12 +56,14 @@ body {
   position: absolute;
   top: 8px;
   right: 8px;
+  z-index: 10;
   border: none;
   background: var(--editor-surface-muted);
   padding: 6px;
   border-radius: 6px;
   cursor: pointer;
   color: var(--editor-text-strong);
+  pointer-events: auto;
 }
 
 .panel .panel-toggle .cb-icon,

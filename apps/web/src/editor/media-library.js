@@ -1,11 +1,8 @@
 (function () {
-  const DEPLOYED_API_BASE = 'https://storage-swa-ccctdwfnbneeaegr.australiaeast-01.azurewebsites.net/api';
-  const isLocalHost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-  const isStaticWebAppsHost = /\.azurestaticapps\.net$/i.test(window.location.hostname);
   const configuredApiBase = typeof window.PAGE_MANAGER_API_BASE === 'string'
     ? window.PAGE_MANAGER_API_BASE.trim()
     : '';
-  const API_BASE = configuredApiBase || ((isLocalHost || isStaticWebAppsHost) ? '/api' : DEPLOYED_API_BASE);
+  const API_BASE = configuredApiBase || '/api';
   const sourceRegistry = new Map();
   const pickerState = {
     options: null,

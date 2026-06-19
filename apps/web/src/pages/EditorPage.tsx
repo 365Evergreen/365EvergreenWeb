@@ -50,6 +50,16 @@ function waitForEditorDom(timeout = 2000) {
       'pe-inserter-search',
       'pe-inserter-panel',
       'pe-inserter-modes',
+      'pe-toggle-left',
+      'pe-toggle-right',
+      'cb-back',
+      'cb-save',
+      'cb-preview-toggle',
+      'cb-settings',
+      'cb-publish',
+      'cb-more',
+      'cb-title-command',
+      'cb-document-overview',
       'pe-canvas-title',
       'pe-inspector-content'
     ]
@@ -369,8 +379,8 @@ export default function EditorPage() {
     }
 
     function wireCollapsiblePanels() {
-      const leftToggle = document.getElementById('pe-toggle-left')
-      const rightToggle = document.getElementById('pe-toggle-right')
+      let leftToggle = document.getElementById('pe-toggle-left')
+      let rightToggle = document.getElementById('pe-toggle-right')
       const root = document.documentElement
       const iconMap = (() => {
         try {
@@ -433,14 +443,38 @@ const onKeyDown = (e: KeyboardEvent) => {
   }
 };
 
-      if (leftToggle) leftToggle.addEventListener('click', leftClick)
-      if (rightToggle) rightToggle.addEventListener('click', rightClick)
+      const attachToggles = () => {
+        leftToggle = leftToggle || document.getElementById('pe-toggle-left')
+        rightToggle = rightToggle || document.getElementById('pe-toggle-right')
+
+        if (leftToggle && !leftToggle.hasAttribute('data-toggle-attached')) {
+          leftToggle.addEventListener('click', leftClick)
+          leftToggle.setAttribute('data-toggle-attached', '1')
+        }
+
+        if (rightToggle && !rightToggle.hasAttribute('data-toggle-attached')) {
+          rightToggle.addEventListener('click', rightClick)
+          rightToggle.setAttribute('data-toggle-attached', '1')
+        }
+      }
+
+      attachToggles()
+
+      const attachInterval = window.setInterval(() => {
+        if (leftToggle && rightToggle) {
+          window.clearInterval(attachInterval)
+          return
+        }
+        attachToggles()
+      }, 100)
+
       window.addEventListener('keydown', onKeyDown)
 
       return () => {
         if (leftToggle) leftToggle.removeEventListener('click', leftClick)
         if (rightToggle) rightToggle.removeEventListener('click', rightClick)
         window.removeEventListener('keydown', onKeyDown)
+        window.clearInterval(attachInterval)
       }
     }
 
@@ -470,15 +504,7 @@ const onKeyDown = (e: KeyboardEvent) => {
 
 
       <div className="editor-header edit-post-header">
-        <button
-          type="button"
-          id="cb-back"
-          className="site-logo-replace components-button is-compact has-icon"
-          aria-label="Back to pages"
-          title="Back to pages"
-        >
-          <span className="cb-icon" data-icon="arrow_left" />
-        </button>
+
 
         <div className={`editor-header__toolbar ${styles.editorHeaderToolbar}`}>
           <div
