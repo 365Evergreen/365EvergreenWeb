@@ -1,0 +1,28 @@
+﻿Work Item Type,Title,Description,Acceptance Criteria,Area Path,Iteration Path,Tags
+Epic,Application shell & layout,Overall application layout and structure,"Responsive, accessible UI with reusable components",SWA React App,Backlog,UI;Core
+User Story,Design responsive layout,User-friendly responsive layout,Adapts to mobile/tablet/desktop; WCAG AA contrast; clear nav,SWA React App,Backlog,Designer
+User Story,Implement app shell,Reusable layout and structure,Reusable AppShell; Vite setup; structured folders; build outputs,SWA React App,Backlog,Developer
+Epic,Navigation & routing,Client-side navigation,Seamless navigation and routing,SWA React App,Backlog,Routing
+User Story,Design intuitive navigation,Clear and simple navigation,Active states; mobile menu; smooth transitions; 404 UX,SWA React App,Backlog,Designer
+User Story,Implement routing,Configure React Router,Routes defined; SPA fallback; lazy loading,SWA React App,Backlog,Developer
+Epic,API integration,Frontend-backend integration,APIs accessible via SWA,SWA React App,Backlog,API
+User Story,Design loading & error states,Clear feedback during API calls,"Loading, error, empty states shown",SWA React App,Backlog,Designer
+User Story,Implement API services,Connect to Azure Functions,/api endpoints; error handling; service layer,SWA React App,Backlog,Developer
+Epic,Authentication,Secure access,Authentication via SWA,SWA React App,Backlog,Security
+User Story,Design login experience,Simple authentication UX,Login visibility; status indicators; logout option,SWA React App,Backlog,Designer
+User Story,Implement SWA auth,Configure auth providers,Providers setup; roles; user identity endpoint,SWA React App,Backlog,Developer
+Epic,Performance,Optimised app performance,Fast loading experience,SWA React App,Backlog,Performance
+User Story,Design performance UX,Fast and smooth experience,<3s load; skeletons; subtle animations,SWA React App,Backlog,Designer
+User Story,Optimise build,Efficient production build,Code splitting; minification; Lighthouse >=90,SWA React App,Backlog,Developer
+Epic,Accessibility,Inclusive design,Accessibility compliance,SWA React App,Backlog,Accessibility
+User Story,Design accessible UI,Accessible interface,Keyboard support; contrast; ARIA usage,SWA React App,Backlog,Designer
+User Story,Implement accessibility,Accessible code,Semantic HTML; linting; screen reader testing,SWA React App,Backlog,Developer
+Epic,Deployment & DevOps,Automated deployment,CI/CD setup,SWA React App,Backlog,DevOps
+User Story,Design preview experience,Preview changes,PR preview environments available,SWA React App,Backlog,Designer
+User Story,Implement CI/CD,Automate deployments,Pipeline setup; preview environments; secure configs,SWA React App,Backlog,Developer
+Epic,Site header component (SCSS modules),Responsive header using modular SCSS,Componentised header using isolated SCSS modules,SWA React App,Backlog,UI;Standards
+User Story,Design site header (responsive),Create accessible responsive header,"Full width; transparent to solid on scroll; desktop nav; mobile hamburger","SWA React App",Backlog,Designer
+User Story,Implement header with SCSS modules,Build reusable header component,"Component folder structure; .module.scss only; no inline styles; scroll detection; responsive","SWA React App",Backlog,Developer
+User Story,Implement mobile navigation menu,Build hamburger menu interaction,"Toggle menu; responsive visibility; close on select and outside click","SWA React App",Backlog,Developer
+User Story,Enforce component standards,Ensure consistent structure across components,"Each component in its own folder; SCSS module required; index export pattern","SWA React App",Backlog,Developer;Standards
+User Story,Enhance header accessibility,Ensure accessible navigation,"ARIA attributes; keyboard navigation; focus management","SWA React App",Backlog,Accessibility

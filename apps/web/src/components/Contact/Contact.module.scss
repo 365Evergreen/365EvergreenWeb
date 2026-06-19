@@ -1,0 +1,128 @@
+.section {
+  display: grid;
+  gap: var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  padding: var(--space-6);
+}
+
+.header {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 42rem;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.5rem, 3.8vw, 2.1rem);
+  line-height: 1.2;
+}
+
+.supportingText {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.content {
+  display: grid;
+  gap: var(--space-6);
+}
+
+.direct {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.directLabel {
+  margin: 0;
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.emailLink {
+  width: fit-content;
+  color: var(--accent-strong);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.trust {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+}
+
+.form {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.label {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.input,
+.textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-primary);
+  padding: var(--space-3) var(--space-4);
+}
+
+.textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  width: fit-content;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--text-inverted);
+  padding: var(--space-3) var(--space-6);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.button:hover {
+  background: var(--accent-strong);
+  transform: translateY(-1px);
+}
+
+.success {
+  margin: 0;
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+@media (min-width: 769px) {
+  .content {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    align-items: start;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-5);
+  }
+
+  .button {
+    width: 100%;
+  }
+}

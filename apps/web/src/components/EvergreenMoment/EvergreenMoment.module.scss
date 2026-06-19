@@ -1,0 +1,96 @@
+.section {
+  display: grid;
+  gap: var(--space-6);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(165deg, var(--surface), var(--accent-soft));
+  padding: var(--space-6);
+}
+
+.content {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 44rem;
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(1.65rem, 4vw, 2.35rem);
+  line-height: 1.2;
+}
+
+.statement {
+  margin: 0;
+  color: var(--accent-secondary);
+  font-size: clamp(1.05rem, 2.8vw, 1.25rem);
+  font-weight: 700;
+}
+
+.detail {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.graphic {
+  width: 100%;
+  height: auto;
+  max-height: 15rem;
+}
+
+.lineBase,
+.lineGrow,
+.lineBranchLeft,
+.lineBranchRight,
+.lineStructure {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.lineBase {
+  stroke: rgba(47, 93, 80, 0.2);
+  stroke-width: 2;
+}
+
+.lineGrow,
+.lineBranchLeft,
+.lineBranchRight,
+.lineStructure {
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 1.2s ease forwards;
+}
+
+.lineGrow {
+  animation-delay: 0.15s;
+}
+
+.lineBranchLeft {
+  animation-delay: 1.15s;
+}
+
+.lineBranchRight {
+  animation-delay: 1.65s;
+}
+
+.lineStructure {
+  animation-delay: 2.15s;
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lineGrow,
+  .lineBranchLeft,
+  .lineBranchRight,
+  .lineStructure {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}

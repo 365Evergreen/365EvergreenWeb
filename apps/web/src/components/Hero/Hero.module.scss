@@ -1,0 +1,145 @@
+.hero {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  min-height: min(44rem, calc(100svh - 8rem));
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-5);
+  padding: var(--space-8) var(--space-6);
+}
+
+.copy {
+  max-width: 32.5rem;
+  display: grid;
+  gap: var(--space-4);
+  text-align: left;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+  font-weight: 700;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.85rem, 6vw, 2.85rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeIn 0.4s ease forwards;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: clamp(1rem, 3.4vw, 1.125rem);
+  max-width: 65ch;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  width: fit-content;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--text-inverted);
+  text-decoration: none;
+  font-weight: 600;
+  padding: var(--space-3) var(--space-6);
+  transition: background-color 0.2s ease;
+}
+
+.cta:hover {
+  background: var(--accent-strong);
+}
+
+.image {
+  position: relative;
+  overflow: hidden;
+  background: #ebedf0;
+}
+
+.imageElement {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
+  animation: slowZoom 20s ease-in-out infinite alternate;
+  transform-origin: right center;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slowZoom {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.02);
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    grid-template-columns: 70% 30%;
+    min-height: 36rem;
+  }
+
+  .content {
+    padding: var(--space-6);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .content {
+    order: 1;
+    padding: var(--space-6) var(--space-5);
+  }
+
+  .cta {
+    width: 100%;
+  }
+
+  .image {
+    order: 2;
+    height: 18rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title,
+  .imageElement {
+    animation: none;
+  }
+
+  .title {
+    opacity: 1;
+    transform: none;
+  }
+}

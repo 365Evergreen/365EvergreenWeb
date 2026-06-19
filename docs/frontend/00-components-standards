@@ -1,0 +1,374 @@
+# 📁 Component standards (React + SCSS modules)
+
+## Purpose
+
+This document defines the **mandatory standards for all UI components** in this repository.
+
+The goal is to ensure:
+
+* Consistency across the codebase
+* Maintainable and scalable structure
+* Strong separation of concerns
+* Accessibility and performance best practices
+
+***
+
+## 🧱 Core principles
+
+All components must follow these principles:
+
+* ✅ **Encapsulated** — self-contained folder per component
+* ✅ **Reusable** — no page-specific logic inside components
+* ✅ **Scoped styling** — no global CSS leakage
+* ✅ **Accessible by default**
+* ✅ **Responsive-first design**
+* ✅ **Simple over complex**
+
+***
+
+# 📂 Required folder structure
+
+Every component **must live in its own folder**:
+
+```
+/components/ComponentName
+  ├── ComponentName.tsx
+  ├── ComponentName.module.scss
+  ├── ComponentName.types.ts      (optional)
+  ├── ComponentName.test.tsx      (optional)
+  └── index.ts
+```
+
+***
+
+## ✅ Example
+
+``` md
+/components/Header
+  ├── Header.tsx
+  ├── Header.module.scss
+  └── index.ts
+```
+
+***
+
+# 🧩 Component rules
+
+## 1. Naming conventions
+
+* Component name must be **PascalCase**
+* Folder name must match component name exactly
+
+✅ Correct:
+
+```
+Header/
+Button/
+MobileMenu/
+```
+
+❌ Incorrect:
+
+```
+header/
+site-header/
+btn/
+```
+
+***
+
+## 2. Component implementation
+
+* Use **functional components only**
+* Use hooks for state and lifecycle
+* Keep components small and focused
+
+✅ Example:
+
+```tsx
+import styles from "./Header.module.scss";
+
+export default function Header() {
+  return <header className={styles.header}>...</header>;
+}
+```
+
+***
+
+## 3. Export pattern (MANDATORY)
+
+Each component must use an `index.ts`:
+
+```ts
+export { default } from "./Header";
+```
+
+✅ This enables clean imports:
+
+```ts
+import Header from "@/components/Header";
+```
+
+***
+
+# 🎨 Styling standards (STRICT)
+
+## 1. SCSS modules only
+
+All components must use:
+
+```
+ComponentName.module.scss
+```
+
+✅ Example:
+
+```tsx
+import styles from "./Header.module.scss";
+```
+
+***
+
+## 2. Prohibited styling approaches
+
+The following are **NOT allowed**:
+
+* ❌ Inline styles
+* ❌ Global CSS (unless explicitly defined in `/styles`)
+* ❌ Tailwind
+* ❌ Styled-components / CSS-in-JS
+
+***
+
+## 3. Class naming
+
+Use **simple, readable class names**:
+
+✅ Good:
+
+```scss
+.header {}
+.container {}
+.nav {}
+.scrolled {}
+```
+
+❌ Avoid:
+
+```scss
+.headerContainerWrapper {}
+.mainNavigationListItem {}
+```
+
+***
+
+## 4. State-based styling
+
+Use modifier classes:
+
+```scss
+.header {}
+.scrolled {}
+.open {}
+.active {}
+```
+
+```tsx
+<header
+  className={`${styles.header} ${isScrolled ? styles.scrolled : ""}`}
+>
+```
+
+***
+
+## 5. Responsive design
+
+All responsiveness must be handled in SCSS:
+
+```scss
+@media (max-width: 1024px) {
+  .nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}
+```
+
+***
+
+# 🔄 Component composition
+
+Complex components should be split into **smaller components**.
+
+## ✅ Example: Header
+
+```
+/components/Header
+/components/Logo
+/components/Nav
+/components/MobileMenu
+/components/HamburgerButton
+```
+
+***
+
+## Rules
+
+* Each subcomponent must follow the same folder structure
+* No deeply nested JSX — extract components instead
+
+***
+
+# ⚙️ Behaviour & state
+
+## 1. Local state only
+
+* Use `useState` for UI behaviour
+* Avoid global state unless necessary
+
+***
+
+## 2. Side effects
+
+* Use `useEffect` responsibly
+* Clean up listeners (e.g. scroll, resize)
+
+✅ Example:
+
+```ts
+useEffect(() => {
+  const onScroll = () => setScrolled(window.scrollY > 50);
+  window.addEventListener("scroll", onScroll);
+
+  return () => window.removeEventListener("scroll", onScroll);
+}, []);
+```
+
+***
+
+## 3. Performance
+
+* Avoid unnecessary re-renders
+* Use memoisation if needed (`React.memo`)
+* Optimise scroll events (throttle if required)
+
+***
+
+# ♿ Accessibility standards (MANDATORY)
+
+All components must meet **WCAG AA baseline**.
+
+## Requirements
+
+* ✅ Use semantic HTML (`header`, `nav`, `button`)
+* ✅ Keyboard accessible
+* ✅ Visible focus states
+* ✅ ARIA attributes where needed
+
+***
+
+## ✅ Example (hamburger button)
+
+```tsx
+<button
+  aria-label="Toggle navigation"
+  aria-expanded={isOpen}
+  className={styles.hamburger}
+>
+```
+
+***
+
+## Additional requirements
+
+* ESC closes overlays/menus
+* Focus should not be lost during interactions
+* Interactive elements must be ≥44px
+
+***
+
+# 🔗 Routing standards
+
+* Use `react-router-dom`
+* Use `<Link>` for internal navigation
+
+✅ Example:
+
+```tsx
+import { Link } from "react-router-dom";
+```
+
+❌ Do not use:
+
+``` md
+/internal-page
+```
+
+***
+
+# 🧪 Testing (recommended)
+
+Where applicable:
+
+```
+ComponentName.test.tsx
+```
+
+* Test rendering
+* Test interactions (clicks, state changes)
+
+***
+
+# 🚫 Anti-patterns (DO NOT DO)
+
+* ❌ Multiple components in one folder
+* ❌ Inline styles
+* ❌ Mixing layout + business logic
+* ❌ Overly large components (>300 lines)
+* ❌ Hard-coded data inside components
+* ❌ Direct DOM manipulation
+
+***
+
+# ✅ Definition of done (components)
+
+A component is considered complete when:
+
+* ✅ Folder structure is correct
+* ✅ Uses `.module.scss` only
+* ✅ Is responsive
+* ✅ Meets accessibility baseline
+* ✅ Has no inline styles
+* ✅ Uses clean export pattern
+* ✅ Behaviour is tested manually
+
+***
+
+# 🧭 Recommended extensions (future)
+
+To strengthen this standard further:
+
+* Add ESLint rule:
+  * Disallow inline styles
+* Add generator (Hygen / Plop):
+  * Auto-create component folders
+* Introduce design tokens:
+  * Colours, spacing, typography
+* Align with Fluent UI patterns (for consistency with M365 ecosystem)
+
+***
+
+# 🧠 Summary
+
+This standard ensures:
+
+* Predictable structure
+* Clean separation of concerns
+* Scalable component architecture
+* Consistent UI and UX
+
+***
+
