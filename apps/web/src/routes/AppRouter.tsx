@@ -1,6 +1,9 @@
 import { Suspense, lazy } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { AppShell } from '../layouts/AppShell'
+import SignInPage from '../pages/SigninPage/SigninPage'
+import { RequireAuth } from '../components/RequireAuth/RequireAuth'
+import { usePrimaryNavigation } from '../hooks/usePrimaryNavigation'
 
 const HomePage = lazy(() => import('../pages/HomePage'))
 const PlatformPage = lazy(() => import('../pages/PlatformPage'))
@@ -21,6 +24,9 @@ function PageLoading() {
 }
 
 export function AppRouter() {
+  // ✅ bring auth state into router
+  const { user, loading } = usePrimaryNavigation()
+
   return (
     <BrowserRouter>
       <Suspense fallback={<PageLoading />}>
@@ -30,8 +36,19 @@ export function AppRouter() {
             <Route path="/platform" element={<PlatformPage />} />
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:slug" element={<BlogPostPage />} />
-            <Route path="/editor" element={<EditorPage />} />
+
+            {/* ✅ Protected route */}
+            <Route
+              path="/editor"
+              element={
+                <RequireAuth user={user} loading={loading}>
+                  <EditorPage />
+                </RequireAuth>
+              }
+            />
+
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/signin" element={<SignInPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Route>
         </Routes>

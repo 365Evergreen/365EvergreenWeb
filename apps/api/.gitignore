@@ -1,5 +1,6 @@
 local.settings.json
 node_modules/
+*.zip
 
 # Azure Functions build artifacts
 bin/

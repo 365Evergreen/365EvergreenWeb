@@ -9,6 +9,11 @@ type SiteHeaderProps = {
   isMenuOpen: boolean
   onToggleMenu: () => void
   onCloseMenu: () => void
+  onToggleTools: () => void
+  user?: {
+    userDetails: string
+    userRoles?: string[]
+  } | null
 }
 
 export default function SiteHeader({
@@ -16,12 +21,17 @@ export default function SiteHeader({
   isMenuOpen,
   onToggleMenu,
   onCloseMenu,
+  onToggleTools,
+  user,
 }: SiteHeaderProps) {
   const menuButtonLabel = isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'
   const menuButtonText = isMenuOpen ? 'Close' : 'Menu'
+
   const navigationClassName = isMenuOpen
     ? `${styles.navigation} ${styles.open}`
     : styles.navigation
+
+  const isAuthenticated = !!user
 
   useEffect(() => {
     function handleKeyDown(event: KeyboardEvent) {
@@ -39,18 +49,22 @@ export default function SiteHeader({
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        <Link
-          className={styles.brand}
-          to="/"
-          aria-label="365 Evergreen Home"
-          onClick={onCloseMenu}
-        >
-          <img
-            className={styles.brandLogo}
-            src="https://sa365evergreenwebsite.blob.core.windows.net/$web/assets/Evergreen_Logo__100px.png"
-            alt="365 Evergreen"
-          />
-        </Link>
+        <div className={styles.left}>
+          <Link
+            className={styles.brand}
+            to="/"
+            aria-label="365 Evergreen Home"
+            onClick={onCloseMenu}
+          >
+            <img
+              className={styles.brandLogo}
+              src="https://sa365evergreenwebsite.blob.core.windows.net/$web/assets/Evergreen_Logo__100px.png"
+              alt="365 Evergreen"
+            />
+            <span className={styles.brandText}>365 Evergreen</span>
+          </Link>
+        </div>
+
         <button
           type="button"
           className={styles.menuToggle}
@@ -61,6 +75,7 @@ export default function SiteHeader({
         >
           {menuButtonText}
         </button>
+
         <nav
           id="primary-navigation"
           className={navigationClassName}
@@ -68,6 +83,31 @@ export default function SiteHeader({
         >
           <SiteNavigation items={items} onNavigate={onCloseMenu} />
         </nav>
+
+        <div className={styles.actions}>
+          {isAuthenticated ? (
+            <>
+              <span className={styles.userName}>{user.userDetails}</span>
+
+              <a href="/.auth/logout" className={styles.signOut}>
+                Sign out
+              </a>
+
+              <button
+                type="button"
+                className={styles.toolsButton}
+                onClick={onToggleTools}
+                aria-label="Open settings"
+              >
+                ⚙
+              </button>
+            </>
+          ) : (
+            <a href="/.auth/login/aad" className={styles.signIn}>
+              Sign in
+            </a>
+          )}
+        </div>
       </div>
     </header>
   )

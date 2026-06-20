@@ -3,61 +3,70 @@ import { TableClient } from '@azure/data-tables';
 import { DefaultAzureCredential } from '@azure/identity';
 
 function getConnectionString() {
-  return process.env.AZURE_STORAGE_CONNECTION_STRING || process.env.AzureWebJobsStorage || process.env.AZURE_STORAGE_CONNECTION_STRING;
-}
-
-function getBlobServiceUri() {
   return (
-    process.env.AzureWebJobsStorage__blobServiceUri ||
-    process.env.AZURE_STORAGE_BLOB_SERVICE_URI ||
-    process.env.BLOB_SERVICE_URI ||
-    process.env.AZURE_STORAGE_CONNECTION_STRING
-  );
-}
-
-function getTableServiceUri() {
-  return (
-    process.env.AzureWebJobsStorage__tableServiceUri ||
-    process.env.AZURE_STORAGE_TABLE_SERVICE_URI ||
-    process.env.TABLE_SERVICE_URI ||
-    process.env.AZURE_STORAGE_CONNECTION_STRING
+    process.env.AZURE_STORAGE_CONNECTION_STRING ||
+    process.env.AzureWebJobsStorage
   );
 }
 
 function getCredential() {
-  return new DefaultAzureCredential();
+  return new DefaultAzureCredential({
+    managedIdentityClientId: process.env.AZURE_CLIENT_ID // safe even if undefined
+  });
 }
 
+// ✅ Blob
 export function getBlobContainerClient(containerName) {
   const connectionString = getConnectionString();
+
   if (connectionString) {
-    const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
+    const blobServiceClient =
+      BlobServiceClient.fromConnectionString(connectionString);
+
     return blobServiceClient.getContainerClient(containerName);
   }
 
-  const blobServiceUri = getBlobServiceUri();
-  if (!blobServiceUri) {
-    throw new Error('Missing blob service connection info. Set AZURE_STORAGE_CONNECTION_STRING or AzureWebJobsStorage__blobServiceUri.');
+  const account = process.env.AZURE_STORAGE_ACCOUNT_NAME;
+
+  if (!account) {
+    throw new Error(
+      'Missing storage account name for managed identity.'
+    );
   }
 
-  const blobServiceClient = new BlobServiceClient(blobServiceUri, getCredential());
-  return blobServiceClient.getContainerClient(containerName);
+  return new BlobServiceClient(
+    `https://${account}.blob.core.windows.net`,
+    getCredential()
+  ).getContainerClient(containerName);
 }
 
+// ✅ Table
 export function getTableClient(tableName) {
   const connectionString = getConnectionString();
+
   if (connectionString) {
-    return new TableClient(connectionString, tableName);
+    return TableClient.fromConnectionString(
+      connectionString,
+      tableName
+    );
   }
 
-  const tableServiceUri = getTableServiceUri();
-  if (!tableServiceUri) {
-    throw new Error('Missing table service connection info. Set AZURE_STORAGE_CONNECTION_STRING or AzureWebJobsStorage__tableServiceUri.');
+  const account = process.env.AZURE_STORAGE_ACCOUNT_NAME;
+
+  if (!account) {
+    throw new Error(
+      'Missing storage account name for managed identity.'
+    );
   }
 
-  return new TableClient(tableServiceUri, tableName, getCredential());
+  return new TableClient(
+    `https://${account}.table.core.windows.net`,
+    tableName,
+    getCredential()
+  );
 }
 
+// ✅ Ensure helpers unchanged
 export async function ensureBlobContainer(containerName) {
   const client = getBlobContainerClient(containerName);
   await client.createIfNotExists();
@@ -66,6 +75,7 @@ export async function ensureBlobContainer(containerName) {
 
 export async function ensureTable(tableName) {
   const client = getTableClient(tableName);
+
   try {
     await client.createTable();
   } catch (error) {
@@ -73,5 +83,6 @@ export async function ensureTable(tableName) {
       throw error;
     }
   }
+
   return client;
 }

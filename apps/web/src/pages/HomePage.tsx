@@ -83,7 +83,7 @@ export default function HomePage() {
     },
     {
       title: 'A practical path from scattered files to trusted knowledge',
-      excerpt: 'An outcome-first approach to organising information without overengineering.',
+      excerpt: 'An outcome-first approach to organising information without over-engineering.',
       meta: 'Guide • 12/06/2026',
       linkTo: '/blog',
     },
