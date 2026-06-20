@@ -1,4 +1,5 @@
 import type { ClientPrincipal } from '../../types/auth'
+import styles from './ToolsDrawer.module.scss'
 
 type ToolsDrawerProps = {
   isOpen: boolean
@@ -6,22 +7,24 @@ type ToolsDrawerProps = {
   user?: ClientPrincipal | null   // ✅ ADD THIS
 }
 
-export default function ToolsDrawer({ isOpen, onClose }: ToolsDrawerProps) {
+export default function ToolsDrawer({ isOpen, onClose, user }: ToolsDrawerProps) {
   if (!isOpen) return null
 
   return (
     <>
       {/* Overlay */}
-      <div className="drawer-overlay" onClick={onClose} />
+      <div className={styles.overlay} onClick={onClose} />
 
       {/* Drawer */}
-      <aside className="drawer">
-        <div className="drawer-header">
-          Settings
-          <button onClick={onClose}>✕</button>
+      <aside
+  className={`${styles.drawer} ${isOpen ? styles.drawerOpen : ''}`}
+>
+        <div className={styles.header}>
+          <div className={styles.title}>Settings</div>
+          <button className={styles.close} onClick={onClose}>✕</button>
         </div>
 
-        <div className="drawer-content">
+        <div className={styles.content}>
           <h3>Content</h3>
           <a href="/editor">Content dashboard</a>
           <a href="/editor/posts">Manage posts</a>
@@ -35,7 +38,11 @@ export default function ToolsDrawer({ isOpen, onClose }: ToolsDrawerProps) {
           <hr />
 
           <h3>Account</h3>
-          <a href="/.auth/logout">Sign out</a>
+          {user ? (
+            <span>{user.userDetails}</span>
+          ) : (
+            <a href="/.auth/logout">Sign out</a>
+          )}
         </div>
       </aside>
     </>
