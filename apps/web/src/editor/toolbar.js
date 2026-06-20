@@ -1480,6 +1480,30 @@
       if (btnRedo) btnRedo.disabled = history.index >= history.stack.length - 1;
     }
 
+    function undo(){
+      if (history.index <= 0) return;
+      history.index--;
+      try {
+        const state = JSON.parse(history.stack[history.index]);
+        if (EditorCore.setState) EditorCore.setState(state);
+      } catch (error) {
+        console.warn('Failed to undo', error);
+      }
+      updateUndoRedoButtons();
+    }
+
+    function redo(){
+      if (history.index >= history.stack.length - 1) return;
+      history.index++;
+      try {
+        const state = JSON.parse(history.stack[history.index]);
+        if (EditorCore.setState) EditorCore.setState(state);
+      } catch (error) {
+        console.warn('Failed to redo', error);
+      }
+      updateUndoRedoButtons();
+    }
+
     function navigateBack(){
       if (!btnBack) return;
       const page = EditorCore.getPage ? EditorCore.getPage() : null;

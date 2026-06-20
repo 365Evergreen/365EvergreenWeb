@@ -111,7 +111,15 @@ export function useBlogPost(slug: string): UseBlogPostResult {
           throw new Error(`Unable to load article content (${contentResponse.status})`)
         }
 
-        const html = await contentResponse.text()
+        const contentType = contentResponse.headers.get('content-type') || ''
+        let html = ''
+        if (contentType.includes('application/json') || contentUrl.endsWith('.json')) {
+          const json = await contentResponse.json()
+          html = String(json.html || (json.content && json.content.html) || '')
+        } else {
+          html = await contentResponse.text()
+        }
+
         if (!canceled) {
           setPost(found)
           setBodyHtml(html)

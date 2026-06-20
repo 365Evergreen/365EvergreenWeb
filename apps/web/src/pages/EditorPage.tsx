@@ -39,6 +39,12 @@ type EditorWindow = Window & {
   EDITOR_BLOCK_ORDER?: string[]
   ToolbarFactory?: { setTopToolbarHost?: (host: HTMLElement) => void }
   PAGE_MANAGER_API_BASE?: string
+  EditorCore?: {
+    getState?: () => { blocks?: unknown[] }
+    getPage?: () => { attrs?: Record<string, unknown> }
+    saveBlocks?: (blocks: unknown[], options: { published: boolean }) => string
+    slugify?: (title: string) => string
+  }
 }
 
 function waitForEditorDom(timeout = 2000) {
@@ -301,6 +307,8 @@ export default function EditorPage() {
           console.error('Failed loading editor runtime', error)
         }
       }
+
+      wireEditorButtons()
     }
 
     function finalizeEditorBlocks() {
@@ -356,6 +364,115 @@ export default function EditorPage() {
         }
       } catch (error) {
         console.warn('Failed to merge editor block definition icons', error)
+      }
+    }
+
+    function getPageTitle() {
+      const titleInput = document.getElementById('pe-canvas-title') as HTMLInputElement | null
+      const editor = (window as EditorWindow).EditorCore
+      const page = editor && typeof editor.getPage === 'function' ? editor.getPage() : { attrs: {} }
+      const titleFromInput = titleInput?.value?.trim()
+      return titleFromInput || String((page && page.attrs && page.attrs.title) || 'Untitled').trim()
+    }
+
+    function getPageSlug() {
+      const editor = (window as EditorWindow).EditorCore
+      const page = editor && typeof editor.getPage === 'function' ? editor.getPage() : { attrs: {} }
+      const attrs = (page && page.attrs) || {}
+      let slug = String(attrs.slug || attrs.persistedSlug || '').trim()
+      if (!slug) {
+        const title = getPageTitle() || 'page-editor'
+        if (editor && typeof editor.slugify === 'function') {
+          slug = String(editor.slugify(title))
+        } else {
+          slug = String(title || 'page-editor').toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '')
+        }
+      }
+      return slug || 'page-editor'
+    }
+
+    function getEditorPayload(mode: 'draft' | 'publish') {
+      const editor = (window as EditorWindow).EditorCore
+      const state = editor && typeof editor.getState === 'function' ? editor.getState() : { blocks: [] }
+      const page = editor && typeof editor.getPage === 'function' ? editor.getPage() : { attrs: {} }
+      const attrs = (page && page.attrs) || {}
+      const title = getPageTitle()
+      const slug = getPageSlug()
+      const html = editor && typeof editor.saveBlocks === 'function'
+        ? editor.saveBlocks(state.blocks || [], { published: mode === 'publish' })
+        : ''
+      return {
+        title,
+        slug,
+        previousSlug: String(attrs.persistedSlug || attrs.slug || ''),
+        excerpt: String(attrs.excerpt || '').trim(),
+        categories: attrs.categories || '',
+        tags: attrs.tags || '',
+        featuredImage: String(attrs.featuredImage || '').trim(),
+        date: attrs.date || new Date().toISOString(),
+        status: mode === 'publish' ? 'published' : 'draft',
+        html,
+        blocks: Array.isArray(state.blocks) ? JSON.parse(JSON.stringify(state.blocks)) : [],
+        content: { path: '' }
+      }
+    }
+
+    async function sendUpsertPost(payload: Record<string, unknown>) {
+      const response = await fetch('/api/upsert-post', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      const body = await response.json().catch(() => ({}) as Record<string, unknown>)
+      if (!response.ok) {
+        const errorMessage = body && typeof body === 'object' && 'error' in body && typeof body.error === 'string'
+          ? body.error
+          : `Save failed with status ${response.status}`
+        throw new Error(errorMessage)
+      }
+      return body
+    }
+
+    function wireEditorButtons() {
+      const saveButton = document.getElementById('cb-save')
+      const publishButton = document.getElementById('cb-publish')
+
+      if (saveButton && !saveButton.dataset.editorWired) {
+        saveButton.addEventListener('click', async () => {
+          saveButton.setAttribute('disabled', 'true')
+          const originalText = saveButton.textContent
+          saveButton.textContent = 'Saving...'
+          try {
+            await sendUpsertPost(getEditorPayload('draft'))
+            saveButton.textContent = 'Saved'
+          } catch (error) {
+            window.alert(error instanceof Error ? error.message : 'Save failed')
+          } finally {
+            saveButton.removeAttribute('disabled')
+            window.setTimeout(() => { if (saveButton.textContent === 'Saved') saveButton.textContent = originalText }, 1500)
+          }
+        })
+        saveButton.dataset.editorWired = '1'
+      }
+
+      if (publishButton && !publishButton.dataset.editorWired) {
+        publishButton.addEventListener('click', async () => {
+          publishButton.setAttribute('disabled', 'true')
+          const originalText = publishButton.textContent
+          publishButton.textContent = 'Publishing...'
+          try {
+            await sendUpsertPost(getEditorPayload('publish'))
+            publishButton.textContent = 'Published'
+          } catch (error) {
+            window.alert(error instanceof Error ? error.message : 'Publish failed')
+          } finally {
+            publishButton.removeAttribute('disabled')
+            window.setTimeout(() => { if (publishButton.textContent === 'Published') publishButton.textContent = originalText }, 1500)
+          }
+        })
+        publishButton.dataset.editorWired = '1'
       }
     }
 

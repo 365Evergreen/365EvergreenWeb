@@ -1,11 +1,9 @@
 {
   "name": "api-365-evergreen",
-  "version": "1.0.0",
-  "private": true,
   "type": "module",
   "scripts": {
     "start": "func start",
-    "test": "echo \"No tests specified\" && exit 0"
+    "build": "echo building"
   },
   "dependencies": {
     "@azure/data-tables": "^13.3.2",

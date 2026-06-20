@@ -60,17 +60,31 @@ export default async function (context, req) {
 
     const blobClient = await ensureBlobContainer(BLOB_CONTAINER);
 
-    const pagePath = post.content.path || `posts/${post.slug}.json`;
-    const blob = blobClient.getBlockBlobClient(pagePath);
+    const hasBlocks = Array.isArray(body.blocks) && body.blocks.length > 0
+    const pageSuffix = hasBlocks ? '.json' : '.html'
+    const pagePath = post.content.path || `posts/${post.slug}${pageSuffix}`
+    const blob = blobClient.getBlockBlobClient(pagePath)
+    const contentUrl = blob.url
 
-    const postJson = JSON.stringify(post, null, 2);
+    if (pagePath.endsWith('.json')) {
+      const contentPayload = {
+        ...post,
+        html: String(body.html || ''),
+        blocks: Array.isArray(body.blocks) ? body.blocks : []
+      }
+      const contentJson = JSON.stringify(contentPayload, null, 2)
+      await blob.upload(contentJson, Buffer.byteLength(contentJson), {
+        blobHTTPHeaders: { blobContentType: 'application/json' }
+      })
+    } else {
+      await blob.upload(String(body.html || ''), Buffer.byteLength(String(body.html || '')), {
+        blobHTTPHeaders: { blobContentType: 'text/html' }
+      })
+    }
 
-    await blob.upload(postJson, Buffer.byteLength(postJson), {
-      blobHTTPHeaders: { blobContentType: 'application/json' }
-    });
-
-    const tableClient = await ensureTable(TABLE_NAME);
-    const entity = mapPostToEntity(post);
+    post.content = { path: contentUrl }
+    const tableClient = await ensureTable(TABLE_NAME)
+    const entity = mapPostToEntity(post)
 
     await tableClient.upsertEntity(entity, 'Merge');
 
