@@ -3,6 +3,7 @@
   "configurations": {
     "web": {
       "appLocation": ".",
+      "apiLocation": "../api",
       "outputLocation": "dist",
       "appBuildCommand": "pnpm build",
       "run": "pnpm dev",
